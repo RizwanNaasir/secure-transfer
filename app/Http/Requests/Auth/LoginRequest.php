@@ -57,7 +57,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Ensure the login request is not rate limited.
+     * Ensure the login.blade.php request is not rate limited.
      *
      * @return void
      *

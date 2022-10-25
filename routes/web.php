@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('SignUp',[FrontendController::class,'register']);
+Route::get('SignIn',[FrontendController::class,'login']);
+Route::get('forgetPassword',[FrontendController::class,'forget']);
+Route::get('userProfile',[FrontendController::class,'profile']);
 
-require __DIR__.'/auth.php';
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified'])->name('dashboard');
+//
+//require __DIR__.'/auth.php';
