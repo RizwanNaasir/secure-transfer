@@ -16,6 +16,8 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
+        "@awcodes/alpine-floating-ui": "^3.4.0",
+        "@tailwindcss/typography": "^0.5.7",
         "flowbite": "^1.5.3"
     }
 }

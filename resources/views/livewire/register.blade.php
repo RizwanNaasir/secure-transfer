@@ -1,4 +1,4 @@
-<div class="grid grid-cols-2 gap-3 p-6 sm:p-12 mt-6 z-50">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-6 sm:p-12 mt-6 z-50">
     <div class="h-32 md:h-auto md:w-full ">
         <img class="object-cover w-full h-full rounded-lg" src="https://source.unsplash.com/user/erondu/1600x900"
              alt="img" />

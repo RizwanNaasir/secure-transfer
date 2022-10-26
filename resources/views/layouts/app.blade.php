@@ -23,9 +23,11 @@
 <body class="font-sans antialiased z-0">
     <div class="bg-white">
         @yield('content')
+        {{ $slot ?? '' }}
     </div>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+    @livewire('notifications')
     @livewire('livewire-ui-modal')
     @livewireScripts
 </body>
