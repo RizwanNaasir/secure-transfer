@@ -1,6 +1,11 @@
-<div class="flex items-center justify-center p-6 sm:p-12 z-40">
+<div class="grid grid-cols-2 gap-4 p-6 sm:p-12 z-40">
+    <div class="h-32 md:h-auto md:w-full ">
+        <img class="object-cover w-full h-full rounded-lg" src="https://source.unsplash.com/user/erondu/1600x900"
+             alt="img" />
+    </div>
     <div class="w-full">
         <div class="flex justify-center">
+            <h2 class="text-2xl">Login</h2>
         </div>
         <div class="mt-4">
             <label class="block text-sm">
@@ -27,7 +32,13 @@
                     <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
                 </div>
             </div>
-            <a href="{{url('forgetPassword')}}" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-right">Forgot password?</a>
+
+            <button
+                class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-right"
+                onclick="Livewire.emit('openModal', 'forget-password')">
+                Forgot password?
+            </button>
+{{--            <a href="{{url('forgetPassword')}}" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500 text-right">Forgot password?</a>--}}
         </div>
         <button
             class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"

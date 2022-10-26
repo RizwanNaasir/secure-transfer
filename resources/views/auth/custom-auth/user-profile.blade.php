@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('content')
     @include('layouts.header')
-    <main class="pb-[0%] px-40">
-    <form class="space-y-4 divide-y divide-gray-200">
-        <div class="space-y-8 divide-y divide-gray-200 sm:space-y-5">
-            <div class="space-y-6 sm:space-y-5">
+    <main class="-mt-0 px-40">
+    <form class="space-y-0 divide-y divide-gray-200">
+        <div class="space-y-4 divide-y divide-gray-200 sm:space-y-5">
+            <div class="space-y-2 sm:space-y-5">
                 <div>
                     <h3 class="text-lg font-medium leading-6 text-gray-900">Profile</h3>
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">This information will be displayed publicly so be careful what you share.</p>

@@ -1,6 +1,11 @@
-<div class="flex items-center justify-center p-6 sm:p-12 mt-6 z-50">
+<div class="grid grid-cols-2 gap-3 p-6 sm:p-12 mt-6 z-50">
+    <div class="h-32 md:h-auto md:w-full ">
+        <img class="object-cover w-full h-full rounded-lg" src="https://source.unsplash.com/user/erondu/1600x900"
+             alt="img" />
+    </div>
     <div class="w-full">
         <div class="flex justify-center">
+            <h2 class="text-3xl mb-10">Register</h2>
         </div>
         <div>
             <label class="block text-sm -mt-7">
