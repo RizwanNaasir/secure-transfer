@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +25,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', RegisterController::class);
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('update', [LoginController::class, 'update']);
+});
+
+Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('list', [UserController::class, 'index']);
 });
