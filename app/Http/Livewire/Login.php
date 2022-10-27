@@ -37,12 +37,10 @@ class Login extends ModalComponent implements HasForms
         return [
             TextInput::make('email')
                 ->required()
-                ->reactive()
                 ->placeholder('email@example.com')
                 ->exists('users', 'email'),
             TextInput::make('password')
                 ->required()
-                ->reactive()
                 ->password()
                 ->placeholder('password'),
             Checkbox::make('remember_me')
