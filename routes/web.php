@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,7 @@ Route::get('SignUp',[FrontendController::class,'register']);
 Route::get('SignIn',[FrontendController::class,'login']);
 Route::get('forgetPassword',[FrontendController::class,'forget']);
 Route::get('userProfile',[FrontendController::class,'profile']);
+Route::get('home',[DashboardController::class,'index']);
 
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
