@@ -3,29 +3,29 @@
         <div
             class="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 lg:px-8">
             <div class="flex justify-start lg:w-0 lg:flex-1">
-                <a href="#">
+                <a href="{{url('/')}}">
                     <span class="sr-only">Your Company</span>
-                    <img class="h-8 w-auto sm:h-10"
-                         src="https://tailwindui.com/img/logos/mark.svg?from-color=purple&from-shade=600&to-color=indigo&to-shade=600&toShade=600"
-                         alt="">
+                    <x-application-logo class="h-8 w-auto sm:h-10"/>
                 </a>
             </div>
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0 gap-4 md:gap-4">
                 <a href="{{url('/')}}"
-                   class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                   class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                     Home
                 </a>
-                <a href="{{url('/')}}"
-                   class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                    Add new Contact
-                </a>
-                <a href="{{url('/')}}"
-                   class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                    History
-                </a>
+                @auth
+                    <a href="{{url('/')}}"
+                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                        Add new Contact
+                    </a>
+                    <a href="{{url('/')}}"
+                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                        History
+                    </a>
+                @endauth
                 @if(!isset($hideLinks))
                     <a href="#"
-                       class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About</a>
+                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About</a>
                    @guest
                         <button
                             class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
@@ -66,6 +66,38 @@
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                                                 </div>
                                                 Change Password
+                                            </button>
+                                        </li>
+                                        <li class="block lg:hidden font-medium">
+                                            <button class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                                <div class="mr-3">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                                                </div>
+                                                Add new Contact
+                                            </button>
+                                        </li>
+                                        <li class="block lg:hidden font-medium">
+                                            <button onclick="Livewire.emit('openModal', 'change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                                <div class="mr-3">
+                                                    <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                        <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+                                                        <title>history</title>
+                                                        <desc>Created with Sketch.</desc>
+                                                        <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <g id="Rounded" transform="translate(-441.000000, -289.000000)">
+                                                                <g id="Action" transform="translate(100.000000, 100.000000)">
+                                                                    <g id="-Round-/-Action-/-history" transform="translate(340.000000, 186.000000)">
+                                                                        <g transform="translate(0.000000, 0.000000)">
+                                                                            <polygon id="Path" points="0 0 24 0 24 24 0 24"></polygon>
+                                                                            <path d="M13.26,3 C8.17,2.86 4,6.95 4,12 L2.21,12 C1.76,12 1.54,12.54 1.86,12.85 L4.65,15.65 C4.85,15.85 5.16,15.85 5.36,15.65 L8.15,12.85 C8.46,12.54 8.24,12 7.79,12 L6,12 C6,8.1 9.18,4.95 13.1,5 C16.82,5.05 19.95,8.18 20,11.9 C20.05,15.81 16.9,19 13,19 C11.39,19 9.9,18.45 8.72,17.52 C8.32,17.21 7.76,17.24 7.4,17.6 C6.98,18.02 7.01,18.73 7.48,19.09 C9,20.29 10.91,21 13,21 C18.05,21 22.14,16.83 22,11.74 C21.87,7.05 17.95,3.13 13.26,3 Z M12.75,8 C12.34,8 12,8.34 12,8.75 L12,12.43 C12,12.78 12.19,13.11 12.49,13.29 L15.61,15.14 C15.97,15.35 16.43,15.23 16.64,14.88 C16.85,14.52 16.73,14.06 16.38,13.85 L13.5,12.14 L13.5,8.74 C13.5,8.34 13.16,8 12.75,8 Z" id="🔹Icon-Color" fill="#1D1D1D"></path>
+                                                                        </g>
+                                                                    </g>
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                History
                                             </button>
                                         </li>
                                         <li class="font-medium">
