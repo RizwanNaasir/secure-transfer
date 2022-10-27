@@ -4,7 +4,7 @@
 <main>
         {{--Start Slider--}}
         <div class="relative">
-            <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100"></div>
+            <div class="absolute inset-x-0 bottom-0 h-1/2 bg-transparent"></div>
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
 
@@ -452,40 +452,36 @@
         {{--End Testimonial--}}
 
         {{--Start of Images of App--}}
+
         <section class="overflow-hidden text-gray-700">
-            <div class="container px-5 pl-0 pr-0 pt-6 pb-2 pb-6rem mx-auto lg:pt-12 lg:px-32 bg-gray-200 rounded-lg">
+            <div class="grid grid-cols-1 container px-5 pl-0 pr-0 pt-6 pb-2 pb-6rem mx-auto lg:pt-12 lg:px-32 bg-gray-200 rounded-lg">
                 <div class="flex flex-wrap -m-1 md:-m-2 flex-none w-full h-[23.625rem] max-w-full sm:ml-auto">
-                    <div class="flex flex-wrap w-1/6">
+                    <div class="grid grid-cols-6 sm:grid-cols-1 md:grid-cols-1 gap-2">
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp">
                         </div>
-                    </div>
-                    <div class="flex flex-wrap w-1/6">
+                        <!-- ... -->
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp">
                         </div>
-                    </div>
-                    <div class="flex flex-wrap w-1/6">
+
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp">
                         </div>
-                    </div>
-                    <div class="flex flex-wrap w-1/6">
+
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp">
                         </div>
-                    </div>
-                    <div class="flex flex-wrap w-1/6">
+
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(76).webp">
                         </div>
-                    </div>
-                    <div class="flex flex-wrap w-1/6">
+
                         <div class="w-full p-1 md:p-2">
                             <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
                                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp">
@@ -512,7 +508,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mt-3 w-48 h-14 bg-black text-white rounded-xl items-center justify-center">
+                    <div class="flex mt-3 w-48 h-14 bg-black text-white rounded-lg items-center justify-center">
                         <div class="mr-3">
                             <svg viewBox="0 0 384 512" width="30">
                                 <path fill="currentColor"
@@ -530,10 +526,10 @@
         {{--End of Images of App--}}
 
         {{--Start Contact us form--}}
-        <div class="flex items-center min-h-[20%]  bg-gray-50">
+        <div class="flex items-center min-h-[20%]  bg-transparent">
             <div class="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
                 <div class="">
-                    <h1 class="text-center text-4xl my-8 font-bold">Contact Us</h1>
+                    <h1 class="text-center text-4xl my-8 font-bold">Registration</h1>
                 </div>
                 <div class="flex flex-col md:flex-row">
                     <div class="h-32 md:h-auto md:w-1/2 w-[80%] ml-12 mb-6">
