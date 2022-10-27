@@ -19,14 +19,14 @@ class Register extends ModalComponent implements HasForms
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
-    public array $avatar = [];
+    //public array $avatar = [];
 
     protected function getFormSchema(): array
     {
         return [
-            FileUpload::make('avatar')
-                ->label('Avatar')
-                ->maxSize(1024 * 1024 * 2),
+//            FileUpload::make('avatar')
+//                ->label('Avatar')
+//                ->maxSize(1024 * 1024 * 2),
             TextInput::make('name')
                 ->required()
                 ->reactive()
@@ -63,7 +63,7 @@ class Register extends ModalComponent implements HasForms
             'name' => $this->name,
             'email' => $this->email,
             'password' => bcrypt($this->password),
-            'avatar' => $this->getAvatar(),
+//            'avatar' => $this->getAvatar(),
         ]);
 
         auth()->attempt([
