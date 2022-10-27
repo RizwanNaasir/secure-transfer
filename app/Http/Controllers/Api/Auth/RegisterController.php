@@ -15,7 +15,9 @@ class RegisterController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
+                'phone' => 'required|string|max:255|unique:users',
                 'password' => ['required', Password::defaults()],
             ]);
         } catch (\Exception $e) {
@@ -27,7 +29,9 @@ class RegisterController extends Controller
 
         User::query()->create([
             'name' => $request->get('name'),
+            'surname' => $request->get('surname'),
             'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
             'password' => bcrypt($request->get('password')),
         ]);
 

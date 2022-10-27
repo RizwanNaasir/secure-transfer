@@ -21,7 +21,9 @@ use Laravel\Sanctum\PersonalAccessToken;
  *
  * @property int $id
  * @property string $name
+ * @property string $surname
  * @property string $email
+ * @property string|null $phone
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -55,7 +57,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
+        'phone',
         'password',
         'avatar',
     ];
