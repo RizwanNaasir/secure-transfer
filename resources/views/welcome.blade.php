@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-@include('layouts.header')
-<main>
+    @include('layouts.header')
+    <main>
         {{--Start Slider--}}
         <div class="relative">
             <div class="absolute inset-x-0 bottom-0 h-1/2 bg-transparent"></div>
@@ -454,220 +454,314 @@
         {{--Start of Images of App--}}
 
         <section class="overflow-hidden text-gray-700">
-            <div class="grid grid-cols-1 container px-5 pl-0 pr-0 pt-6 pb-2 pb-6rem mx-auto lg:pt-12 lg:px-32 bg-gray-200 rounded-lg">
-                <div class="flex flex-wrap -m-1 md:-m-2 flex-none w-full h-[23.625rem] max-w-full sm:ml-auto">
-                    <div class="grid grid-cols-6 sm:grid-cols-1 md:grid-cols-1 gap-2">
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp">
-                        </div>
-                        <!-- ... -->
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp">
+            <div class="bg-gray-100">
+                <div class="mx-auto max-w-7xl py-8 px-4 sm:px-6 lg:px-8">
+
+                    <ul role="list"
+                        class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+
+                        <li class="relative">
+                            <div
+                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                <img
+                                    src="https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=512&amp;q=80"
+                                    alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+                                <button type="button" class="absolute inset-0 focus:outline-none">
+                                    <span class="sr-only">View details for IMG_4985.HEIC</span>
+                                </button>
+                            </div>
+                        </li>
+
+                        <li class="relative">
+                            <div
+                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                <img
+                                    src="https://images.unsplash.com/photo-1614926857083-7be149266cda?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=512&amp;q=80"
+                                    alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+                                <button type="button" class="absolute inset-0 focus:outline-none">
+                                    <span class="sr-only">View details for IMG_5214.HEIC</span>
+                                </button>
+                            </div>
+                        </li>
+
+                        <li class="relative">
+                            <div
+                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                <img
+                                    src="https://images.unsplash.com/photo-1614705827065-62c3dc488f40?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=512&amp;q=80"
+                                    alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+                                <button type="button" class="absolute inset-0 focus:outline-none">
+                                    <span class="sr-only">View details for IMG_3851.HEIC</span>
+                                </button>
+                            </div>
+                        </li>
+
+                        <li class="relative">
+                            <div
+                                class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
+                                <img
+                                    src="https://images.unsplash.com/photo-1614926857083-7be149266cda?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=512&amp;q=80"
+                                    alt="" class="pointer-events-none object-cover group-hover:opacity-75">
+                                <button type="button" class="absolute inset-0 focus:outline-none">
+                                    <span class="sr-only">View details for IMG_5214.HEIC</span>
+                                </button>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <div class="flex justify-end mt-3">
+                        <div
+                            class="flex mt-3 w-48 h-14 mr-3 bg-black text-white rounded-lg items-center justify-center">
+                            <div class="mr-3">
+                                <svg viewBox="30 336.7 120.9 129.2" width="30">
+                                    <path fill="#FFD400"
+                                          d="M119.2,421.2c15.3-8.4,27-14.8,28-15.3c3.2-1.7,6.5-6.2,0-9.7  c-2.1-1.1-13.4-7.3-28-15.3l-20.1,20.2L119.2,421.2z"/>
+                                    <path fill="#FF3333"
+                                          d="M99.1,401.1l-64.2,64.7c1.5,0.2,3.2-0.2,5.2-1.3  c4.2-2.3,48.8-26.7,79.1-43.3L99.1,401.1L99.1,401.1z"/>
+                                    <path fill="#48FF48"
+                                          d="M99.1,401.1l20.1-20.2c0,0-74.6-40.7-79.1-43.1  c-1.7-1-3.6-1.3-5.3-1L99.1,401.1z"/>
+                                    <path fill="#3BCCFF"
+                                          d="M99.1,401.1l-64.3-64.3c-2.6,0.6-4.8,2.9-4.8,7.6  c0,7.5,0,107.5,0,113.8c0,4.3,1.7,7.4,4.9,7.7L99.1,401.1z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-xs">GET IT ON</div>
+                                <div class="text-xl font-semibold font-sans -mt-1">Google Play</div>
+                            </div>
                         </div>
 
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp">
-                        </div>
-
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp">
-                        </div>
-
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(76).webp">
-                        </div>
-
-                        <div class="w-full p-1 md:p-2">
-                            <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                                 src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp">
-                        </div>
-                    </div>
-                </div>
-                <div class="flex justify-end">
-                    <div class="flex mt-3 w-48 h-14 mr-3 bg-black text-white rounded-lg items-center justify-center">
-                        <div class="mr-3">
-                            <svg viewBox="30 336.7 120.9 129.2" width="30">
-                                <path fill="#FFD400"
-                                      d="M119.2,421.2c15.3-8.4,27-14.8,28-15.3c3.2-1.7,6.5-6.2,0-9.7  c-2.1-1.1-13.4-7.3-28-15.3l-20.1,20.2L119.2,421.2z"/>
-                                <path fill="#FF3333"
-                                      d="M99.1,401.1l-64.2,64.7c1.5,0.2,3.2-0.2,5.2-1.3  c4.2-2.3,48.8-26.7,79.1-43.3L99.1,401.1L99.1,401.1z"/>
-                                <path fill="#48FF48"
-                                      d="M99.1,401.1l20.1-20.2c0,0-74.6-40.7-79.1-43.1  c-1.7-1-3.6-1.3-5.3-1L99.1,401.1z"/>
-                                <path fill="#3BCCFF"
-                                      d="M99.1,401.1l-64.3-64.3c-2.6,0.6-4.8,2.9-4.8,7.6  c0,7.5,0,107.5,0,113.8c0,4.3,1.7,7.4,4.9,7.7L99.1,401.1z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs">GET IT ON</div>
-                            <div class="text-xl font-semibold font-sans -mt-1">Google Play</div>
-                        </div>
-                    </div>
-
-                    <div class="flex mt-3 w-48 h-14 bg-black text-white rounded-lg items-center justify-center">
-                        <div class="mr-3">
-                            <svg viewBox="0 0 384 512" width="30">
-                                <path fill="currentColor"
-                                      d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <div class="text-xs">Download on the</div>
-                            <div class="text-2xl font-semibold font-sans -mt-1">App Store</div>
+                        <div class="flex mt-3 w-48 h-14 bg-black text-white rounded-lg items-center justify-center">
+                            <div class="mr-3">
+                                <svg viewBox="0 0 384 512" width="30">
+                                    <path fill="currentColor"
+                                          d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="text-xs">Download on the</div>
+                                <div class="text-2xl font-semibold font-sans -mt-1">App Store</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        {{--End of Images of App--}}
-
-        {{--Start Contact us form--}}
-        <div class="flex items-center min-h-[20%]  bg-transparent">
-            <div class="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
-                <div class="">
-                    <h1 class="text-center text-4xl my-8 font-bold">Registration</h1>
-                </div>
-                <div class="flex flex-col md:flex-row">
-                    <div class="h-32 md:h-auto md:w-1/2 w-[80%] ml-12 mb-6">
-                        <img class="object-cover w-full h-full" src="https://source.unsplash.com/user/erondu/1600x900"
-                             alt="img"/>
-                    </div>
-                    <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-                        <div class="w-full">
-                            <div class="flex justify-center">
-                            </div>
-                            <div>
-                                <label class="block text-sm -mt-7">
-                                    First Name
-                                </label>
-                                <input type="text"
-                                       class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                       placeholder="Name"/>
-                            </div>
-                            <div class="mt-4">
-                                <label class="block text-sm">
-                                    Last Name
-                                </label>
-                                <input type="text"
-                                       class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                       placeholder="Last Name"/>
-                            </div>
-                            <div class="mt-4">
-                                <label class="block text-sm">
-                                    Email
-                                </label>
-                                <input type="email"
-                                       class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                       placeholder="Email Address"/>
-                            </div>
-                            <div class="mt-4">
-                                <label class="block text-sm">
-                                    Password
-                                </label>
-                                <input
-                                    class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                    placeholder="Password" type="password"/>
-                            </div>
-                            <div>
-                                <label class="block mt-4 text-sm">
-                                    Confirm Password
-                                </label>
-                                <input
-                                    class="w-full px-4 py-2 text-sm border rounded-md focus:border-blue-400 focus:outline-none focus:ring-1 focus:ring-blue-600"
-                                    placeholder="Password" type="password"/>
-                            </div>
-                            <button
-                                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-lg active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-                                href="#">
-                                Submit
-                            </button>
-
-                            <div class="mt-4 text-center">
-                                <p class="text-sm">Don't have an account yet? <a href="#"
-                                                                                 class="text-blue-600 hover:underline">
-                                        Sign up.</a></p>
-                            </div>
-                        </div>
+        {{--End Contact us form--}}
+        <section class="overflow-hidden">
+            <!-- Header -->
+            <div class="bg-warm-gray-50">
+                <div class="py-24 lg:py-32">
+                    <div class="relative z-10 mx-auto max-w-7xl pl-4 pr-8 sm:px-6 lg:px-8">
+                        <h1 class="text-4xl font-bold tracking-tight text-warm-gray-900 sm:text-5xl lg:text-6xl">Sign Up
+                            Now!</h1>
+                        <p class="mt-6 max-w-3xl text-xl text-warm-gray-500">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus magnam voluptatum
+                            cupiditate veritatis in accusamus quisquam.
                     </div>
                 </div>
             </div>
-        </div>
-        {{--End Contact us form--}}
+
+            <!-- Contact section -->
+            <section class="relative bg-white" aria-labelledby="contact-heading">
+                <div class="absolute h-1/2 w-full bg-warm-gray-50" aria-hidden="true"></div>
+                <!-- Decorative dot pattern -->
+                <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <svg
+                        class="absolute top-0 right-0 z-0 -translate-y-16 translate-x-1/2 transform sm:translate-x-1/4 md:-translate-y-24 lg:-translate-y-72"
+                        width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">
+                        <defs>
+                            <pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20"
+                                     patternUnits="userSpaceOnUse">
+                                <rect x="0" y="0" width="4" height="4" class="text-warm-gray-200" fill="currentColor"/>
+                            </pattern>
+                        </defs>
+                        <rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)"/>
+                    </svg>
+                </div>
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="relative bg-white shadow-xl">
+                        <h2 id="contact-heading" class="sr-only">Register Right Now</h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-3">
+                            <!-- Contact information -->
+                            <div
+                                class="hidden lg:block md:block sm:block relative overflow-hidden bg-gradient-to-b from-teal-500 to-teal-600 py-10 px-6 sm:px-10 xl:p-12">
+                                <!-- Decorative angle backgrounds -->
+                                <div class="pointer-events-none absolute inset-0 sm:hidden" aria-hidden="true">
+                                    <svg class="absolute inset-0 h-full w-full" width="343" height="388"
+                                         viewBox="0 0 343 388" fill="none" preserveAspectRatio="xMidYMid slice"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M-99 461.107L608.107-246l707.103 707.107-707.103 707.103L-99 461.107z"
+                                              fill="url(#linear1)" fill-opacity=".1"/>
+                                        <defs>
+                                            <linearGradient id="linear1" x1="254.553" y1="107.554" x2="961.66"
+                                                            y2="814.66" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#fff"></stop>
+                                                <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div
+                                    class="pointer-events-none absolute top-0 right-0 bottom-0 hidden w-1/2 sm:block lg:hidden"
+                                    aria-hidden="true">
+                                    <svg class="absolute inset-0 h-full w-full" width="359" height="339"
+                                         viewBox="0 0 359 339" fill="none" preserveAspectRatio="xMidYMid slice"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M-161 382.107L546.107-325l707.103 707.107-707.103 707.103L-161 382.107z"
+                                            fill="url(#linear2)" fill-opacity=".1"/>
+                                        <defs>
+                                            <linearGradient id="linear2" x1="192.553" y1="28.553" x2="899.66"
+                                                            y2="735.66" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#fff"></stop>
+                                                <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <div class="pointer-events-none absolute top-0 right-0 bottom-0 hidden w-1/2 lg:block"
+                                     aria-hidden="true">
+                                    <svg class="absolute inset-0 h-full w-full" width="160" height="678"
+                                         viewBox="0 0 160 678" fill="none" preserveAspectRatio="xMidYMid slice"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M-161 679.107L546.107-28l707.103 707.107-707.103 707.103L-161 679.107z"
+                                              fill="url(#linear3)" fill-opacity=".1"/>
+                                        <defs>
+                                            <linearGradient id="linear3" x1="192.553" y1="325.553" x2="899.66"
+                                                            y2="1032.66" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#fff"></stop>
+                                                <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-white">Sign up Righ now</h3>
+                                <p class="mt-6 max-w-3xl text-base text-teal-50">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa libero labore natus,
+                                    quod, quas, voluptatem quia voluptates quibusdam voluptatibus necessitatibus.
+                                <dl class="mt-8 space-y-6">
+                                    <div>
+                                        <dt class="sr-only">Phone number</dt>
+                                        <dd class="flex">
+                                            <svg class="flex-shrink-0 h-6 w-6 text-teal-400"
+                                                 x-description="Heroicon name: outline/phone"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M15 3a2 2 0 012 2v10a2 2 0 01-2 2H9a2 2 0 01-2-2V5a2 2 0 012-2h6zm3 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                            </svg>
+                                            <span class="ml-3 text-base text-teal-50">
+                                                +1 (555) 123-4567
+                                            </span>
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="sr-only">Email</dt>
+                                        <dd class="flex">
+                                            <svg class="flex-shrink-0 h-6 w-6 text-teal-400"
+                                                 x-description="Heroicon name: outline/mail"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke="currentColor" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                      d="M3 7l7 5 7-5M5 21v-8a2 2 0 012-2h10a2 2 0 012 2v8m-10-6l-7 5m14 0l7-5"/>
+                                            </svg>
+                                            <span
+                                                class="ml-3 text-base text-teal-50">{{config('mail.from.address')}}</span>
+                                        </dd>
+                                    </div>
+                                </dl>
+                                <ul role="list" class="mt-8 flex space-x-12">
+                                    <li>
+                                        <a class="text-teal-200 hover:text-teal-100" href="#">
+                                            <span class="sr-only">Facebook</span>
+                                            <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"
+                                                 aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="text-teal-200 hover:text-teal-100" href="#">
+                                            <span class="sr-only">GitHub</span>
+                                            <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"
+                                                 aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="text-teal-200 hover:text-teal-100" href="#">
+                                            <span class="sr-only">Twitter</span>
+                                            <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"
+                                                 aria-hidden="true">
+                                                <path
+                                                    d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Register form -->
+                            @livewire('register-from-home')
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact grid -->
+            <section aria-labelledby="offices-heading">
+                <div class="mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
+                    <h2 id="offices-heading" class="text-3xl font-bold tracking-tight text-warm-gray-900">Our
+                        offices</h2>
+                    <p class="mt-6 max-w-3xl text-lg text-warm-gray-500">Varius facilisi mauris sed sit. Non sed et duis
+                        dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
+                    <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+                        <div>
+                            <h3 class="text-lg font-medium text-warm-gray-900">Los Angeles</h3>
+                            <p class="mt-2 text-base text-warm-gray-500">
+                                <span class="block">4556 Brendan Ferry</span>
+
+                                <span class="block">Los Angeles, CA 90210</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-warm-gray-900">New York</h3>
+                            <p class="mt-2 text-base text-warm-gray-500">
+                                <span class="block">886 Walter Streets</span>
+
+                                <span class="block">New York, NY 12345</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-warm-gray-900">Toronto</h3>
+                            <p class="mt-2 text-base text-warm-gray-500">
+                                <span class="block">7363 Cynthia Pass</span>
+
+                                <span class="block">Toronto, ON N3Y 4H8</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-medium text-warm-gray-900">London</h3>
+                            <p class="mt-2 text-base text-warm-gray-500">
+                                <span class="block">114 Cobble Lane</span>
+
+                                <span class="block">London N1 2EF</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
     </main>
-@include('layouts.footer')
-<script>
-        const items = [
-            {
-                position: 0,
-                el: document.getElementById('carousel-item-1')
-            },
-            {
-                position: 1,
-                el: document.getElementById('carousel-item-2')
-            },
-            {
-                position: 2,
-                el: document.getElementById('carousel-item-3')
-            },
-            {
-                position: 3,
-                el: document.getElementById('carousel-item-4')
-            },
-        ];
-
-        const options = {
-            activeItemPosition: 1,
-            interval: 3000,
-
-            indicators: {
-                activeClasses: 'bg-white dark:bg-gray-800',
-                inactiveClasses: 'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800',
-                items: [
-                    {
-                        position: 0,
-                        el: document.getElementById('carousel-indicator-1')
-                    },
-                    {
-                        position: 1,
-                        el: document.getElementById('carousel-indicator-2')
-                    },
-                    {
-                        position: 2,
-                        el: document.getElementById('carousel-indicator-3')
-                    },
-                    {
-                        position: 3,
-                        el: document.getElementById('carousel-indicator-4')
-                    },
-                ]
-            },
-
-            // callback functions
-            onNext: () => {
-                console.log('next slider item is shown');
-            },
-            onPrev: () => {
-                console.log('previous slider item is shown');
-            },
-            onChange: () => {
-                console.log('new slider item has been shown');
-            }
-        };
-        const carousel = new Carousel(items, options);
-        const prevButton = document.getElementById('data-carousel-prev');
-        const nextButton = document.getElementById('data-carousel-next');
-
-        prevButton.addEventListener('click', () => {
-            carousel.prev();
-        });
-
-        nextButton.addEventListener('click', () => {
-            carousel.next();
-        });
-
-    </script>
+    @include('layouts.footer')
 @endsection

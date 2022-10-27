@@ -15,5 +15,11 @@
                 {{ __('Login') }}
             </x-reactive-button>
         </form>
+        <div class="mt-4 text-center">
+            <p class="text-sm">Don't have an account yet?
+                <button onclick="Livewire.emit('openModal', 'forgot-password')" class="text-blue-500 hover:text-blue-700">
+                    Sign up.</button>
+            </p>
+        </div>
     </div>
 </div>

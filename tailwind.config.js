@@ -8,6 +8,7 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './vendor/filament/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js"
     ],
 
     theme: {
@@ -20,6 +21,8 @@ module.exports = {
                 primary: colors.blue,
                 success: colors.green,
                 warning: colors.yellow,
+                'warm-gray': colors.stone,
+                teal: colors.purple,
             },
         },
     },
@@ -27,5 +30,6 @@ module.exports = {
     plugins: [
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
+        require('flowbite/plugin')
     ],
 };

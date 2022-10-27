@@ -9,9 +9,9 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Validation\ValidationException;
-use LivewireUI\Modal\ModalComponent;
+use Livewire\Component;
 
-class Register extends ModalComponent implements HasForms
+class RegisterFromHome extends Component implements  HasForms
 {
     use InteractsWithForms;
 
@@ -21,36 +21,6 @@ class Register extends ModalComponent implements HasForms
     public string $phone = '';
     public string $password = '';
     public string $password_confirmation = '';
-
-    /**
-     * @throws ValidationException
-     */
-    public function submit()
-    {
-        $this->validate();
-
-        User::query()->create([
-            'name' => $this->name,
-            'surname' => $this->surname,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'password' => bcrypt($this->password),
-        ]);
-
-        auth()->attempt([
-            'email' => $this->email,
-            'password' => $this->password,
-        ]);
-
-        $this->closeModal();
-        Notification::make()->title('Registration successful')->success()->send();
-        return redirect()->to('/');
-    }
-
-    public function render()
-    {
-        return view('livewire.register');
-    }
 
     protected function getFormSchema(): array
     {
@@ -95,15 +65,38 @@ class Register extends ModalComponent implements HasForms
         ];
     }
 
-    private function getAvatar(): mixed
+    /**
+     * @throws ValidationException
+     */
+    public function submit()
     {
-        if (isset($this->avatar)) {
-            $avatar = collect($this->avatar)->map(function ($file) {
-                return $file->store('public/avatars');
-            })->first();
-        } else {
-            $avatar = 'avatars/default.png';
+        $this->validate();
+
+        User::query()->create([
+            'name' => $this->name,
+            'surname' => $this->surname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'password' => bcrypt($this->password),
+        ]);
+
+        auth()->attempt([
+            'email' => $this->email,
+            'password' => $this->password,
+        ]);
+
+        Notification::make()->title('Registration successful')->success()->send();
+
+        if (!auth()->check()){
+            Notification::make()->title('Registration failed')->danger()->send();
+            return false;
         }
-        return $avatar;
+        return redirect()->to('/');
+    }
+
+
+    public function render()
+    {
+        return view('livewire.register-from-home');
     }
 }

@@ -23,22 +23,20 @@
                         History
                     </a>
                 @endauth
-                @if(!isset($hideLinks))
                     <a href="#"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About</a>
-                   @guest
-                        <button
-                            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-                            onclick="Livewire.emit('openModal', 'login')">
-                            Login
-                        </button>
-                        <button
-                            class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-                            onclick="Livewire.emit('openModal', 'register')">
-                            Sign Up
-                        </button>
-                    @endguest
-                @endif
+               @guest
+                    <button
+                        class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
+                        onclick="Livewire.emit('openModal', 'login')">
+                        Login
+                    </button>
+                    <button
+                        class="inline-flex items-center rounded-md border border-transparent bg-purple-100 px-3 py-2 text-sm font-medium leading-4 text-purple-700 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                        onclick="Livewire.emit('openModal', 'register')">
+                        Sign Up
+                    </button>
+                @endguest
                 @auth
                     <div class="flex justify-center items-center">
                         <div x-data="{ open: false }" class=" flex justify-center items-center z-50">
@@ -53,6 +51,15 @@
                                 <div x-show="open" style="left: -212px; top: 65px;" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
                                     <ul class="space-y-3">
                                         <li class="font-medium">
+                                            <a href="{{route('home')}}" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                                <div class="mr-3">
+                                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm1 0v14h12V3H4zm4 2a1 1 0 00-1 1v1a1 1 0 001 1h4a1 1 0 001-1V6a1 1 0 00-1-1H8zm0 3a1 1 0 00-1 1v1a1 1 0 001 1h4a1 1 0 001-1v-1a1 1 0 00-1-1H8z" clip-rule="evenodd"></path>
+                                                    </svg>
+                                                </div>
+                                                Dashboard
+                                            </a>
+                                        </li> <li class="font-medium">
                                             <a href="{{url('userProfile')}}" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>

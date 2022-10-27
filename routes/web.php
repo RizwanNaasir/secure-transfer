@@ -24,12 +24,8 @@ Route::get('SignUp',[FrontendController::class,'register']);
 Route::get('SignIn',[FrontendController::class,'login']);
 Route::get('forgetPassword',[FrontendController::class,'forget']);
 Route::get('userProfile',[FrontendController::class,'profile']);
-Route::get('home',[DashboardController::class,'index']);
+Route::get('home',[DashboardController::class,'index'])->name('home');
 
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
-//
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => ['web']], function () {
