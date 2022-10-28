@@ -708,7 +708,7 @@
                             </div>
 
                             <!-- Register form -->
-                            @livewire('register-from-home')
+                            @livewire('auth.register-from-home')
                         </div>
                     </div>
                 </div>
