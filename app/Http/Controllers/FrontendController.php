@@ -24,7 +24,7 @@ class FrontendController extends Controller
 
     public function profile()
     {
-        return view(view: 'auth.custom-auth.user-profile');
+        return view(view: 'user.profile.index');
     }
 
     /**

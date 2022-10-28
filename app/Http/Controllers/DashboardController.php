@@ -12,36 +12,19 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function viewContractForm()
     {
-        //
+        return view('contract.add-contract');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function history()
     {
-        //
+        return view('history.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function historyDetail()
     {
-        //
+        return view('history.detail');
     }
 
     /**

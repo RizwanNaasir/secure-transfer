@@ -25,6 +25,9 @@ Route::get('SignIn',[FrontendController::class,'login']);
 Route::get('forgetPassword',[FrontendController::class,'forget']);
 Route::get('userProfile',[FrontendController::class,'profile']);
 Route::get('home',[DashboardController::class,'index'])->name('home');
+Route::get('add-contract',[DashboardController::class,'viewContractForm']);
+Route::get('history',[DashboardController::class,'history']);
+Route::get('detail',[DashboardController::class,'historyDetail']);
 
 require __DIR__.'/auth.php';
 
