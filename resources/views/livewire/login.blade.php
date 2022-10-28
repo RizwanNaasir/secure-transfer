@@ -13,7 +13,7 @@
         </form>
         <div class="mt-4 text-center col-span-2 flex" >
             <p class="text-sm">Don't have an account yet?
-                <button onclick="Livewire.emit('openModal', 'auth.register')" class="text-blue-500 hover:text-blue-700">
+                <button onclick="Livewire.emit('openModal', 'register')" class="text-blue-500 hover:text-blue-700">
                     Sign up.</button>
             </p>
         </div>

@@ -14,7 +14,7 @@
     </div>
     <div class="text-center mb-3" >
         <p class="text-sm">Forgot your password?
-            <button onclick="Livewire.emit('openModal', 'auth.forget-password')" class="text-blue-500 hover:text-blue-700">
+            <button onclick="Livewire.emit('openModal', 'forget-password')" class="text-blue-500 hover:text-blue-700">
                 Reset</button>
         </p>
     </div>

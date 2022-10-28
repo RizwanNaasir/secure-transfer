@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace App\Http\Livewire;
 
 use App\Models\User;
 use Filament\Forms\Components\TextInput;
@@ -47,6 +47,6 @@ class ForgetPassword extends ModalComponent implements  HasForms
 
     public function render()
     {
-        return view('livewire.auth.forget-password');
+        return view('livewire.forget-password');
     }
 }

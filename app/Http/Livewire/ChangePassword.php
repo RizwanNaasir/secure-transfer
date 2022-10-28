@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace App\Http\Livewire;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -42,7 +42,7 @@ class ChangePassword extends ModalComponent implements HasForms
 
     public function render()
     {
-        return view('livewire.auth.change-password');
+        return view('livewire.change-password');
     }
 
     protected function getFormSchema(): array

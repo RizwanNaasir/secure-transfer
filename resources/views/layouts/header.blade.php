@@ -28,12 +28,12 @@
                @guest
                     <button
                         class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
-                        onclick="Livewire.emit('openModal', 'auth.login')">
+                        onclick="Livewire.emit('openModal', 'login')">
                         Login
                     </button>
                     <button
                         class="inline-flex items-center rounded-md border border-transparent bg-purple-100 px-3 py-2 text-sm font-medium leading-4 text-purple-700 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                        onclick="Livewire.emit('openModal', 'auth.register')">
+                        onclick="Livewire.emit('openModal', 'register')">
                         Sign Up
                     </button>
                 @endguest
@@ -68,7 +68,7 @@
                                             </a>
                                         </li>
                                         <li class="font-medium">
-                                            <button onclick="Livewire.emit('openModal', 'auth.change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                            <button onclick="Livewire.emit('openModal', 'change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                                                 </div>
@@ -84,7 +84,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="Livewire.emit('openModal', 'auth.change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                            <button onclick="Livewire.emit('openModal', 'change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->

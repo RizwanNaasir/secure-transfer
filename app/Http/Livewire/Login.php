@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace App\Http\Livewire;
 
 use App\Models\User;
 use Filament\Forms\Components\Checkbox;
@@ -60,7 +60,7 @@ class Login extends ModalComponent implements HasForms
 
     public function render()
     {
-        return view('livewire.auth.login');
+        return view('livewire.login');
     }
 
     protected function getFormSchema(): array

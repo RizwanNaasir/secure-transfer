@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Auth;
+namespace App\Http\Livewire;
 
 use App\Models\User;
 use Filament\Forms\Components\Grid;
@@ -97,6 +97,6 @@ class RegisterFromHome extends Component implements  HasForms
 
     public function render()
     {
-        return view('livewire.auth.register-from-home');
+        return view('livewire.register-from-home');
     }
 }
