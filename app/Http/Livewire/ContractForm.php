@@ -56,8 +56,8 @@ class ContractForm extends Component implements HasForms
                 ]),
             Radio::make('preferred_payment_method')
                 ->options([
-                    'crypto' => 'crypto',
-                    'back' => 'bank',
+                    'crypto' => 'Crypto',
+                    'bank' => 'Bank',
                 ])->inline()
                 ->extraAttributes(['class' => 'gap-10'])
         ];

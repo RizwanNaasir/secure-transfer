@@ -8,13 +8,12 @@
             <div class="flex items-center space-x-5">
                 <div class="flex-shrink-0">
                     <div class="relative">
-                        <img class="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80" alt="">
+                        <img class="h-16 w-16 rounded-full" src="{{$recipient->avatar}}" alt="">
                         <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
                     </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Ricardo Cooper</h1>
-{{--                    <p class="text-sm font-medium text-gray-500">Applied for <a href="#" class="text-gray-900">Front End Developer</a> on <time datetime="2020-08-25">August 25, 2020</time></p>--}}
+                    <h1 class="text-2xl font-bold text-gray-900">{{$recipient->fullname}}</h1>
                 </div>
             </div>
         </div>
@@ -26,30 +25,28 @@
                     <div class="bg-white shadow sm:rounded-lg">
                         <div class="px-4 py-5 sm:px-6">
                             <h2 id="applicant-information-title" class="text-lg font-medium leading-6 text-gray-900">History Detail</h2>
-{{--                            <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>--}}
                         </div>
                         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Name</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">Ali Yousaf
-                                    </dd>
+                                    <dd class="mt-1 text-sm text-gray-900">{{$recipient->fullname}}</dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Email address</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">aliyousafkamboh</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">{{$recipient->email}}</dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Amount</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">$120,000</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">${{$contract->amount}}</dd>
                                 </div>
-{{--                                <div class="sm:col-span-1">--}}
-{{--                                    <dt class="text-sm font-medium text-gray-500">Phone</dt>--}}
-{{--                                    <dd class="mt-1 text-sm text-gray-900">+1 555-555-5555</dd>--}}
-{{--                                </div>--}}
+                                <div class="sm:col-span-1">
+                                    <dt class="text-sm font-medium text-gray-500">Preferred Payment Method</dt>
+                                    <dd class="mt-1 text-sm text-gray-900">{{ucfirst($contract->preferred_payment_method)}}</dd>
+                                </div>
                                 <div class="sm:col-span-2">
                                     <dt class="text-sm font-medium text-gray-500">Description</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</dd>
+                                    <dd class="mt-1 text-sm text-gray-900">{{$contract->description}}</dd>
                                 </div>
                                 <div class="sm:col-span-2">
                                     <dt class="text-sm font-medium text-gray-500">Attachments</dt>
@@ -84,28 +81,14 @@
                                     </dd>
                                 </div>
 
-                                <div class="sm:hidden text-center">
-                                    <button type="button" class="bg-green-400 mr-6 border inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16"> <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/> <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/> </svg>--}}
+                                <div class="inline-flex flex-row-reverse rounded-md shadow-sm sm:col-span-2" role="group">
+                                    <button type="button" onclick="Livewire.emit('openModal', 'contracts.accept')"
+                                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         <span class="ml-2">Approve </span>
                                     </button>
-                                    <button type="button" class="bg-red-400 inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-{{--                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16"> <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/> </svg>--}}
+                                    <button type="button"  onclick="Livewire.emit('openModal', 'contracts.decline')"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                         <span class="ml-2">Decline</span>
                                     </button>
-                                </div>
-
-                                <div class="hidden sm:block flex justify-center text-center p-10 sm:col-span-2">
-                                    <div class="inline-flex rounded-md shadow-sm j" role="group">
-                                        <button type="button" class="bg-green-400 mr-6 border inline-flex items-center py-2 px-4 text-sm font-medium text-white  rounded-r-md border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16"> <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/> <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/> </svg>--}}
-                                            <span class="ml-2">Approve </span>
-                                        </button>
-                                        <button type="button" class=" bg-red-400 inline-flex items-center py-2 px-4 text-sm font-medium text-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
-{{--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16"> <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/> </svg>--}}
-                                            <span class="ml-2">Decline</span>
-                                        </button>
-                                    </div>
                                 </div>
                             </dl>
                         </div>

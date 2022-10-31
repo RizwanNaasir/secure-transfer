@@ -68,4 +68,11 @@ class ContractController extends Controller
             ->whereNull('password')
             ->first();
     }
+
+    public function details(Contract $contract)
+    {
+        $contract = $contract->load('status', 'recipient', 'user');
+        $recipient = $contract->recipient->first();
+        return view('history.detail', compact('contract', 'recipient'));
+    }
 }
