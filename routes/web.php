@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,12 +20,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('SignUp', [FrontendController::class, 'register']);
-Route::get('SignIn', [FrontendController::class, 'login']);
-Route::get('forgetPassword', [FrontendController::class, 'forget']);
-Route::get('userProfile', [FrontendController::class, 'profile']);
-Route::get('home', [DashboardController::class, 'index'])->name('home');
-Route::get('detail', [DashboardController::class, 'historyDetail']);
+Route::get('SignUp',[FrontendController::class,'register']);
+Route::get('SignIn',[FrontendController::class,'login']);
+Route::get('forgetPassword',[FrontendController::class,'forget']);
+Route::get('userProfile',[FrontendController::class,'profile']);
+Route::get('home',[DashboardController::class,'index'])->name('home');
+Route::get('add-contract',[DashboardController::class,'viewContractForm']);
+Route::get('history',[DashboardController::class,'history']);
+Route::get('detail',[DashboardController::class,'historyDetail']);
+Route::get('card-detail',[DashboardController::class,'cardDetail']);
+Route::get('payment',[DashboardController::class,'approvePayment']);
+Route::get('description',[DashboardController::class,'description']);
+Route::get('marketing',[DashboardController::class,'marketingView']);
+Route::get('success',[DashboardController::class,'successPayment']);
 
 Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {
     Route::get('list', [ContractController::class, 'list'])->name('list');
