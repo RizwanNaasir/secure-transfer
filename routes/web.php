@@ -31,7 +31,8 @@ Route::get('detail',[DashboardController::class,'historyDetail']);
 Route::get('card-detail',[DashboardController::class,'cardDetail']);
 Route::get('payment',[DashboardController::class,'approvePayment']);
 Route::get('description',[DashboardController::class,'description']);
-Route::get('marketing',[DashboardController::class,'marketingView']);
+Route::get('market_place',[DashboardController::class,'marketingView']);
+Route::get('market_details',[DashboardController::class,'marketProduct']);
 Route::get('success',[DashboardController::class,'successPayment']);
 
 Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {

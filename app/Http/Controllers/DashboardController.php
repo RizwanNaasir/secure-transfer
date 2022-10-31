@@ -40,11 +40,25 @@ class DashboardController extends Controller
 
     public function marketingView()
     {
-        return view(view: 'marketing.index');
+        $pics = [
+          'img' => asset('assets/images/1.png'),
+          'img1' => asset('assets/images/2.png'),
+          'img2' => asset('assets/images/3.png'),
+          'img3' => asset('assets/images/4.png'),
+          'img4' => asset('assets/images/camera.png'),
+          'img5' => asset('assets/images/laptop.png'),
+          'img6' => asset('assets/images/3.png'),
+        ];
+        return view( 'marketing.index',['pics'=>$pics]);
     }
 
+    public function marketProduct()
+    {
+        return view(view: 'marketing.details');
+    }
     public function successPayment()
     {
         return view(view: 'success.index');
     }
+
 }

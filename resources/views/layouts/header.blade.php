@@ -18,7 +18,7 @@
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Add New Contract
                     </a>
-                    <a href="{{url('/')}}"
+                    <a href="{{url('market_place')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Market Place
                     </a>
@@ -28,7 +28,12 @@
                     </a>
                 @endauth
                     <a href="#"
-                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About</a>
+                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About
+                    </a>
+                <a href="{{url('market_place')}}"
+                   class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                    Market Place
+                </a>
                @guest
                     <button
                         class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
@@ -40,6 +45,7 @@
                         onclick="Livewire.emit('openModal', 'register')">
                         Sign Up
                     </button>
+
                 @endguest
                 @auth
                     <div class="flex justify-center items-center">
