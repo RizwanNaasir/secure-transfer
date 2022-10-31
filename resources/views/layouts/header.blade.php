@@ -14,7 +14,7 @@
                     Home
                 </a>
                 @auth
-                    <a href="{{url('/')}}"
+                    <a href="{{route('contract.add-contract')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Add New Contract
                     </a>
@@ -80,7 +80,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                            <button onclick="window.location.href='{{route('contract.add-contract')}}'" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
                                                 </div>

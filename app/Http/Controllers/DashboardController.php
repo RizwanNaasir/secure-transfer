@@ -12,10 +12,6 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    public function viewContractForm()
-    {
-        return view('contract.add-contract');
-    }
 
     public function history()
     {

@@ -26,17 +26,24 @@ Route::get('SignIn', [FrontendController::class, 'login']);
 Route::get('forgetPassword', [FrontendController::class, 'forget']);
 Route::get('userProfile', [FrontendController::class, 'profile']);
 Route::get('home', [DashboardController::class, 'index'])->name('home');
-Route::get('add-contract', [DashboardController::class, 'viewContractForm']);
 Route::get('detail', [DashboardController::class, 'historyDetail']);
 
 Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {
     Route::get('list', [ContractController::class, 'list'])->name('list');
+    Route::get('add-contract', [ContractController::class, 'viewContractForm'])->name('add-contract');
+
+    Route::get('process', [ContractController::class, 'process'])->name('accept');
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| Including all routes from auth folder
+|--------------------------------------------------------------------------
+*/
 require __DIR__ . '/auth.php';
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web','auth']], function () {
     Route::get('call/{command}', function ($command) {
         if ($command == 'migrate') {
             Artisan::call('migrate', ['--force' => true]);

@@ -21,7 +21,19 @@ class RegisterFromHome extends Component implements  HasForms
     public string $phone = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public ?object $tempUser = null;
 
+    public function mount()
+    {
+        if(isset($this->tempUser)){
+            $this->form->fill([
+                'name' => $this->tempUser->name,
+                'surname' => $this->tempUser->surname,
+                'email' => $this->tempUser->email,
+                'phone' => $this->tempUser->phone ?? '',
+            ]);
+        }
+    }
     protected function getFormSchema(): array
     {
         return [
