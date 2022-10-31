@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('contract_statuses', function (Blueprint $table) {
             $table->id();
-            $table->double('amount')->default(0.0);
-            $table->string('currency')->nullable();
+            $table->foreignId('contract_id');
+            $table->string('status')->default('pending')->nullable();
+            $table->string('qr_code')->nullable();
             $table->string('description')->nullable();
-            $table->string('preferred_payment_method')->nullable();
-            $table->string('amount_received_via')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('contract_statuses');
     }
 };

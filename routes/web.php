@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
@@ -33,14 +36,26 @@ Route::get('payment',[DashboardController::class,'approvePayment']);
 Route::get('description',[DashboardController::class,'description']);
 Route::get('marketing',[DashboardController::class,'marketingView']);
 Route::get('success',[DashboardController::class,'successPayment']);
+Route::get('SignUp', [FrontendController::class, 'register']);
+Route::get('SignIn', [FrontendController::class, 'login']);
+Route::get('forgetPassword', [FrontendController::class, 'forget']);
+Route::get('userProfile', [FrontendController::class, 'profile']);
+Route::get('home', [DashboardController::class, 'index'])->name('home');
+Route::get('add-contract', [DashboardController::class, 'viewContractForm']);
+Route::get('detail', [DashboardController::class, 'historyDetail']);
 
-require __DIR__.'/auth.php';
+Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {
+    Route::get('list', [ContractController::class, 'list'])->name('list');
+});
+
+
+require __DIR__ . '/auth.php';
 
 Route::group(['middleware' => ['web']], function () {
     Route::get('call/{command}', function ($command) {
-        if($command == 'migrate'){
-            Artisan::call('migrate',['--force' => true]);
-        }else{
+        if ($command == 'migrate') {
+            Artisan::call('migrate', ['--force' => true]);
+        } else {
             Artisan::call($command);
         }
         return Artisan::output();

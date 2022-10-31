@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('contracts', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->double('amount')->default(0.0);
-            $table->string('currency')->nullable();
-            $table->string('description')->nullable();
-            $table->string('preferred_payment_method')->nullable();
-            $table->string('amount_received_via')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('key');// public keys only
+            $table->text('value');// never store private info on random databases
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contracts');
+        Schema::dropIfExists('payment_methods');
     }
 };

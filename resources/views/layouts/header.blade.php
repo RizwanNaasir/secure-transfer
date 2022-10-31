@@ -22,7 +22,7 @@
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Market Place
                     </a>
-                    <a href="{{url('/')}}"
+                    <a href="{{route('contract.list')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         History
                     </a>

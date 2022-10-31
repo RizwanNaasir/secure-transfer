@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,9 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::get('list', [UserController::class, 'index']);
+});
+
+Route::group(['prefix'=>'contract','middleware' => 'auth:sanctum'],function (){
+    Route::post('new',[ContractController::class,'store']);
+    Route::get('view',[ContractController::class,'view']);
 });
