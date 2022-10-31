@@ -28,6 +28,11 @@ Route::get('home',[DashboardController::class,'index'])->name('home');
 Route::get('add-contract',[DashboardController::class,'viewContractForm']);
 Route::get('history',[DashboardController::class,'history']);
 Route::get('detail',[DashboardController::class,'historyDetail']);
+Route::get('card-detail',[DashboardController::class,'cardDetail']);
+Route::get('payment',[DashboardController::class,'approvePayment']);
+Route::get('description',[DashboardController::class,'description']);
+Route::get('marketing',[DashboardController::class,'marketingView']);
+Route::get('success',[DashboardController::class,'successPayment']);
 
 require __DIR__.'/auth.php';
 

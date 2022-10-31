@@ -27,37 +27,28 @@ class DashboardController extends Controller
         return view('history.detail');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function cardDetail()
     {
-        //
+        return view(view: 'card.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function approvePayment()
     {
-        //
+        return view(view: 'payment.approve');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function description()
     {
-        //
+        return view(view: 'reason.index');
+    }
+
+    public function marketingView()
+    {
+        return view(view: 'marketing.index');
+    }
+
+    public function successPayment()
+    {
+        return view(view: 'success.index');
     }
 }
