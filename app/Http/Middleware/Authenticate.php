@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Filament\Notifications\Notification;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
@@ -15,7 +16,12 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login.blade.php');
+            Notification::make()
+                ->title('Authentication Required')
+                ->body('You need to login before you can perform any actions.')
+                ->warning()
+                ->send();
+            return route('/');
         }
     }
 }
