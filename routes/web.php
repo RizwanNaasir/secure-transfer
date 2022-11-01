@@ -40,7 +40,7 @@ Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'c
     Route::get('add-contract', [ContractController::class, 'viewContractForm'])->name('add-contract');
     Route::get('details/{contract}', [ContractController::class, 'details'])->name('details');
 });
-Route::get('contract/process', [ContractController::class, 'process'])->name('contract.accept');
+Route::get('contract/process', [ContractController::class, 'process'])->name('contract.process');
 
 
 /*

@@ -19,7 +19,8 @@ class ContractController extends Controller
     public function list()
     {
         $contracts = auth()->user()->contracts()->with('status', 'recipient')->get();
-        return view('history.index', compact('contracts'));
+        $receivedContracts = auth()->user()->receivedContracts()->with('status', 'user')->get();
+        return view('history.index', compact('contracts','receivedContracts'));
     }
 
     public function view(Request $request)
@@ -72,7 +73,7 @@ class ContractController extends Controller
     public function details(Contract $contract)
     {
         $contract = $contract->load('status', 'recipient', 'user');
-        $recipient = $contract->recipient->first();
+        $recipient = \request()->get('from-sender') ? $contract->user->first() : $contract->recipient->first();
         return view('history.detail', compact('contract', 'recipient'));
     }
 }

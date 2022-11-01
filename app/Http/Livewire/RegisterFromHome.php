@@ -11,7 +11,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class RegisterFromHome extends Component implements  HasForms
+class RegisterFromHome extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -25,7 +25,7 @@ class RegisterFromHome extends Component implements  HasForms
 
     public function mount()
     {
-        if(isset($this->tempUser)){
+        if (isset($this->tempUser)) {
             $this->form->fill([
                 'name' => $this->tempUser->name,
                 'surname' => $this->tempUser->surname,
@@ -34,6 +34,45 @@ class RegisterFromHome extends Component implements  HasForms
             ]);
         }
     }
+
+    /**
+     * @throws ValidationException
+     */
+    public function submit()
+    {
+        $this->validate();
+
+        User::query()->updateOrCreate(
+            [
+                'email' => $this->email]
+            , [
+                'name' => $this->name,
+                'surname' => $this->surname,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'password' => bcrypt($this->password),
+            ]
+        );
+
+        auth()->attempt([
+            'email' => $this->email,
+            'password' => $this->password,
+        ]);
+
+        Notification::make()->title('Registration successful')->success()->send();
+
+        if (!auth()->check()) {
+            Notification::make()->title('Registration failed')->danger()->send();
+            return false;
+        }
+        return redirect()->to('/');
+    }
+
+    public function render()
+    {
+        return view('livewire.register-from-home');
+    }
+
     protected function getFormSchema(): array
     {
         return [
@@ -55,7 +94,7 @@ class RegisterFromHome extends Component implements  HasForms
                 ->required()
                 ->placeholder('email@example.com')
                 ->email()
-                ->unique('users', 'email'),
+                ->unique('users', 'email', ignorable: $this->tempUser),
             TextInput::make('phone')
                 ->required()
                 ->placeholder('+92 (123) 456 7890')
@@ -75,40 +114,5 @@ class RegisterFromHome extends Component implements  HasForms
                     ->columnSpan(2),
             ]),
         ];
-    }
-
-    /**
-     * @throws ValidationException
-     */
-    public function submit()
-    {
-        $this->validate();
-
-        User::query()->create([
-            'name' => $this->name,
-            'surname' => $this->surname,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'password' => bcrypt($this->password),
-        ]);
-
-        auth()->attempt([
-            'email' => $this->email,
-            'password' => $this->password,
-        ]);
-
-        Notification::make()->title('Registration successful')->success()->send();
-
-        if (!auth()->check()){
-            Notification::make()->title('Registration failed')->danger()->send();
-            return false;
-        }
-        return redirect()->to('/');
-    }
-
-
-    public function render()
-    {
-        return view('livewire.register-from-home');
     }
 }
