@@ -13,14 +13,25 @@ class ContractController extends Controller
 {
     public function store(Request $request)
     {
-        return ContractService::create($request->all(), $request->user());
+        return ContractService::create($request->all(), auth()->user());
     }
 
     public function list()
     {
-        $contracts = auth()->user()->contracts()->with('status', 'recipient')->get();
-        $receivedContracts = auth()->user()->receivedContracts()->with('status', 'user')->get();
-        return view('history.index', compact('contracts','receivedContracts'));
+        $contracts = auth()
+            ->user()
+            ->contracts()
+            ->with('status', 'recipient')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+        $receivedContracts = auth()
+            ->user()
+            ->receivedContracts()
+            ->with('status', 'user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
+        return view('history.index', compact('contracts', 'receivedContracts'));
     }
 
     public function view(Request $request)
@@ -73,7 +84,8 @@ class ContractController extends Controller
     public function details(Contract $contract)
     {
         $contract = $contract->load('status', 'recipient', 'user');
-        $recipient = \request()->get('from-sender') ? $contract->user->first() : $contract->recipient->first();
-        return view('history.detail', compact('contract', 'recipient'));
+        (bool)$fromSender = \request()->get('from-sender');
+        $recipient = $fromSender ? $contract->user->first() : $contract->recipient->first();
+        return view('history.detail', compact('contract', 'recipient', 'fromSender'));
     }
 }

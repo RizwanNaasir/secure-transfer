@@ -18,18 +18,11 @@
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Add New Contract
                     </a>
-                    <a href="{{url('market_place')}}"
-                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                        Market Place
-                    </a>
                     <a href="{{route('contract.list')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         History
                     </a>
                 @endauth
-                    <a href="#"
-                       class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">About
-                    </a>
                 <a href="{{url('market_place')}}"
                    class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                     Market Place

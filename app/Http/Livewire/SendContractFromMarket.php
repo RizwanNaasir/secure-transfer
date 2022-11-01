@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Livewire\Market;
+namespace App\Http\Livewire;
 
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Livewire\Component;
+use Filament\Notifications\Notification;
 use LivewireUI\Modal\ModalComponent;
 
-class SendContract extends ModalComponent implements HasForms
+class SendContractFromMarket extends ModalComponent implements HasForms
 {
     use InteractsWithForms;
     public int $price = 0;
     public string $description = '';
     public function render()
     {
-        return view('livewire.market.send-contract');
+        return view('livewire.send-contract-from-market');
     }
     public function getFormSchema(): array
     {
@@ -31,5 +31,7 @@ class SendContract extends ModalComponent implements HasForms
     {
 
 //        dd($this->form->getState());
+        $this->closeModal();
+        Notification::make()->title('Contract sent successfully!')->success()->send();
     }
 }

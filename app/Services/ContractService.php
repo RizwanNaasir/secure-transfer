@@ -31,10 +31,32 @@ class ContractService extends Service
             ->firstOrCreate([
                 'email' => $email
             ], [
-                    'name' => fake()->name,
-                    'surname' => fake()->name,
+                    'name' => substr(
+                        string: $email,
+                        offset: 0,
+                        length: strpos(
+                            haystack: $email,
+                            needle: '@'
+                        )
+                    ),
+                    'surname' => '',
                 ]
             );
+    }
+
+    public static function createContract(Builder $contract, array $data): Builder|Model
+    {
+        $contract = $contract->create([
+            'amount' => $data['amount'],
+            'description' => $data['description'],
+            'preferred_payment_method' => $data['preferred_payment_method']
+        ]);
+        return $contract;
+    }
+
+    public static function attachBothUsersToContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
+    {
+        $contract->user()->attach($user->id, ['recipient_id' => $recipient->id]);
     }
 
     public static function getCode(Model|Builder $contract, User $recipient)
@@ -51,10 +73,16 @@ class ContractService extends Service
 
     private static function createQrCode(int $contract_id, string $recipient_email)
     {
-        return QrCode::size(250)->generate(url('/contract/process?' . http_build_query([
-                'contract_id' => $contract_id,
-                'recipient_email' => $recipient_email
-            ])));
+        return QrCode::size(250)
+            ->generate(
+                url('/contract/process?'
+                    . http_build_query([
+                            'contract_id' => $contract_id,
+                            'recipient_email' => $recipient_email
+                        ]
+                    )
+                )
+            );
     }
 
     public static function acceptContract(Request $request): Model|Builder
@@ -62,21 +90,6 @@ class ContractService extends Service
         $contract = Contract::query()->where('id', $request->get('contract_id'))
             ->firstOrFail();
         $contract->status()->update(['status' => 'accepted']);
-        return $contract;
-    }
-
-    public static function attachBothUsersToContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
-    {
-        $contract->user()->attach($user->id, ['recipient_id' => $recipient->id]);
-    }
-
-    public static function createContract(Builder $contract, array $data): Builder|Model
-    {
-        $contract = $contract->create([
-            'amount' => $data['amount'],
-            'description' => $data['description'],
-            'preferred_payment_method' => $data['preferred_payment_method']
-        ]);
         return $contract;
     }
 }
