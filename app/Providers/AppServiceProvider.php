@@ -27,9 +27,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Contract::query()->delete();
-        ContractStatus::query()->delete();
-        DB::table('contract_user')->delete();
         Model::preventLazyLoading(!app()->isProduction());
 //        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
         Model::unguard();
