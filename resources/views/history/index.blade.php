@@ -25,7 +25,7 @@
                             id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
                             aria-controls="dashboard"
                             aria-selected="false">
-                            Recieved
+                            Received
                             <span class="inline-flex justify-center items-center ml-2 w-4 h-4 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
                                 {{ $receivedContracts->count() }}
                               </span>
@@ -103,6 +103,11 @@
                                     <p class="text-2xl font-bold">No Contracts</p>
                                 </div>
                             @endforelse
+                            @if($contracts->count() > 0)
+                                <div class="mt-4">
+                                    {{ $contracts->links() }}
+                                </div>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -175,6 +180,11 @@
                                     <p class="text-2xl font-bold">No Contracts</p>
                                 </div>
                             @endforelse
+                            @if($receivedContracts->count() > 0)
+                                <div class="m-4">
+                                    {{$receivedContracts->links()}}
+                                </div>
+                            @endif
                         </ul>
                     </div>
                 </div>

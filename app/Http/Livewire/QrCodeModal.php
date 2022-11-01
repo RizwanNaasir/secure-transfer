@@ -10,6 +10,16 @@ class QrCodeModal extends ModalComponent
 
     public $contract;
 
+        public static function closeModalOnEscape(): bool
+    {
+        return false;
+    }
+
+    public static function closeModalOnClickAway(): bool
+    {
+        return false;
+    }
+
     public static function modalMaxWidth(): string
     {
         return 'lg';

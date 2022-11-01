@@ -5,23 +5,19 @@
         </h3>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-1 gap-4 p-6 sm:p-12 z-40">
-        <div class="h-32 md:h-auto md:w-full my-class" id="print">
+        <div class="flex justify-center h-64" id="print">
             {!!$qrCode!!}
         </div>
-        <div class="mt-4 text-center col-span-2 flex" >
-            <x-primary-button class="w-full" onclick="function printDiv(id) {
-                 const divContents = document.getElementById(id).innerHTML;
-                const a = window.open('', '', 'height=500, width=500');
-                a.document.write('<html>');
-                a.document.write('<body > <h1>Save as PDF</h1>');
-                    a.document.write(divContents);
-                    a.document.write('</body></html>');
-                a.document.close();
-                a.print();
-            }
-            printDiv('print')">
+        <div class="mt-4 flex flex-row gap-3 text-center col-span-2 flex" >
+            <x-primary-button class="w-full flex justify-center" onclick="">
                     {{ __('Save QR Code') }}
             </x-primary-button>
+
+            <x-danger-button class="w-full flex justify-center" onclick="confirm('Are you sure you want to close this QR Code?') || event.stopImmediatePropagation()"
+                             wire:click="$emit('closeModal')">
+                {{ __('Close') }}
+            </x-danger-button>
+
         </div>
     </div>
 </div>
