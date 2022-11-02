@@ -38,8 +38,8 @@ class Contract extends Model
         return basename($this->file);
     }
 
-    public function getIsAcceptedAttribute(): bool
+    public function getIsPendingAttribute(): bool
     {
-        return $this->status()->where(['status' => 'accepted'])->exists();
+        return $this->status()->where(['status' => 'pending'])->exists();
     }
 }
