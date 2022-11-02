@@ -61,7 +61,20 @@
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Status</dt>
-                                    <dd class="mt-1 text-sm text-gray-900">{{ucfirst($contract->status->status ?? '')}}</dd>
+                                    <dd class="mt-1 text-sm text-gray-900 flex flex-row">
+                                        @switch($contract->current_status)
+                                            @case('Pending')
+                                                <x-pending class="mr-1.5 h-5 w-5"/>
+                                                @break
+                                            @case('Declined')
+                                                <x-decline class="mr-1.5 h-5 w-5"/>
+                                                @break
+                                            @case('Accepted')
+                                                <x-accepted class="mr-1.5 h-5 w-5"/>
+                                                @break
+                                        @endswitch
+                                        {{$contract->current_status}}
+                                    </dd>
                                 </div>
                                 @if(isset($contract->file))
                                     <div class="sm:col-span-2">
