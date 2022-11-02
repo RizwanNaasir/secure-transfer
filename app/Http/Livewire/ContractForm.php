@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Services\ContractService;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Textarea;
@@ -22,9 +23,6 @@ class ContractForm extends Component implements HasForms
     public array $file = [];
     public string $preferred_payment_method = '';
 
-    protected $listeners = [
-        'qrCode' => 'qrCode',
-    ];
 
     public function render()
     {
@@ -33,14 +31,9 @@ class ContractForm extends Component implements HasForms
 
     public function submit()
     {
-        ContractService::create($this->form->getState(), auth()->user());
+        ContractService::create($this->formattedData(), auth()->user());
         Notification::make()->title('Contract sent successfully!')->success()->send();
         $this->emit('openModal', 'qr-code-modal');
-    }
-
-    public function qrCode($qrCode)
-    {
-        dd($qrCode);
     }
 
     protected function getFormSchema(): array
@@ -53,7 +46,7 @@ class ContractForm extends Component implements HasForms
             Textarea::make('description'),
             Grid::make(4)
                 ->schema([
-//                FileUpload::make('file')->columnSpan(4),
+                FileUpload::make('file')->columnSpan(4),
                 ]),
             Radio::make('preferred_payment_method')
                 ->options([
@@ -61,6 +54,28 @@ class ContractForm extends Component implements HasForms
                     'bank' => 'Bank',
                 ])->inline()->required()
                 ->extraAttributes(['class' => 'gap-10'])
+        ];
+    }
+    private function getFile(): mixed
+    {
+        if (isset($this->file)) {
+            $file = collect($this->file)->map(function ($file) {
+                return $file->store('public/files');
+            })->first();
+        } else {
+            $file = null;
+        }
+        return $file;
+    }
+
+    public function formattedData(): array
+    {
+        return [
+            'email' => $this->email,
+            'amount' => $this->amount,
+            'description' => $this->description,
+            'file' => $this->getFile(),
+            'preferred_payment_method' => $this->preferred_payment_method,
         ];
     }
 }
