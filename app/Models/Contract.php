@@ -30,7 +30,7 @@ class Contract extends Model
 
     public function getFileAttribute($file): ?string
     {
-        return isset($file) ? asset($file) : null;
+        return isset($file) ? asset('media/'.$file) : null;
     }
 
     public function getFileNameAttribute(): string
