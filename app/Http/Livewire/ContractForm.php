@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use App\Services\ContractService;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -40,7 +41,10 @@ class ContractForm extends Component implements HasForms
     {
         return [
             TextInput::make('email')
-                ->email()->required(),
+                ->email()->required()
+                ->datalist(
+                    options: User::query()->pluck('email')->toArray()
+                ),
             TextInput::make('amount')
                 ->numeric()->required(),
             Textarea::make('description'),
