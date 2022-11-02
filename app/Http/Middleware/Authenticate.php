@@ -2,11 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\CanResponseTrait;
 use Filament\Notifications\Notification;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
+    use CanResponseTrait;
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
@@ -21,7 +23,12 @@ class Authenticate extends Middleware
                 ->body('You need to login before you can perform any actions.')
                 ->warning()
                 ->send();
-            return route('/');
+            return url('/');
+        }else{
+            return $this->error(
+                message: 'You need to login before you can perform any actions.',
+                code: 401
+            );
         }
     }
 }
