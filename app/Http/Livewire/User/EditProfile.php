@@ -54,7 +54,7 @@ class EditProfile extends Component implements HasForms
     {
         if (isset($this->avatar)) {
             $avatar = collect($this->avatar)->map(function ($file) {
-                return $file->store('public/avatars');
+                return $file->store('avatars');
             })->first();
         } else {
             $avatar = 'avatars/default.png';

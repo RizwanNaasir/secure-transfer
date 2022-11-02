@@ -85,11 +85,16 @@ class ContractService extends Service
             );
     }
 
-    public static function acceptContract(Request $request): Model|Builder
+    public static function updateContract(
+        Contract|Builder|Model $contract,
+        string $status,
+        string $description = null
+    ): Contract|Model|Builder
     {
-        $contract = Contract::query()->where('id', $request->get('contract_id'))
-            ->firstOrFail();
-        $contract->status()->update(['status' => 'accepted']);
+        $contract->status()->update([
+            'status' => $status,
+            'description' => $description
+        ]);
         return $contract;
     }
 }

@@ -86,6 +86,7 @@ class ContractController extends Controller
         $contract = $contract->load('status', 'recipient', 'user');
         (bool)$fromSender = \request()->get('from-sender');
         $recipient = $fromSender ? $contract->user->first() : $contract->recipient->first();
+        session()->put('contract_id', $contract->id);
         return view('history.detail', compact('contract', 'recipient', 'fromSender'));
     }
 }

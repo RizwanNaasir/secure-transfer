@@ -37,4 +37,9 @@ class Contract extends Model
     {
         return basename($this->file);
     }
+
+    public function getIsAcceptedAttribute(): bool
+    {
+        return $this->status()->where(['status' => 'accepted'])->exists();
+    }
 }

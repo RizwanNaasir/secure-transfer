@@ -60,7 +60,7 @@ class ContractForm extends Component implements HasForms
     {
         if (isset($this->file)) {
             $file = collect($this->file)->map(function ($file) {
-                return $file->store('public/files');
+                return $file->store('files');
             })->first();
         } else {
             $file = null;
