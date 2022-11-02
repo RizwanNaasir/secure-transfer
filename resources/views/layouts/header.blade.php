@@ -87,7 +87,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="Livewire.emit('openModal', 'change-password')" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                            <button onclick="location.href='{{route('contract.list')}}'" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
