@@ -61,4 +61,9 @@ class DashboardController extends Controller
         return view(view: 'success.index');
     }
 
+    public function starRating()
+    {
+        return view(view: 'rating.index');
+    }
+
 }

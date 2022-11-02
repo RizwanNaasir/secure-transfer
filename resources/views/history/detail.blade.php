@@ -23,8 +23,19 @@
                 <!-- Description list-->
                 <section aria-labelledby="applicant-information-title">
                     <div class="bg-white shadow sm:rounded-lg">
-                        <div class="px-4 py-5 sm:px-6">
-                            <h2 id="applicant-information-title" class="text-lg font-medium leading-6 text-gray-900">History Detail</h2>
+                        <div class="flex-row px-4 py-5 sm:px-6">
+                            <h2 id="applicant-information-title" class="text-lg font-medium leading-6 text-gray-900">
+                                History Detail
+                                @if(!$fromSender)
+                                <span style="float: right">
+                                <button type="button" onclick="Livewire.emit('openModal', 'contracts.rating')"
+                                        class="flex flex-row-reverse text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 shadow-lg shadow-yellow-500/50 dark:shadow-lg dark:shadow-yellow-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                <span class="ml-2">Rating </span>
+                            </button>
+                            </span>
+                                    @endif
+                            </h2>
+
                         </div>
                         <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">

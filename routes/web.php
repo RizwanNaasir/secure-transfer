@@ -34,6 +34,7 @@ Route::get('description',[DashboardController::class,'description']);
 Route::get('market_place',[DashboardController::class,'marketingView']);
 Route::get('market_details',[DashboardController::class,'marketProduct']);
 Route::get('success',[DashboardController::class,'successPayment']);
+Route::get('rating',[DashboardController::class,'starRating']);
 
 Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {
     Route::get('list', [ContractController::class, 'list'])->name('list');

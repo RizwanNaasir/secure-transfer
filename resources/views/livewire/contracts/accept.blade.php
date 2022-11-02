@@ -1,5 +1,5 @@
-<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-2 gap-0 py-0">
-    <div class="col-span-2 md:col-span-4 p-12 pt-4 border-r-2">
+<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-2 gap-0 py-0 ">
+    <div class="col-span-2 md:col-span-4 p-12 pt-4">
         <h3 class="text-center mb-2 mr-6"><strong>Scan QR code</strong></h3>
        <div class="box-border h-36 w-44 pt-0 p-0 border-2">
            <img  src="{{ asset('assets/images/img.png') }}" alt="">
@@ -20,4 +20,16 @@
         </div>
     </div>
 </div>
+<div class="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-2 gap-0 py-0">
+<div class="flex justify-center ml-4 mb-5 col-span-4 md:col-span-4  inline-flex gap-6  rounded-md shadow-sm" role="group">
+    <button type="button" onclick="Livewire.emit('openModal', 'contracts.rating')"
+            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-8 py-2.5 text-center mr-2 mb-2">
+        <span class="ml-2">OK </span>
+    </button>
+    <button type="button"  onclick="Livewire.emit('closeModal', 'contracts.decline')"  class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+        <span class="ml-2">Cancel</span>
+    </button>
+</div>
+</div>
+
 
