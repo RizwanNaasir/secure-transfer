@@ -88,7 +88,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarAttribute($avatar): ?string
     {
-        return $avatar ? asset('media/'.$avatar) : 'https://ui-avatars.com/api/?name=' . $this->name;
+        return $avatar ? asset($avatar) : 'https://ui-avatars.com/api/?name=' . $this->name;
     }
 
     public function fullName(): Attribute
