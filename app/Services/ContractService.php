@@ -46,12 +46,12 @@ class ContractService extends Service
 
     public static function createContract(Builder $contract, array $data): Builder|Model
     {
-        $contract = $contract->create([
+        return $contract->create([
             'amount' => $data['amount'],
             'description' => $data['description'],
+            'file' => $data['file'],
             'preferred_payment_method' => $data['preferred_payment_method']
         ]);
-        return $contract;
     }
 
     public static function attachBothUsersToContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
