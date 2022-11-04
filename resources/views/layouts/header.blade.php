@@ -18,7 +18,7 @@
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         Add New Contract
                     </a>
-                    <a href="{{route('contract.list')}}"
+                    <a href="{{route('contract.list','sent')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         History
                     </a>
@@ -87,7 +87,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="location.href='{{route('contract.list')}}'" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
+                                            <button onclick="location.href='{{route('contract.list','sent')}}'" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                                         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->

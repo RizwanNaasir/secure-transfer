@@ -37,7 +37,7 @@ Route::get('success',[DashboardController::class,'successPayment']);
 Route::get('rating',[DashboardController::class,'starRating']);
 
 Route::group(['prefix' => 'contract', 'middleware' => ['web','auth'], 'as' => 'contract.'], function () {
-    Route::get('list', [ContractController::class, 'list'])->name('list');
+    Route::get('list/{tab}', [ContractController::class, 'list'])->name('list');
     Route::get('add-contract', [ContractController::class, 'viewContractForm'])->name('add-contract');
     Route::get('details/{contract}', [ContractController::class, 'details'])->name('details');
 });

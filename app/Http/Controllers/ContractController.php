@@ -16,22 +16,15 @@ class ContractController extends Controller
         return ContractService::create($request->all(), auth()->user());
     }
 
-    public function list()
+    public function list($tab = 'sent')
     {
-        $contracts = auth()
-            ->user()
-            ->contracts()
-            ->with('status', 'recipient')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-        $receivedContracts = auth()
-            ->user()
-            ->receivedContracts()
-            ->with('status', 'user')
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-
-        return view('history.index', compact('contracts', 'receivedContracts'));
+        if(!in_array($tab, ['sent', 'received'])) {
+            Notification::make()->title('Invalid tab')->warning()->send();
+            return redirect(url('/'));
+        }
+        return view('history.index', [
+            'tab' => $tab,
+        ]);
     }
 
     public function view(Request $request)
@@ -68,7 +61,7 @@ class ContractController extends Controller
             return view('user.register', compact('tempUser'));
         }
 
-        ContractService::acceptContract($request);
+//        ContractService::acceptContract($request);
 
         return view('contract.accept-contract', compact('contract'));
     }

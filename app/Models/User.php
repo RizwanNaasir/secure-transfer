@@ -114,6 +114,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function allContracts(): BelongsToMany
+    {
+        return $this->contracts()->orWherePivot('recipient_id', $this->id);
+    }
+
     public function paymentMethods(): HasMany
     {
         return $this->hasMany(PaymentMethod::class);

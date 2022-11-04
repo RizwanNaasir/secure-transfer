@@ -10,13 +10,13 @@ trait CanResponseTrait
     protected function success(
         mixed  $data = null,
         string $message = 'success',
-        int    $code = 200
+        int    $code = Response::HTTP_OK
     ): JsonResponse
     {
         return response()->json([
             'message' => $message,
             'data' => $data
-        ], $code);
+        ], status: $code);
     }
 
     protected function error(
@@ -28,7 +28,7 @@ trait CanResponseTrait
         return response()->json([
             'message' => $message,
             'data' => $data
-        ], $code);
+        ], status: $code);
     }
 
     protected function notFound(
@@ -40,6 +40,6 @@ trait CanResponseTrait
         return response()->json([
             'message' => $message,
             'data' => $data
-        ], $code);
+        ], status: $code);
     }
 }
