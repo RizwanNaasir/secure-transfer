@@ -11,10 +11,14 @@
                 {{ __('Login') }}
             </x-reactive-button>
         </form>
-        <div class="mt-4 text-center col-span-2 flex" >
+        <div class="mt-4 text-center col-span-2 flex gap-3" >
             <p class="text-sm">Don't have an account yet?
                 <button onclick="Livewire.emit('openModal', 'auth.register')" class="text-blue-500 hover:text-blue-700">
                     Sign up.</button>
+            </p>
+            <p class="text-sm">Forgot your password?
+                <button onclick="Livewire.emit('openModal', 'auth.forget-password')" class="text-blue-500 hover:text-blue-700">
+                    Reset</button>
             </p>
         </div>
     </div>
