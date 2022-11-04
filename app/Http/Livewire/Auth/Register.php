@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Auth;
 
 use App\Models\User;
 use Filament\Forms\Components\Grid;
@@ -49,7 +49,7 @@ class Register extends ModalComponent implements HasForms
 
     public function render()
     {
-        return view('livewire.register');
+        return view('livewire.auth.register');
     }
 
     protected function getFormSchema(): array
