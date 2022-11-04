@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Contracts;
 
 use App\Models\User;
 use App\Services\ContractService;
@@ -14,7 +14,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class ContractForm extends Component implements HasForms
+class NewContract extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -27,7 +27,7 @@ class ContractForm extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.contract-form');
+        return view('livewire.contracts.new-contract');
     }
 
     public function submit()

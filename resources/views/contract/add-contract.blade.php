@@ -9,7 +9,7 @@
                      alt="img" />
             </div>
             <div class="w-full p-4">
-                @livewire('contract-form')
+                @livewire('contracts.new-contract')
             </div>
         </div>
     </div>
