@@ -147,7 +147,7 @@
                 </div>
 
                 <!-- Register form -->
-                @livewire('register-from-home',['tempUser' => $tempUser])
+                @livewire('auth.register-from-home',['tempUser' => $tempUser])
             </div>
         </div>
     </div>
