@@ -23,6 +23,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('avatar')->avatar()->disk(''),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -36,10 +37,10 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('avatar')
+//                Forms\Components\TextInput::make('password')
+//                    ->password()
+//                    ->maxLength(255),
+
             ]);
     }
 

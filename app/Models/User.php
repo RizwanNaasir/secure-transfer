@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -45,7 +47,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static Builder|User findOrFail($value)
  * @method static Builder|User create($array)
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasAvatar, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -122,5 +124,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function paymentMethods(): HasMany
     {
         return $this->hasMany(PaymentMethod::class);
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return true;
     }
 }
