@@ -1,6 +1,5 @@
-<svg {{$attributes}} xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-    <path fill-rule="evenodd"
-          d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-          clip-rule="evenodd"/>
+
+<svg {{$attributes}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="green" class="w-6 h-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
+

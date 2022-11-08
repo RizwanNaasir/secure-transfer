@@ -7,9 +7,10 @@
             @forelse($contracts as $contract)
                 @php
                     $tab === 'sent' ? $user = $contract->recipient->first() : $user = $contract->user->first();
+                    $tab === 'sent' ? $route = url('contract/details',$contract->id) : $route = url('contract/details/'.$contract->id. '?from-sender=1');
                 @endphp
                 <li>
-                    <a href="{{url('contract/details',$contract->id)}}" class="block hover:bg-gray-50">
+                    <a href="{{$route}}" class="block hover:bg-gray-50">
                         <div class="flex items-center px-4 py-4 sm:px-6">
                             <div class="flex min-w-0 flex-1 items-center">
                                 <div class="flex-shrink-0">
