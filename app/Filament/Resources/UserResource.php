@@ -10,6 +10,9 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -48,17 +51,23 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('surname'),
-                Tables\Columns\TextColumn::make('email'),
-//                Tables\Columns\TextColumn::make('email_verified_at')
-//                    ->dateTime(),
-                Tables\Columns\TextColumn::make('phone'),
-//                Tables\Columns\TextColumn::make('created_at')
-//                    ->dateTime(),
-//                Tables\Columns\TextColumn::make('updated_at')
-//                    ->dateTime(),
-                Tables\Columns\ImageColumn::make('avatar')->circular()
+                ImageColumn::make('avatar')->circular(),
+                TextColumn::make('full_name'),
+                TextColumn::make('email'),
+                BadgeColumn::make('status')
+                ->colors([
+                    'success' => 'active',
+                    'secondary' => 'pending',
+                    'danger' => 'blocked',
+                ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+                BadgeColumn::make('email_verified_at')->label('Verified ?')
+                    ->colors([
+                    'success',
+                    'danger' => null,
+                ])->formatStateUsing(function ($state) {
+                        return isset($state) ? 'Yes' : 'No';
+                }),
+                TextColumn::make('phone'),
             ])
             ->filters([
                 //
