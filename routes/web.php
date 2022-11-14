@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,10 @@ Route::group([
     'as' => 'user.'
 ], function () {
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
+
+    //    Payment method
+    Route::get('payment', [PaymentController::class, 'paymentMethod']);
+    Route::get('showcharge', [PaymentController::class, 'showCharge']);
 });
 
 Route::get('home', [DashboardController::class, 'index'])->name('home');
@@ -43,7 +48,7 @@ Route::get('rating', [DashboardController::class, 'starRating']);
 
 Route::group([
     'prefix' => 'contract',
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['web', 'auth','verify_document'],
     'as' => 'contract.'
 ], function () {
     Route::get('list/{tab}', [ContractController::class, 'list'])->name('list');

@@ -11,7 +11,11 @@ class Contract extends Model
 {
     use HasFactory;
 
-
+    protected $appends = [
+        'current_status',
+        'sender_detail',
+        'recipient_detail'
+    ];
     public function user(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
@@ -49,5 +53,22 @@ class Contract extends Model
             'declined' => __('Declined'),
             'pending' => __('Pending'),
         };
+    }
+    public function getSenderDetailAttribute()
+            {
+                $data = $this->user()->first();
+        return [
+            'name'=> $data->full_name,
+            'email'=>$data->email,
+        ];
+    }
+    public function getRecipientDetailAttribute()
+    {
+        $data = $this->recipient()->first();
+        return
+            [
+                'name'=> $data->full_name,
+                'email'=>$data->email,
+            ];
     }
 }

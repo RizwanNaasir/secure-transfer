@@ -135,4 +135,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     {
         return true;
     }
+
+    public function  getIsApprovedByAdminAttribute() : bool
+    {
+        return $this->status === 'active';
+    }
 }

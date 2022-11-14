@@ -43,6 +43,8 @@ class EditProfile extends Component implements HasForms
                 'name' => $this->name,
                 'surname' => $this->surname,
                 'email' => $this->email,
+                'document1' => $this->getDocuments('document1'),
+                'document2' => $this->getDocuments('document2'),
                 'phone' => $this->phone,
                 'avatar' => $this->getAvatar(),
             ]
@@ -60,6 +62,15 @@ class EditProfile extends Component implements HasForms
             $avatar = 'avatars/default.png';
         }
         return $avatar;
+    }
+    private function getDocuments(string $name): mixed
+    {
+        if (isset($this->$name)) {
+            $name = collect($this->$name)->map(static fn($file) => $file->store($name))->first();
+        } else {
+            $name = null;
+        }
+        return $name;
     }
 
     public function mount()
@@ -110,6 +121,14 @@ class EditProfile extends Component implements HasForms
                     ->maxLength(255)
                     ->columnSpan(2),
             ]),
+            Grid::make('4')->schema([
+                FileUpload::make('document1')->label('Select Image')->columnSpan(2)->image(),
+                FileUpload::make('document2')->label('Select Document')->columnSpan(2)
+                    ->acceptedFileTypes(['application/pdf']),
+
+
+            ])
+
         ];
     }
 }

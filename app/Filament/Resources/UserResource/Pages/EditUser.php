@@ -24,16 +24,16 @@ class EditUser extends EditRecord
     {
         return [
             DeleteAction::make(),
-            ActionGroup::make([
-                Action::make('Approve')
-                    ->action($this->changeStatus('active'))
-                    ->color('success')
-                    ->icon('heroicon-o-check-circle'),
-                Action::make('Block')
-                    ->action($this->changeStatus('blocked'))
-                    ->color('danger')
-                    ->icon('heroicon-o-x-circle'),
-            ])->label('Change status')->icon('heroicon-o-cog'),
+            Action::make('Approve')
+                ->action($this->changeStatus('active'))
+                ->color('success')
+                ->icon('heroicon-o-check-circle')
+                ->visible(!$this->record->is_approved_by_admin),
+            Action::make('Block')
+                ->action($this->changeStatus('blocked'))
+                ->color('danger')
+                ->icon('heroicon-o-x-circle')
+                ->visible($this->record->is_approved_by_admin),
         ];
     }
 

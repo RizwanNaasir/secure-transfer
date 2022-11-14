@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserController;
+use App\Models\Contract;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,14 +26,18 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', LoginController::class);
     Route::post('register', RegisterController::class);
     Route::post('logout', [LoginController::class, 'logout']);
-    Route::post('update', [LoginController::class, 'update']);
+
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::get('list', [UserController::class, 'index']);
+    Route::post('update', [LoginController::class, 'update']);
 });
 
-Route::group(['prefix'=>'contract','middleware' => 'auth:sanctum'],function (){
+Route::group(['prefix'=>'contract','middleware' => ['auth:sanctum','verify_document']],function (){
     Route::post('new',[ContractController::class,'store']);
-    Route::get('view',[ContractController::class,'view']);
+    Route::get('view',[ContractController::class,'contractlist']);
+    Route::get('detail/{contract}',[ContractController::class,'contractDetails']);
+    Route::post('accept/{contract}',[ContractController::class,'acceptContract']);
+    Route::post('decline/{contract}',[ContractController::class,'declineContract']);
 });

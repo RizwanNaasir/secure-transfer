@@ -6,10 +6,13 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Pages\Actions\Action;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -47,6 +50,9 @@ class UserResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -60,7 +66,7 @@ class UserResource extends Resource
                     'secondary' => 'pending',
                     'danger' => 'blocked',
                 ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
-                BadgeColumn::make('email_verified_at')->label('Verified ?')
+                BadgeColumn::make('email_verified_at')->label('Verified Email')
                     ->colors([
                     'success',
                     'danger' => null,
@@ -73,8 +79,10 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
+                Tables\Actions\Action::make('view')
+                    ->url(fn (User $record): string => route('filament.pages.view', ['user'=>$record]))
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -94,6 +102,7 @@ class UserResource extends Resource
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\EditUser::route('/{record}/view'),
         ];
     }
 }

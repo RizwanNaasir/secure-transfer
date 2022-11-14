@@ -36,9 +36,13 @@ class LoginController extends Controller
     public function update(Request $request): JsonResponse
     {
         try {
-            $user = User::query()->where('id', auth()->id())->first();
-            $user->update($request->validated());
-            return $this->success($user);
+            $user = $request->user();
+            $user->name = $request->name;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->update();
+            return $this->success(message: 'user updated successfully');
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
