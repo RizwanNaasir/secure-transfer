@@ -30,8 +30,9 @@ Route::group([
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
     //    Payment method
-    Route::get('payment', [PaymentController::class, 'paymentMethod']);
+    Route::get('create', [PaymentController::class, 'createCharge']);
     Route::get('showcharge', [PaymentController::class, 'showCharge']);
+    Route::get('listcharge', [PaymentController::class, 'listCharges']);
 });
 
 Route::get('home', [DashboardController::class, 'index'])->name('home');

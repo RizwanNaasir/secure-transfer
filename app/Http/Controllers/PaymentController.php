@@ -10,15 +10,16 @@ class PaymentController extends Controller
 {
     public function headers()
     {
-        $response = Http::withHeaders ([
+        $response = Http::withHeaders([
             'accept' => 'application/json',
             'X-CC-Api-Key' => '9ffb2560-2929-42a6-99c0-949ae3303f0d',
             'X-CC-Version' => '2018-03-22'
         ]);
 
         return $response;
-   }
-    public function paymentMethod()
+    }
+
+    public function createCharge()
     {
         $responses = $this->headers()->acceptJson()->post('https://api.commerce.coinbase.com/charges', [
             'local_price' => [
@@ -47,38 +48,46 @@ class PaymentController extends Controller
      */
     public function showCharge()
     {
-        $charge_id = $this->paymentMethod();
+        $charge_id = $this->createCharge();
         $id = $charge_id['code'];
 
-        $show_charge = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/charges/'.$id);
+        $show_charge = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/charges/' . $id);
 
         $show_charges = [
-            'id' => $id,
-            'name' => $show_charge['data']['metadata']['customer_name'],
+            'id' => $show_charge['data']['id'],
+            'code' => $show_charge['data']['code'],
+            'resource' => $show_charge['data']['resource'],
+            'name' => $show_charge['data']['name'],
             'description' => $show_charge['data']['description'],
             'pricing_type' => $show_charge['data']['pricing_type'],
             'pricing' => $show_charge['data']['pricing'],
+            'cancel_url' => $show_charge['data']['cancel_url'],
+            'redirect_url' => $show_charge['data']['redirect_url'],
+
 
         ];
-        dd($show_charge->object());
+        dd($show_charges);
 
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function listCharges()
     {
-        //
+       $lists = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/charges');
+       $list = $lists->object();
+       dd($list);
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -89,7 +98,7 @@ class PaymentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -100,8 +109,8 @@ class PaymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -112,7 +121,7 @@ class PaymentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

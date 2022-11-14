@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserController;
 use App\Models\Contract;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', LoginController::class);
     Route::post('register', RegisterController::class);
     Route::post('logout', [LoginController::class, 'logout']);
-
+    Route::post('forgetpassword', [ResetPasswordController::class, 'send']);
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
