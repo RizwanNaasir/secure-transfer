@@ -31,7 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
-    Route::get('list', [UserController::class, 'index']);
+    Route::get('profile', [UserController::class, 'index']);
     Route::post('update', [LoginController::class, 'update']);
 });
 

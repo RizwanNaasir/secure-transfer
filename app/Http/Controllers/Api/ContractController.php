@@ -13,8 +13,17 @@ class ContractController extends Controller
 {
     public function store(ContractRequest $request)
     {
-        return
-            ContractService::create($request->all(), $request->user());
+        try {
+              return  $this->success(
+                  message: 'çontract add successfully',
+                  data: ContractService::create($request->all(), $request->user()));
+            }
+         catch (\Exception $e) {
+            return $this->error($e->getMessage(), 400);
+        }
+
+
+
     }
 
     public function contractlist(Request $request)

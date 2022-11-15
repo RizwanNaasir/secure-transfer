@@ -13,7 +13,7 @@ class ResetPasswordController extends Controller
     public function send()
     {
         request()->validate([
-            'email' => 'required|email',
+            'email' => 'required|email:unique',
         ]);
         $status = Password::sendResetLink(
             ['email' => request()->input('email')]
@@ -21,6 +21,7 @@ class ResetPasswordController extends Controller
         if ($status == Password::RESET_LINK_SENT) {
             return $this->success(
                 message: 'Reset link sent to your email',
+                data: []
             );
         } else {
             return $this->error(

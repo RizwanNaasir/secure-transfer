@@ -2,21 +2,18 @@
 
 namespace App\Http\Requests;
 
-use App\Traits\CanResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ContractRequest extends FormRequest
+class PasswordRestRequest extends FormRequest
 {
-
-    use CanResponseTrait;
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -26,19 +23,15 @@ class ContractRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'email' => 'required|email|unique:users,email',
-            'amount' => 'required',
-            'description' => 'required',
-            'file' => 'required|file',
-            'preferred_payment_method' => 'required',
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException($this->error(message: $validator->errors()->first()));
     }
-
 }

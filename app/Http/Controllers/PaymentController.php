@@ -125,17 +125,54 @@ class PaymentController extends Controller
         ]);
         $data = $responses;
 
-        return $data->body();
+        return $responses;
+    }
+    public function showCheckout()
+    {
+        $checkout_id = $this->createCheckout();
+        $id = $checkout_id['data']['id'];
+       $show_checkout = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/checkouts/'.$id);
+
+       return $show_checkout;
+    }
+    public function updateCheckout()
+    {
+        $id = $this->createCheckout();
+        $checkout_id = $id['data']['id'];
+        $update_checkout = $this->headers()->acceptJson()->put('https://api.commerce.coinbase.com/checkouts/'.$checkout_id,[
+            'local_price' => [
+                'amount' => 20,
+                'currency' => 'USD',
+            ],
+            'requested_info' => [
+                'email',
+                'name' ,
+                'address'
+            ],
+            'metadata' => [
+                'customer_id' => 'fffeeeddd',
+                'customer_name' => 'zaman',
+            ],
+            'name' => 'ali',
+            'description' => 'new transaction',
+            'pricing_type' => 'fixed_price',
+            'redirect_url' => 'https://charge/completed/page',
+            'cancel_url' => 'https://charge/canceled/page',
+        ]);
+
+       return $update_checkout['data'];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function deleteCheckout()
     {
-        //
+        $id = $this->createCheckout();
+        $checkout_id = $id['data']['id'];
+
+        $delete_checkout = $this->headers()->acceptJson()->delete('https://api.commerce.coinbase.com/checkouts/'.$checkout_id);
+        return [
+            'data' => $delete_checkout->object()
+        ];
+
     }
+
 }

@@ -39,7 +39,9 @@ Route::group([
     //checkout
     Route::get('checkoutlist', [PaymentController::class, 'listCheckout']);
     Route::get('newcheckout', [PaymentController::class, 'createCheckout']);
-    Route::get('checkouts', [PaymentController::class, 'checkouts']);
+    Route::get('showcheckout', [PaymentController::class, 'showCheckout']);
+    Route::get('updatecheckout', [PaymentController::class, 'updateCheckout']);
+    Route::get('deletecheckout', [PaymentController::class, 'deleteCheckout']);
 });
 
 Route::get('home', [DashboardController::class, 'index'])->name('home');
