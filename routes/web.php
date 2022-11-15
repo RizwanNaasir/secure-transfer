@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::group([
     'as' => 'user.'
 ], function () {
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
+
+    //products
+    Route::get('products', [ProductController::class, 'index']);
 
     //    Payment method
     Route::get('create', [PaymentController::class, 'createCharge']);

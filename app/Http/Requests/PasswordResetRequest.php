@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\CanResponseTrait;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class PasswordRestRequest extends FormRequest
+class PasswordResetRequest extends FormRequest
 {
+    use CanResponseTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +29,7 @@ class PasswordRestRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|exists:users,email',
         ];
     }
 
