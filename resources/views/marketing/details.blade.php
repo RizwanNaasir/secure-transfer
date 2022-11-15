@@ -5,26 +5,6 @@
     <div class="mx-auto max-w-auto py-16 px-4 sm:py-24 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8" style="padding-top: 0px">
         <!-- Product details -->
         <div class="lg:max-w-lg lg:self-end">
-{{--            <nav aria-label="Breadcrumb">--}}
-{{--                <ol role="list" class="flex items-center space-x-2">--}}
-{{--                    <li>--}}
-{{--                        <div class="flex items-center text-sm">--}}
-{{--                            <a href="#" class="font-medium text-gray-500 hover:text-gray-900">Travel</a>--}}
-
-{{--                            <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" class="ml-2 h-5 w-5 flex-shrink-0 text-gray-300">--}}
-{{--                                <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />--}}
-{{--                            </svg>--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
-
-{{--                    <li>--}}
-{{--                        <div class="flex items-center text-sm">--}}
-{{--                            <a href="#" class="font-medium text-gray-500 hover:text-gray-900">Bags</a>--}}
-{{--                        </div>--}}
-{{--                    </li>--}}
-{{--                </ol>--}}
-{{--            </nav>--}}
-
             <div class="mt-4">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Everyday Ruck Snack</h1>
             </div>
@@ -40,11 +20,6 @@
                         <div class="flex items-center">
                             <div>
                                 <div class="flex items-center">
-                                    <!--
-                                      Heroicon name: mini/star
-
-                                      Active: "text-yellow-400", Default: "text-gray-300"
-                                    -->
                                     <svg class="text-yellow-400 h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
                                     </svg>
@@ -80,13 +55,6 @@
                     <p class="text-base text-gray-500">Don&#039;t compromise on snack-carrying capacity with this lightweight and spacious bag. The drawstring top keeps all your favorite chips, crisps, fries, biscuits, crackers, and cookies secure.</p>
                 </div>
 
-{{--                <div class="mt-6 flex items-center">--}}
-{{--                    <!-- Heroicon name: mini/check -->--}}
-{{--                    <svg class="h-5 w-5 flex-shrink-0 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">--}}
-{{--                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />--}}
-{{--                    </svg>--}}
-{{--                    <p class="ml-2 text-sm text-gray-500">In stock and ready to ship</p>--}}
-{{--                </div>--}}
             </section>
         </div>
 
@@ -144,20 +112,24 @@
 {{--                        </a>--}}
                     </div>
                     <div class="mt-10">
+
+                        <div>
+                            <a class="buy-with-crypto"
+                               href="https://commerce.coinbase.com/checkout/9df6f47c-dbeb-4222-bbbb-db765da14d6f">
+                                Buy with Crypto
+                            </a>
+
+                        </div>
+
                         <button onclick="Livewire.emit('openModal','send-contract-from-market')" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">Make Contract</button>
                     </div>
-{{--                    <div class="mt-6 text-center">--}}
-{{--                        <a href="#" class="group inline-flex text-base font-medium">--}}
-{{--                            <!-- Heroicon name: outline/shield-check -->--}}
-{{--                            <svg class="mr-2 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">--}}
-{{--                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />--}}
-{{--                            </svg>--}}
-{{--                            <span class="text-gray-500 hover:text-gray-700">Lifetime Guarantee</span>--}}
-{{--                        </a>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
             </section>
         </div>
     </div>
 </div>
 @endsection
+
+@section('scripts')
+    <script src="https://commerce.coinbase.com/v1/checkout.js?version=201807">
+    </script>
+    @endsection

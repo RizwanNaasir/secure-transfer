@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use function Symfony\Component\String\s;
 
 class PaymentController extends Controller
 {
@@ -41,11 +42,7 @@ class PaymentController extends Controller
         return $data;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function showCharge()
     {
         $charge_id = $this->createCharge();
@@ -70,12 +67,7 @@ class PaymentController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function listCharges()
     {
        $lists = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/charges');
@@ -84,38 +76,56 @@ class PaymentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function cancelCharges()
     {
-        //
+        $charge_id = $this->createCharge();
+        $code = $charge_id['code'];
+       $canceling = $this->headers()->acceptJson()->post('https://api.commerce.coinbase.com/charges/'.$code.'/cancel');
+       $cancel = $canceling->object();
+       dd($cancel);
+
+       return $cancel;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function resolveCharges()
     {
-        //
+        $charge_id = $this->createCharge();
+        $code = $charge_id['code'];
+
+        $resolveCharges = $this->headers()->acceptJson()->post('https://api.commerce.coinbase.com/charges/'.$code.'/resolve');
+        dd($resolveCharges->object());
+    }
+    public function listCheckout()
+    {
+        $checkoutlist = $this->headers()->acceptJson()->get('https://api.commerce.coinbase.com/checkouts');
+        dd($checkoutlist->object());
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function createCheckout()
     {
-        //
+        $responses = $this->headers()->acceptJson()->post('https://api.commerce.coinbase.com/checkouts', [
+            'local_price' => [
+                'amount' => 20,
+                'currency' => 'USD',
+            ],
+            'requested_info' => [
+                        'email',
+                        'name' ,
+                        'address'
+            ],
+            'metadata' => [
+                'customer_id' => 'fffeeeddd',
+                'customer_name' => 'zaman',
+            ],
+            'name' => 'ali',
+            'description' => 'new transaction',
+            'pricing_type' => 'fixed_price',
+            'redirect_url' => 'https://charge/completed/page',
+            'cancel_url' => 'https://charge/canceled/page',
+        ]);
+        $data = $responses;
+
+        return $data->body();
     }
 
     /**

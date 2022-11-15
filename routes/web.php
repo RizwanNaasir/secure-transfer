@@ -33,6 +33,13 @@ Route::group([
     Route::get('create', [PaymentController::class, 'createCharge']);
     Route::get('showcharge', [PaymentController::class, 'showCharge']);
     Route::get('listcharge', [PaymentController::class, 'listCharges']);
+    Route::get('cancelcharge', [PaymentController::class, 'cancelCharges']);
+    Route::get('resolvecharge', [PaymentController::class, 'resolveCharges']);
+
+    //checkout
+    Route::get('checkoutlist', [PaymentController::class, 'listCheckout']);
+    Route::get('newcheckout', [PaymentController::class, 'createCheckout']);
+    Route::get('checkouts', [PaymentController::class, 'checkouts']);
 });
 
 Route::get('home', [DashboardController::class, 'index'])->name('home');
