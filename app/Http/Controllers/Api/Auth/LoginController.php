@@ -33,20 +33,38 @@ class LoginController extends Controller
         }
     }
 
-    public function update(Request $request): JsonResponse
+    public function update(Request $request)
     {
-        try {
-            $user = $request->user();
-            $user->name = $request->name;
-            $user->surname = $request->surname;
-            $user->email = $request->email;
-            $user->phone = $request->phone;
-            $user->update();
-            return $this->success(message: 'user updated successfully');
-        } catch (\Exception $e) {
-            return $this->error($e->getMessage(), 400);
+        $user = User::whereId($request->user()->id)->first();
+        if (filled($request->input('name'))) {
+            $user->name = $request->input('name');
         }
-    }
+        if (filled($request->input('surname'))) {
+            $user->surname = $request->input('surname');
+        }
+        if (filled($request->input('email'))) {
+            $user->email = $request->input('email');
+        }
+        if (filled($request->input('password'))) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        if (filled($request->input('phone'))) {
+            $user->phone = $request->input('phone');
+        }
+//        if (filled($request->input('role'))) {
+//            $user->role = $request->input('role');
+//        }
+//        if (filled($request->input('liable_with_tc'))) {
+//            $user->liable_with_tc = $request->boolean('liable_with_tc');
+//        }
+//        if ($request->hasFile('avatar')) {
+//            $user->avatar = $request->file('avatar')->store('');
+//        }
+
+        $user->save();
+
+        return $this->success(['profile' => $user], message: 'Profile updated successfully');
+        }
 
     public function logout(): array
     {

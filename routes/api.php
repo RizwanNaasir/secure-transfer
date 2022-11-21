@@ -4,10 +4,11 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductController as TempController;
 use App\Models\Contract;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,10 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::get('profile', [UserController::class, 'index']);
     Route::post('update', [LoginController::class, 'update']);
+    Route::get('product/all', [ProductController::class, 'allProducts']);
+    Route::get('product', [ProductController::class, 'product']);
+    Route::get('edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
+    Route::post('update-product/{id}',[ProductController::class,'updateProduct']);
 });
 
 Route::group(['prefix'=>'contract','middleware' => ['auth:sanctum','verify_document']],function (){
@@ -45,5 +50,5 @@ Route::group(['prefix'=>'contract','middleware' => ['auth:sanctum','verify_docum
 });
 
 //Products
-Route::post('/tmp-upload/{id}',[ProductController::class, 'tmpUpload']);
-Route::delete('/tmp-delete',[ProductController::class, 'tmpDelete']);
+Route::post('/tmp-upload/{id}',[TempController::class, 'tmpUpload']);
+Route::delete('/tmp-delete',[TempController::class, 'tmpDelete']);
