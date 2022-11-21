@@ -2,6 +2,6 @@
 @section('content')
     @include('layouts.header')
     <div class="p-24">
-        <livewire:products.product/>
+        <livewire:products.product-list />
     </div>
 @endsection

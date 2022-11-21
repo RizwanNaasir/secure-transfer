@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ProductController;
 use App\Models\Contract;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
@@ -42,3 +43,7 @@ Route::group(['prefix'=>'contract','middleware' => ['auth:sanctum','verify_docum
     Route::post('accept/{contract}',[ContractController::class,'acceptContract']);
     Route::post('decline/{contract}',[ContractController::class,'declineContract']);
 });
+
+//Products
+Route::post('/tmp-upload/{id}',[ProductController::class, 'tmpUpload']);
+Route::delete('/tmp-delete',[ProductController::class, 'tmpDelete']);

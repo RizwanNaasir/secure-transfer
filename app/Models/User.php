@@ -145,4 +145,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     {
         return $this->hasMany(Product::class);
     }
+
+    public function  temporaryFile() : HasMany
+    {
+        return $this->hasMany(TemporaryFile::class);
+    }
 }

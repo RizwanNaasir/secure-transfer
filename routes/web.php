@@ -32,6 +32,9 @@ Route::group([
 
     //products
     Route::get('products', [ProductController::class, 'index']);
+    Route::get('product-list', [ProductController::class, 'productList']);
+    Route::get('edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
+    Route::post('update-product/{id}',[ProductController::class,'updateProduct']);
 
     //    Payment method
     Route::get('create', [PaymentController::class, 'createCharge']);
