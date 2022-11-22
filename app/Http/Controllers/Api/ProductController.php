@@ -3,87 +3,84 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\ProductsTransformerResource;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function allProducts()
     {
-       $products = Product::select('name','image','price','description')->get();
-//        $products = Product::all();
+        $products = Product::select('id', 'name', 'image', 'price', 'description')->get();
         return $this->success([
-////            'products'=> $products->each(function ($product){
-////                return ProductsTransformerResource::make($product);
-////            })
-        'products'=> $products
-
+            'products' => $products
         ]);
     }
+
     public function product(Request $request)
     {
-        $data = $request->user()->products()->select('name','image','price','description')->get();
+        $data = $request->user()->products()->select('name', 'image', 'price', 'description')->get();
         return $this->success([
-            'product'=> $data->each(function ($product){
+            'product' => $data->each(function ($product) {
                 return $product;
             })
         ]);
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function productDetail(Request $request, $id)
     {
-        //
+        if (Product::query()->where('id', $id)->exists()) {
+            $proDetail = Product::whereId($id)->first();
+            return $this->success(
+                $proDetail
+            );
+
+        } else {
+            response(status: 404);
+            return [
+                'status' => 404,
+                'data' => 'product does not exist'
+            ];
+
+        }
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updateProduct(Request $request)
     {
-        //
+//        dd($request->input('product_id'));
+        $product = Product::query()->findOrFail($request->input('product_id'));
+        $data = $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+        ]);
+        if (filled($data)) {
+            $product->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'image' => '/products/' . $request->input('filepond'),
+                'description' => $request->input('description'),
+            ]);
+
+            return $this->success(message: 'product updated successfully');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

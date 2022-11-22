@@ -37,8 +37,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::post('update', [LoginController::class, 'update']);
     Route::get('product/all', [ProductController::class, 'allProducts']);
     Route::get('product', [ProductController::class, 'product']);
-    Route::get('edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
-    Route::post('update-product/{id}',[ProductController::class,'updateProduct']);
+    Route::get('product/detail/{id}', [ProductController::class, 'productDetail']);
+    Route::post('update/product',[ProductController::class,'updateProduct']);
 });
 
 Route::group(['prefix'=>'contract','middleware' => ['auth:sanctum','verify_document']],function (){

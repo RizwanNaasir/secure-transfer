@@ -10,6 +10,8 @@ use App\Models\User;
 class Product extends Model
 {
     use HasFactory;
+    protected $appends = ['full_image'];
+
 
     protected $fillable = [
         'user_id',
@@ -21,12 +23,14 @@ class Product extends Model
 
     public function getFullImageAttribute()
     {
-        return asset('media/'.$this->image);
+        return asset('media' . $this->image);
     }
     public function users() : belongsTo
     {
         return $this->belongsTo(User::class);
     }
+
+
 
 }
 
