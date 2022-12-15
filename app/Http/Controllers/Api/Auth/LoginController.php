@@ -51,16 +51,9 @@ class LoginController extends Controller
         if (filled($request->input('phone'))) {
             $user->phone = $request->input('phone');
         }
-//        if (filled($request->input('role'))) {
-//            $user->role = $request->input('role');
-//        }
-//        if (filled($request->input('liable_with_tc'))) {
-//            $user->liable_with_tc = $request->boolean('liable_with_tc');
-//        }
-//        if ($request->hasFile('avatar')) {
-//            $user->avatar = $request->file('avatar')->store('');
-//        }
-
+        if ($request->hasFile('avatar')) {
+            $user->avatar = $request->file('avatar')->store('/');
+        }
         $user->save();
 
         return $this->success(['profile' => $user], message: 'Profile updated successfully');
