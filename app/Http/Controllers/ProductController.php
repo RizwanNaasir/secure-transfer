@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
        return view('products.index');
@@ -34,7 +29,7 @@ class ProductController extends Controller
         auth()->user()->products()->update([
             'name' => $request->input('name'),
             'price' => $request->input('price'),
-            'image' => '/products/'.$request->input('filepond'),
+            'image' => '/'.$request->input('filepond'),
             'description'=> $request->input('description'),
         ]);
             return view('products.productlist');
@@ -46,23 +41,12 @@ class ProductController extends Controller
         {
         $image = $request->file('filepond');
         $file_name = $image->getClientOriginalName();
-        $image->storeAs('products',$file_name);
+        $image->store(public_path('/'.$file_name));
 
         User::find($id)->temporaryFile()->create([
             'file'  =>$file_name,
        ]);
         return $file_name;
         }
-    }
-
-    public function tmpDelete(Product $product)
-    {
-        //
-    }
-
-
-    public function destroy(Product $product)
-    {
-        //
     }
 }

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
+use function Symfony\Component\String\s;
 
 class ProductController extends Controller
 {
@@ -121,21 +122,37 @@ class ProductController extends Controller
         }
     }
 
-    public
-    function edit($id)
+
+    public function destroy(Request $request, $id)
     {
-        //
+        $products = Product::findOrFail($id);
+        if ($products->image) {
+            $path = '/' . $products->image;
+            if (File::exists($path)) {
+                File::delete($path);
+            }
+        }
+        $products->delete();
+
+        return $this->success(message: 'Product Deleted Successfully');
     }
 
-    public
-    function update(Request $request, $id)
+    public function search_product(Request $request)
     {
-        //
+        $product = $request->input('name');
+        $product_search = Product::query()->where('name','LIKE',"%$product%")->get();
+        if($product_search->isNotEmpty()){
+        return $this->success(
+            data: $product_search
+        );
+        }
+        else{
+            return $this->notFound(
+                message: 'Product Not Found',
+            );
+        }
+
     }
 
-    public
-    function destroy($id)
-    {
-        //
-    }
+
 }
