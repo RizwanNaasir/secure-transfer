@@ -7,19 +7,55 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
+
+    protected function addProduct(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+        ]);
+
+        if (filled($data)) {
+
+            $products = new Product();
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move(public_path('/'), $filename);
+                $products->image = $filename;
+
+                $products->user_id = $request->user()->id;
+                $products->name = $request->input('name');
+                $products->price = $request->input('price');
+                $products->description = $request->input('description');
+                $products->save();
+
+                return $this->success(message: 'Product Added Successfully');
+            }
+        }
+    }
+
     public function allProducts()
     {
         $products = Product::select('id', 'name', 'image', 'price', 'description')->get();
+
         return $this->success([
             'products' => $products
         ]);
     }
 
-    public function product(Request $request)
+    public
+    function product(Request $request)
     {
         $data = $request->user()->products()->select('name', 'image', 'price', 'description')->get();
         return $this->success([
@@ -30,7 +66,8 @@ class ProductController extends Controller
 
     }
 
-    public function productDetail(Request $request, $id)
+    public
+    function productDetail(Request $request, $id)
     {
         if (Product::query()->where('id', $id)->exists()) {
             $proDetail = Product::whereId($id)->first();
@@ -49,10 +86,9 @@ class ProductController extends Controller
 
     }
 
-    public function updateProduct(Request $request)
+    public
+    function updateProduct(Request $request)
     {
-//        dd($request->input('product_id'));
-        $product = Product::query()->findOrFail($request->input('product_id'));
         $data = $request->validate([
             'name' => 'required',
             'price' => 'required',
@@ -60,28 +96,45 @@ class ProductController extends Controller
             'description' => 'required',
         ]);
         if (filled($data)) {
-            $product->update([
-                'name' => $request->input('name'),
-                'price' => $request->input('price'),
-                'image' => '/products/' . $request->input('filepond'),
-                'description' => $request->input('description'),
-            ]);
-
-            return $this->success(message: 'product updated successfully');
+            $products = Product::query()->find($request->input('id'));
+            if (filled($products)) {
+                if ($request->hasFile('image')) {
+                    $path = '/' . $products->image;
+                    if (File::exists($path)) {
+                        File::delete($path);
+                    }
+                    $file = $request->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $extension;
+                    $file->move(public_path('/'), $filename);
+                    $products->image = $filename;
+                }
+                $products->user_id = $request->user()->id;
+                $products->name = $request->input('name');
+                $products->price = $request->input('price');
+                $products->description = $request->input('description');
+                $products->update();
+                return $this->success(message: 'Product Updated Successfully');
+            } else {
+                return $this->notFound([]);
+            }
         }
     }
 
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
 
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         //
     }
 
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         //
     }
