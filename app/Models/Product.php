@@ -21,6 +21,11 @@ class Product extends Model
         'image',
         ];
 
+    protected $hidden=[
+        'created_at',
+        'updated_at',
+    ];
+
     public function getFullImageAttribute()
     {
         return asset('media/' . $this->image);
