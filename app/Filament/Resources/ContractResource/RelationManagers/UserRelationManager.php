@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Filament\Resources\ContractResource\RelationManagers;
+
+use App\Models\User;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Form;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Resources\Table;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+
+class UserRelationManager extends RelationManager
+{
+    protected static string $relationship = 'user';
+
+    protected static ?string $title = 'Sender';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('avatar')->circular()->disk(''),
+
+                TextColumn::make('full_name')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
+                BadgeColumn::make('status')
+                    ->colors([
+                        'success' => 'active',
+                        'secondary' => 'pending',
+                        'danger' => 'blocked',
+                    ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+                BadgeColumn::make('email_verified_at')->label('Verified Email')
+                    ->colors([
+                        'success',
+                        'danger' => null,
+                    ])->formatStateUsing(function ($state) {
+                        return isset($state) ? 'Yes' : 'No';
+                    }),
+            ]);
+    }
+}
