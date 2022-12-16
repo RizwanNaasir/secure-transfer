@@ -31,7 +31,8 @@ Route::group([
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
     //products
-    Route::get('products', [ProductController::class, 'index']);
+    Route::get('products', [ProductController::class, 'index'])->name('product.index');
+    Route::post('add/product', [ProductController::class, 'addProduct']);
     Route::get('product-list', [ProductController::class, 'productList']);
     Route::get('edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
     Route::post('update-product/{id}',[ProductController::class,'updateProduct']);
@@ -58,7 +59,7 @@ Route::get('detail', [DashboardController::class, 'historyDetail']);
 Route::get('card-detail', [DashboardController::class, 'cardDetail']);
 Route::get('payment', [DashboardController::class, 'approvePayment']);
 Route::get('description', [DashboardController::class, 'description']);
-Route::get('market_place', [DashboardController::class, 'marketingView']);
+Route::get('market_place', [DashboardController::class, 'marketingView'])->name('all.products');
 Route::get('market_details/{id}', [DashboardController::class, 'marketProduct']);
 Route::get('success', [DashboardController::class, 'successPayment']);
 Route::get('rating', [DashboardController::class, 'starRating']);
