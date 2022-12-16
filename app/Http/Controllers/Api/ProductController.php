@@ -59,16 +59,9 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Product $product)
     {
-        $products = Product::findOrFail($id);
-        if ($products->image) {
-            $path = '/' . $products->image;
-            if (File::exists($path)) {
-                File::delete($path);
-            }
-        }
-        $products->delete();
+        $product->delete();
 
         return $this->success(message: 'Product Deleted Successfully');
     }
