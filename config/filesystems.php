@@ -32,18 +32,8 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => public_path('media'),
+            'root' => storage_path('app'),
             'throw' => false,
-            'permissions' => [
-                'file' => [
-                    'public' => 0644,
-                    'private' => 0644,
-                ],
-                'dir' => [
-                    'public' => 0755,
-                    'private' => 0755,
-                ],
-            ],
         ],
 
         'public' => [
