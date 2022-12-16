@@ -7,6 +7,7 @@ use App\Filament\Resources\ContractResource\RelationManagers\RecipientRelationMa
 use App\Filament\Resources\ContractResource\RelationManagers\UserRelationManager;
 use App\Models\Contract;
 use Filament\Forms\Components\Card;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -46,7 +47,7 @@ class ContractResource extends Resource
 
                        TextInput::make('amount_received_via'),
 
-                       TextInput::make('file'),
+                       FileUpload::make('file'),
                    ])->columnSpan(2),
                    Card::make([
                        Placeholder::make('created_at')
@@ -74,11 +75,11 @@ class ContractResource extends Resource
                         'success' => 'accepted',
                         'danger' => 'declined',
                     ])
-                    ->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
                 TextColumn::make('user.email')->label('Sender')->limit(12),
                 TextColumn::make('recipient.email')->label('Recipient')->limit(12),
                 TextColumn::make('preferred_payment_method')
-                    ->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
             ])->filters(self::getTableFilters());
     }
     protected static function getTableFilters(): array

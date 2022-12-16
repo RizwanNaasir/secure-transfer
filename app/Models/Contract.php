@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Contract extends Model
 {
@@ -26,9 +27,9 @@ class Contract extends Model
         return $this->belongsToMany(related: User::class, relatedPivotKey: 'recipient_id');
     }
 
-    public function getFileAttribute($file): ?string
+    public function getFilePathAttribute(): ?string
     {
-        return isset($file) ? asset('media/' . $file) : null;
+        return isset($this->file) ? Storage::url($this->file) : null;
     }
 
     public function getFileNameAttribute(): string
