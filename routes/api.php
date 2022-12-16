@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\ContractController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ProductController as TempController;
-use App\Models\Contract;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,16 +34,18 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::get('profile', [UserController::class, 'index']);
     Route::post('update', [LoginController::class, 'update']);
+
+
+    Route::get('product', [ProductController::class, 'myProducts']);
 });
 
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::post('add', [ProductController::class, 'addProduct']);
     Route::get('all', [ProductController::class, 'allProducts']);
     Route::get('our-products', [ProductController::class, 'product']);
-    Route::get('detail/{id}', [ProductController::class, 'productDetail']);
+    Route::get('detail/{product}', [ProductController::class, 'productDetail']);
     Route::post('update/product', [ProductController::class, 'updateProduct']);
     Route::get('delete/{id}', [ProductController::class, 'destroy']);
-    Route::post('search', [ProductController::class, 'search_product']);
 });
 
 Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_document']], function () {
