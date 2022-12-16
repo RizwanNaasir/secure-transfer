@@ -45,7 +45,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('our-products', [ProductController::class, 'product']);
     Route::get('detail/{product}', [ProductController::class, 'productDetail']);
     Route::post('update/product', [ProductController::class, 'updateProduct']);
-    Route::delete('delete/{id}', [ProductController::class, 'destroy']);
+    Route::delete('delete/{product}', [ProductController::class, 'destroy']);
 });
 
 Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_document']], function () {
