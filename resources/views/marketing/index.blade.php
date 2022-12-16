@@ -15,104 +15,25 @@
                     <button onclick="window.location.href='{{url('user/products')}}'" type="button" class=" text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Add Product</button>
                 </div>
                 <ul role="list" class="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8 gap-8">
-                    @foreach($pics as $pic)
-                    <li>
-                        <a href="{{url('market_details')}}">
-                        <div class="space-y-4">
-                            <div class="object-cover shadow-lg h-[280px] w-auto h-[280px] w-auto">
-                                <img class="rounded-lg " width="220" height="auto" src="{{$pic}}" alt="">
-                            </div>
+                    @foreach($products as $product)
+                        <li>
+                            <a href="{{url('market_details/'.$product->id)}}">
+                                <div class="space-y-4">
+                                    <div class="object-cover shadow-lg h-[280px] w-auto h-[280px] w-auto">
+                                        <img class="rounded-lg " width="220" height="auto" src="{{$product->full_image}}" alt="">
+                                    </div>
 
-                            <div class="space-y-2">
-                                <div class="space-y-1 text-lg font-medium leading-6">
-                                    <h3>Lindsay Walton</h3>
-                                    <price class="font-normal">12000$</price>
-{{--                                    <price class="font-normal">12000$</price>--}}
+                                    <div class="space-y-2">
+                                        <div class="space-y-1 text-lg font-medium leading-6">
+                                            <h3>{{$product->name}}</h3>
+                                            <price class="font-normal">{{$product->price}}$</price>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
                     @endforeach
-{{--                    <li>--}}
-{{--                        <a href="{{url('market_details')}}">--}}
-{{--                        <div class="space-y-4">--}}
-{{--                            <div class="object-cover shadow-lg h-[280px] w-auto h-[280px] w-auto">--}}
-{{--                                <img class="rounded-lg" width="220" height="auto" src="{{asset('assets/images/camera.png')}}" alt="">--}}
-{{--                            </div>--}}
 
-{{--                            <div class="space-y-2">--}}
-{{--                                <div class="space-y-1 text-lg font-medium leading-6">--}}
-{{--                                    <h3>Lindsay Walton</h3>--}}
-{{--                                    <price class="font-normal">12000$</price>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{url('market_details')}}">--}}
-{{--                        <div class="space-y-4">--}}
-{{--                            <div class="object-cover shadow-lg h-[280px] w-auto">--}}
-{{--                                <img class="rounded-lg" width="220" height="auto" src="{{asset('assets/images/1.png')}}" alt="">--}}
-{{--                            </div>--}}
-
-{{--                            <div class="space-y-2">--}}
-{{--                                <div class="space-y-1 text-lg font-medium leading-6">--}}
-{{--                                    <h3>Lindsay Walton</h3>--}}
-{{--                                    <price class="font-normal">12000$</price>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{url('market_details')}}">--}}
-{{--                        <div class="space-y-4">--}}
-{{--                            <div class="object-cover shadow-lg h-[280px] w-auto">--}}
-{{--                                <img class="rounded-lg " width="220" height="auto" src="{{asset('assets/images/2.png')}}" alt="">--}}
-{{--                            </div>--}}
-
-{{--                            <div class="space-y-2">--}}
-{{--                                <div class="space-y-1 text-lg font-medium leading-6">--}}
-{{--                                    <h3>Lindsay Walton</h3>--}}
-{{--                                    <price class="font-normal">12000$</price>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{url('market_details')}}">--}}
-{{--                        <div class="space-y-4">--}}
-{{--                            <div class="object-cover shadow-lg h-[280px] w-auto">--}}
-{{--                                <img class="rounded-lg" width="220" height="auto" src="{{asset('assets/images/3.png')}}" alt="">--}}
-{{--                            </div>--}}
-{{--                            <div class="space-y-2">--}}
-{{--                                <div class="space-y-1 text-lg font-medium leading-6">--}}
-{{--                                    <h3>Lindsay Walton</h3>--}}
-{{--                                    <price class="font-normal">12000$</price>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
-{{--                    <li>--}}
-{{--                        <a href="{{url('market_details')}}">--}}
-{{--                        <div class="space-y-4">--}}
-{{--                            <div class="object-cover shadow-lg h-[280px] w-auto">--}}
-{{--                                <img class="rounded-lg" width="220" height="auto" src="{{asset('assets/images/camera.png')}}" alt="">--}}
-{{--                            </div>--}}
-
-{{--                            <div class="space-y-2">--}}
-{{--                                <div class="space-y-1 text-lg font-medium leading-6">--}}
-{{--                                    <h3>Lindsay Walton</h3>--}}
-{{--                                    <price class="font-normal">12000$</price>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        </a>--}}
-{{--                    </li>--}}
 
                     <!-- More people... -->
                 </ul>

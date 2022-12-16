@@ -28,7 +28,7 @@ class Product extends Model
 
     public function getFullImageAttribute()
     {
-        return asset('media/' . $this->image);
+        return asset('/' . $this->image);
     }
     public function user() : belongsTo
     {

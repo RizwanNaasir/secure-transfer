@@ -68,9 +68,9 @@ class Product extends Component implements HasForms
     public function getImage(): string|null
     {
         if (isset($this->image)) {
-            $image = collect($this->image)->map(static fn($file) => $file->store('products'))->first();
+            $image = collect($this->image)->map(static fn($file) =>$file->storeAs('/'))->first();
         } else {
-            $image = 'products/default.png';
+            $image = '/default.png';
         }
         return $image;
 

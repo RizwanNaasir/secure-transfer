@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -40,21 +41,14 @@ class DashboardController extends Controller
 
     public function marketingView()
     {
-        $pics = [
-          'img' => asset('assets/images/1.png'),
-          'img1' => asset('assets/images/2.png'),
-          'img2' => asset('assets/images/3.png'),
-          'img3' => asset('assets/images/4.png'),
-          'img4' => asset('assets/images/camera.png'),
-          'img5' => asset('assets/images/laptop.png'),
-          'img6' => asset('assets/images/3.png'),
-        ];
-        return view( 'marketing.index',['pics'=>$pics]);
+       $products = Product::all();
+        return view( 'marketing.index',['products'=>$products]);
     }
 
-    public function marketProduct()
+    public function marketProduct($id)
     {
-        return view(view: 'marketing.details');
+        $product = Product::find($id);
+        return view('marketing.details',['product'=>$product]);
     }
     public function successPayment()
     {
