@@ -15,18 +15,15 @@ class ContractController extends Controller
     {
         try {
               return  $this->success(
-                  message: 'çontract add successfully',
-                  data: ContractService::create($request->all(), $request->user()));
+                  data: ContractService::create($request->all(), $request->user()),
+                  message: 'contract add successfully');
             }
          catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
-
-
-
     }
 
-    public function contractlist(Request $request)
+    public function contractList(Request $request)
     {
 
         $list_received = request()

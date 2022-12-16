@@ -29,12 +29,7 @@ class ProductController extends Controller
             $products = new Product();
 
             if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extension;
-                $file->move(public_path('/'), $filename);
-                $products->image = $filename;
-
+                $products->image = $request->file('image')->store('public');
                 $products->user_id = $request->user()->id;
                 $products->name = $request->input('name');
                 $products->price = $request->input('price');
@@ -99,17 +94,7 @@ class ProductController extends Controller
         if (filled($data)) {
             $products = Product::query()->find($request->input('id'));
             if (filled($products)) {
-                if ($request->hasFile('image')) {
-                    $path = '/' . $products->image;
-                    if (File::exists($path)) {
-                        File::delete($path);
-                    }
-                    $file = $request->file('image');
-                    $extension = $file->getClientOriginalExtension();
-                    $filename = time() . '.' . $extension;
-                    $file->move(public_path('/'), $filename);
-                    $products->image = $filename;
-                }
+                $products->image = $request->file('image')->store('public');
                 $products->user_id = $request->user()->id;
                 $products->name = $request->input('name');
                 $products->price = $request->input('price');

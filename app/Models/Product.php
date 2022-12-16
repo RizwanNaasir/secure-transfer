@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -26,9 +27,11 @@ class Product extends Model
         'updated_at',
     ];
 
-    public function getFullImageAttribute()
+    public function getFullImageAttribute(): string
     {
-        return asset('/' . $this->image);
+        return filled($this->image) && file_exists(Storage::path($this->image))
+        ? url(Storage::url($this->image))
+        : 'https://via.placeholder.com/150';
     }
     public function user() : belongsTo
     {

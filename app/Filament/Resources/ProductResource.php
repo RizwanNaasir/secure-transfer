@@ -28,7 +28,7 @@ class ProductResource extends Resource
                 TextInput::make('name'),
                 Textarea::make('description'),
                 Textarea::make('price'),
-                FileUpload::make('image')
+                FileUpload::make('image')->directory('public')
             ]);
     }
 
@@ -36,7 +36,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('full_image'),
                 TextColumn::make('name'),
                 TextColumn::make('description'),
                 TextColumn::make('price')

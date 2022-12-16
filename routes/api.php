@@ -49,7 +49,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
 
 Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_document']], function () {
     Route::post('new', [ContractController::class, 'store']);
-    Route::get('view', [ContractController::class, 'contractlist']);
+    Route::get('view', [ContractController::class, 'contractList']);
     Route::get('detail/{contract}', [ContractController::class, 'contractDetails']);
     Route::post('accept/{contract}', [ContractController::class, 'acceptContract']);
     Route::post('decline/{contract}', [ContractController::class, 'declineContract']);
