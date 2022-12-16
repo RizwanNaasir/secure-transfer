@@ -7,20 +7,36 @@ use App\Http\Requests\ContractRequest;
 use App\Models\Contract;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class ContractController extends Controller
 {
     public function store(ContractRequest $request)
     {
+        $QRCode = ContractService::create(
+            data: $this->formattedData($request),
+            user: $request->user()
+        );
         try {
-              return  $this->success(
-                  data: ContractService::create($request->all(), $request->user()),
-                  message: 'contract add successfully');
-            }
-         catch (\Exception $e) {
+            return $this->success(
+                data: [
+                    'qr_code' => $QRCode->toHtml()
+                ],
+                message: 'Contract added successfully'
+            );
+        } catch (\Exception $e) {
             return $this->error($e->getMessage(), 400);
         }
+    }
+
+    public function formattedData(Request $request): array
+    {
+        return [
+            'email' => $request->input('email'),
+            'amount' => $request->input('amount'),
+            'description' => $request->input('description'),
+            'file' => $request->file('file')->store('public'),
+            'preferred_payment_method' => $request->input('preferred_payment_method'),
+        ];
     }
 
     public function contractList(Request $request)
@@ -62,12 +78,9 @@ class ContractController extends Controller
 
     public function acceptContract(Contract $contract)
     {
-        if ($contract->current_status === 'Accepted')
-        {
+        if ($contract->current_status === 'Accepted') {
             return $this->success(message: 'Contract already accepted');
-        }
-        else
-        {
+        } else {
             ContractService::updateContract($contract, 'accepted');
             return $this->success(message: 'Contract accepted');
         }
@@ -75,13 +88,10 @@ class ContractController extends Controller
 
     public function declineContract(Contract $contract)
     {
-        if ($contract->current_status === 'Declined')
-        {
+        if ($contract->current_status === 'Declined') {
             return $this->success(message: 'Contract already declined');
-        }
-        else
-        {
-            ContractService::updateContract($contract, 'declined',\request()->get('description'));
+        } else {
+            ContractService::updateContract($contract, 'declined', \request()->get('description'));
             return $this->success(message: 'Contract declined');
         }
     }

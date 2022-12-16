@@ -2,11 +2,13 @@
 
 namespace App\Services;
 
+use App\Mail\NewContractMail;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Mail;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ContractService extends Service
@@ -19,9 +21,13 @@ class ContractService extends Service
 
         self::attachBothUsersToContract($contract, $user, $recipient);
 
+        $qrCode = self::getCode($contract, $recipient);
+
+        self::notifyBothUsersAboutContract($contract, $user, $recipient);
+
         session()->put('contract_id', $contract->id);
 
-        return self::getCode($contract, $recipient);
+        return $qrCode;
     }
 
     public static function getOrCreateAnonymousRecipient($email): User
@@ -56,6 +62,12 @@ class ContractService extends Service
     public static function attachBothUsersToContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
     {
         $contract->user()->attach($user->id, ['recipient_id' => $recipient->id]);
+    }
+
+    public static function notifyBothUsersAboutContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
+    {
+        Mail::to($recipient)
+            ->send(new NewContractMail($contract, $user, $recipient));
     }
 
     public static function getCode(Model|Builder $contract, User $recipient)

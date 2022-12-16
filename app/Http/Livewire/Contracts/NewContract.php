@@ -64,7 +64,7 @@ class NewContract extends Component implements HasForms
     {
         if (isset($this->file)) {
             $file = collect($this->file)->map(function ($file) {
-                return $file->store('files');
+                return $file->store('public');
             })->first();
         } else {
             $file = null;
