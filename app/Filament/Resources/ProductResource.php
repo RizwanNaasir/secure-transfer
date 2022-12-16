@@ -4,7 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
+use App\Models\User;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
@@ -25,6 +27,7 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
+                Select::make('user_id')->options(User::all()->pluck('name','id')),
                 TextInput::make('name'),
                 Textarea::make('description'),
                 Textarea::make('price'),

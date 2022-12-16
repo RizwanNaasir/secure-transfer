@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
+use Couchbase\SearchResult;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -43,10 +44,8 @@ class ProductController extends Controller
 
     public function allProducts()
     {
-        $products = Product::select('id', 'name', 'image', 'price', 'description')->get();
-
         return $this->success([
-            'products' => $products
+            'products' => Product::search(\request()->get('search'))->get()
         ]);
     }
 
