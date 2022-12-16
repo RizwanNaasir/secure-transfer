@@ -87,16 +87,29 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
 
     protected $appends = [
         'full_name',
+        'full_avatar',
     ];
 
-    public function getAvatarAttribute($avatar): ?string
+    public function getAvatarPathAttribute(): ?string
     {
-        return $avatar ? asset('media/'.$avatar) : 'https://ui-avatars.com/api/?name=' . $this->name;
+        return $this->avatar ? Storage::url($this->avatar) : $this->getFilamentAvatarUrl();
     }
 
     public function fullName(): Attribute
     {
         return Attribute::make(get: fn() => ucfirst($this->name) . ' ' . ucfirst($this->surname));
+    }
+
+    public function getFullAvatarAttribute(): ?string
+    {
+        return $this->getFilamentAvatarUrl();
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return filled($this->avatar) && file_exists(Storage::path($this->avatar))
+            ? url(Storage::url($this->avatar))
+            : 'https://ui-avatars.com/api/?name=' . $this->name . '+' . $this->surname;
     }
 
     public function findContractWith($recipient_id): BelongsToMany
@@ -125,11 +138,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     public function paymentMethods(): HasMany
     {
         return $this->hasMany(PaymentMethod::class);
-    }
-
-    public function getFilamentAvatarUrl(): ?string
-    {
-        return $this->avatar;
     }
 
     public function canAccessFilament(): bool

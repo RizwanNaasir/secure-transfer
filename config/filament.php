@@ -286,7 +286,7 @@ return [
     |
     */
 
-    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'public'),
+    'default_filesystem_disk' => env('FILAMENT_FILESYSTEM_DRIVER', 'local'),
 
     /*
     |--------------------------------------------------------------------------

@@ -29,7 +29,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('avatar')->avatar()->disk(''),
+                Forms\Components\FileUpload::make('avatar')->avatar()->directory('public'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -57,7 +57,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('avatar')->circular(),
+                ImageColumn::make('avatar')->circular()->disk(''),
                 TextColumn::make('full_name'),
                 TextColumn::make('email'),
                 BadgeColumn::make('status')

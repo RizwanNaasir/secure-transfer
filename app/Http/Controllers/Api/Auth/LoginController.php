@@ -52,7 +52,7 @@ class LoginController extends Controller
             $user->phone = $request->input('phone');
         }
         if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->store('/');
+            $user->avatar = $request->file('avatar')->store('public');
         }
         $user->save();
 

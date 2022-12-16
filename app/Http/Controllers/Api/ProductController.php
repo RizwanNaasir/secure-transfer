@@ -143,11 +143,16 @@ class ProductController extends Controller
         $product_search = Product::query()->where('name','LIKE',"%$product%")->get();
         if($product_search->isNotEmpty()){
         return $this->success(
-            data: $product_search
+            data: [
+                'product' => $product_search
+            ]
         );
         }
         else{
             return $this->notFound(
+                data: [
+                    'product' => []
+                ],
                 message: 'Product Not Found',
             );
         }
