@@ -90,7 +90,7 @@
                                                         <span class="ml-2 w-0 flex-1 truncate">{{$contract->file_name}}</span>
                                                     </div>
                                                     <div class="ml-4 flex-shrink-0">
-                                                        <a href="{{$contract->file}}" target="_blank" download
+                                                        <a href="{{$contract->file_path}}" target="_blank" download
                                                            class="font-medium text-blue-600 hover:text-blue-500">Download</a>
                                                     </div>
                                                 </li>

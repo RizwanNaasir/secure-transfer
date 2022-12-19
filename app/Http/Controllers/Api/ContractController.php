@@ -9,6 +9,8 @@ use App\Http\Resources\Api\ContractListResource;
 use App\Models\Contract;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class ContractController extends Controller
 {
@@ -59,23 +61,23 @@ class ContractController extends Controller
         ]);
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function contractDetails(Contract $contract)
     {
-        (bool)$fromSender = \request()->get('from-sender');
+        (bool)$fromSender = request()->get('from-sender',false);
 
-        $recipient = $fromSender ? $contract->user->first() : $contract->recipient->first();
+        $user = $fromSender ? $contract->user->first() : $contract->recipient->first();
 
-        if ($fromSender == 0) {
-            return $this->success(data: [
-                'contract' => ContractDetailResource::make($contract),
-                'from_recipient' => $recipient,
-            ]);
-        } else {
-            return $this->success(data: [
-                'contract' => ContractDetailResource::make($contract),
-                'from_sender' => $recipient,
-            ]);
-        }
+        return $this->success(data: [
+            'contract' => ContractDetailResource::make($contract),
+            'user' => [
+                'name' => $user->full_name,
+                'email' => $user->email
+            ],
+        ]);
     }
 
     public function acceptContract(Contract $contract)
