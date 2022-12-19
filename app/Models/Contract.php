@@ -17,15 +17,6 @@ class Contract extends Model
         'sender_detail',
         'recipient_detail'
     ];
-    public function user(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function recipient(): BelongsToMany
-    {
-        return $this->belongsToMany(related: User::class, relatedPivotKey: 'recipient_id');
-    }
 
     public function getFilePathAttribute(): ?string
     {
@@ -55,21 +46,33 @@ class Contract extends Model
             'pending' => __('Pending'),
         };
     }
-    public function getSenderDetailAttribute()
-            {
-                $data = $this->user()->first();
+
+    public function getSenderDetailAttribute(): array
+    {
+        $data = $this->user()->first();
         return [
-            'name'=> $data->full_name,
-            'email'=>$data->email,
+            'name' => $data->full_name,
+            'email' => $data->email,
         ];
     }
+
+    public function user(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function getRecipientDetailAttribute()
     {
         $data = $this->recipient()->first();
         return
             [
-                'name'=> $data->full_name,
-                'email'=>$data->email,
+                'name' => $data->full_name,
+                'email' => $data->email,
             ];
+    }
+
+    public function recipient(): BelongsToMany
+    {
+        return $this->belongsToMany(related: User::class, relatedPivotKey: 'recipient_id');
     }
 }
