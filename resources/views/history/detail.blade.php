@@ -98,7 +98,7 @@
                                         </dd>
                                     </div>
                                 @endif
-                                @if(!$fromSender)
+                                @if(!$fromSender and $contract->is_pending)
                                     <div class="sm:col-span-2">
                                         <dt class="text-sm font-medium text-gray-500">QR Code</dt>
                                         <dd class="m-2 text-sm text-gray-900">

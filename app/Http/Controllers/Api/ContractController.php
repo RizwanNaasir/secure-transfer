@@ -48,12 +48,14 @@ class ContractController extends Controller
         $list_received = $request->user()
             ->receivedContracts()
             ->get()
-            ->load('status');
+            ->load('status')
+            ->sortByDesc('id');
 
         $list_send = $request->user()
             ->contracts()
             ->get()
-            ->load('status');
+            ->load('status')
+            ->sortByDesc('id');
 
         return $this->success(data: [
             'received' => ContractListResource::collection($list_received),
@@ -80,8 +82,9 @@ class ContractController extends Controller
         ]);
     }
 
-    public function acceptContract(Contract $contract)
+    public function acceptContract(Request $request)
     {
+        $contract = Contract::findOrFail($request->input('contract_id'));
         if ($contract->current_status === 'Accepted') {
             return $this->success(message: 'Contract already accepted');
         } else {
@@ -90,12 +93,13 @@ class ContractController extends Controller
         }
     }
 
-    public function declineContract(Contract $contract)
+    public function declineContract(Request $request)
     {
+        $contract = Contract::findOrFail($request->input('contract_id'));
         if ($contract->current_status === 'Declined') {
             return $this->success(message: 'Contract already declined');
         } else {
-            ContractService::updateContract($contract, 'declined', \request()->get('description'));
+            ContractService::updateContract($contract, 'declined', \request()->input('description'));
             return $this->success(message: 'Contract declined');
         }
     }

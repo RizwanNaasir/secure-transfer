@@ -20,7 +20,7 @@ class Contract extends Model
 
     public function getFilePathAttribute(): ?string
     {
-        return isset($this->file) ? Storage::url($this->file) : null;
+        return isset($this->file) ? url(Storage::url($this->file)) : null;
     }
 
     public function getFileNameAttribute(): string
