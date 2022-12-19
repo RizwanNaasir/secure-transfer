@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContractRequest;
+use App\Http\Resources\Api\ContractDetailResource;
+use App\Http\Resources\Api\ContractListResource;
 use App\Models\Contract;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
@@ -41,19 +43,19 @@ class ContractController extends Controller
 
     public function contractList(Request $request)
     {
-
-        $list_received = request()
-            ->user()
+        $list_received = $request->user()
             ->receivedContracts()
-            ->get();
+            ->get()
+            ->load('status');
 
-        $list_send = request()
-            ->user()
+        $list_send = $request->user()
             ->contracts()
-            ->get();
+            ->get()
+            ->load('status');
+
         return $this->success(data: [
-            'list_received' => $list_received,
-            'list_send' => $list_send,
+            'received' => ContractListResource::collection($list_received),
+            'sent' => ContractListResource::collection($list_send),
         ]);
     }
 
@@ -65,12 +67,12 @@ class ContractController extends Controller
 
         if ($fromSender == 0) {
             return $this->success(data: [
-                'contract' => $contract,
+                'contract' => ContractDetailResource::make($contract),
                 'from_recipient' => $recipient,
             ]);
         } else {
             return $this->success(data: [
-                'contract' => $contract,
+                'contract' => ContractDetailResource::make($contract),
                 'from_sender' => $recipient,
             ]);
         }
