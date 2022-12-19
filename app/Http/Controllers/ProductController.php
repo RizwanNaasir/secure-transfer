@@ -26,21 +26,12 @@ class ProductController extends Controller
         if (filled($data)) {
 
             $products = new Product();
-
-            if ($request->hasFile('image')) {
-                $file = $request->file('image');
-                $extension = $file->getClientOriginalExtension();
-                $filename = time() . '.' . $extension;
-                $file->move(public_path('/'), $filename);
-                $products->image = $filename;
-
-                $products->user_id = $request->user()->id;
-                $products->name = $request->input('name');
-                $products->price = $request->input('price');
-                $products->description = $request->input('description');
-                $products->save();
-
-            }
+            $products->image = $request->file('image')->store('public');
+            $products->user_id = $request->user()->id;
+            $products->name = $request->input('name');
+            $products->price = $request->input('price');
+            $products->description = $request->input('description');
+            $products->save();
         }
         return redirect(route('all.products'));
 
@@ -72,13 +63,13 @@ class ProductController extends Controller
     {
         if ($request->hasFile('filepond')) {
             $image = $request->file('filepond');
-            $file_name = $image->getClientOriginalName();
-            $image->store(public_path('/' . $file_name));
+//            $file_name = $image->getClientOriginalName();
+            $image->store('public');
 
             User::find($id)->temporaryFile()->create([
-                'file' => $file_name,
+                'file' => $image,
             ]);
-            return $file_name;
+            return $image;
         }
     }
 }

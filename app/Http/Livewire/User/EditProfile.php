@@ -20,7 +20,7 @@ class EditProfile extends Component implements HasForms
     public string $name = '';
     public string $surname = '';
     public string $email = '';
-    public array|string $avatar = [];
+    public array|string|null $avatar = [];
     public string $phone = '';
     private User|Authenticatable|null $user = null;
 
@@ -56,7 +56,7 @@ class EditProfile extends Component implements HasForms
     {
         if (isset($this->avatar)) {
             $avatar = collect($this->avatar)->map(function ($file) {
-                return $file->store('avatars');
+                return $file->store('public');
             })->first();
         } else {
             $avatar = 'avatars/default.png';
@@ -86,7 +86,7 @@ class EditProfile extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            FileUpload::make('avatar')
+            FileUpload::make('avatar')->avatar()->directory('public')
                 ->label('Avatar')
                 ->placeholder('Upload your avatar')
                 ->required()
