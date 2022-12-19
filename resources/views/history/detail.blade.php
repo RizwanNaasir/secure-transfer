@@ -8,7 +8,7 @@
             <div class="flex items-center space-x-5">
                 <div class="flex-shrink-0">
                     <div class="relative">
-                        <img class="h-16 w-16 rounded-full" src="{{$recipient->avatar}}" alt="">
+                        <img class="h-16 w-16 rounded-full" src="{{$recipient->full_avatar}}" alt="">
                         <span class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></span>
                     </div>
                 </div>

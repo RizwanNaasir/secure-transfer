@@ -15,7 +15,7 @@
                             <div class="flex min-w-0 flex-1 items-center">
                                 <div class="flex-shrink-0">
                                     <img class="h-12 w-12 rounded-full"
-                                         src="{{$user->avatar}}" alt="">
+                                         src="{{$user->full_avatar}}" alt="">
                                 </div>
                                 <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                                     <div class="hidden md:block">

@@ -82,4 +82,28 @@ class ContractController extends Controller
         session()->put('contract_id', $contract->id);
         return view('history.detail', compact('contract', 'recipient', 'fromSender'));
     }
+
+    public function acceptContract(Contract $contract)
+    {
+        if ($contract->current_status === 'Accepted') {
+            /*return $this->success(message: 'Contract already accepted');*/
+            Notification::make()->title('Contract')->body('Contract already accepted')->success()->send();
+            return redirect(route('contract.accepted'));
+        } else {
+            ContractService::updateContract($contract, 'accepted');
+            /*return $this->success(message: 'Contract accepted');*/
+            Notification::make()->title('Contract')->body('Contract accepted')->success()->send();
+            return redirect(route('contract.accepted'));
+        }
+    }
+
+    public function declineContract(Contract $contract)
+    {
+        if ($contract->current_status === 'Declined') {
+            return $this->success(message: 'Contract already declined');
+        } else {
+            ContractService::updateContract($contract, 'declined', \request()->get('description'));
+            return $this->success(message: 'Contract declined');
+        }
+    }
 }

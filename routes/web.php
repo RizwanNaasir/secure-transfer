@@ -72,6 +72,8 @@ Route::group([
     Route::get('list/{tab}', [ContractController::class, 'list'])->name('list');
     Route::get('add-contract', [ContractController::class, 'viewContractForm'])->name('add-contract');
     Route::get('details/{contract}', [ContractController::class, 'details'])->name('details');
+    Route::post('accept/{contract}', [ContractController::class, 'acceptContract'])->name('accepted');
+    Route::post('decline/{contract}', [ContractController::class, 'declineContract'])->name('declined');
 });
 Route::get('contract/process', [ContractController::class, 'process'])->name('contract.process');
 
