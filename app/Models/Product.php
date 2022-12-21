@@ -40,5 +40,10 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function authUserIsOwner(): bool
+    {
+        return (int) $this->user_id === (int) auth()->id();
+    }
+
 }
 

@@ -22,6 +22,7 @@ class Received extends Component
                 ->user()
                 ->receivedContracts()
                 ->with('status', 'user')
+                ->orderByDesc('id')
                 ->paginate(5),
             'tab' => $this->tab,
         ]);
