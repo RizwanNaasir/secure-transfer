@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\CanBeRated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
 class Product extends Model
 {
-    use Searchable;
+    use Searchable, CanBeRated;
+
     protected $appends = ['full_image'];
 
 
@@ -21,9 +21,9 @@ class Product extends Model
         'description',
         'price',
         'image',
-        ];
+    ];
 
-    protected $hidden=[
+    protected $hidden = [
         'created_at',
         'updated_at',
     ];
@@ -31,15 +31,14 @@ class Product extends Model
     public function getFullImageAttribute(): string
     {
         return filled($this->image) && file_exists(Storage::path($this->image))
-        ? url(Storage::url($this->image))
-        : 'https://via.placeholder.com/150';
+            ? url(Storage::url($this->image))
+            : 'https://via.placeholder.com/150';
     }
-    public function user() : belongsTo
+
+    public function user(): belongsTo
     {
         return $this->belongsTo(User::class);
     }
-
-
 
 }
 

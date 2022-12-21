@@ -17,7 +17,8 @@
         "livewire/livewire": "^2.10",
         "opcodesio/log-viewer": "^1.6",
         "simplesoftwareio/simple-qrcode": "~4",
-        "wire-elements/modal": "^1.0"
+        "wire-elements/modal": "^1.0",
+        "yepsua/filament-rating-field": "^0.1.0"
     },
     "require-dev": {
         "doctrine/dbal": "^3.5",

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ProductController as TempController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::get('profile', [UserController::class, 'index']);
     Route::post('update', [LoginController::class, 'update']);
 
+    Route::post('review',RatingController::class);
 
     Route::get('product', [ProductController::class, 'myProducts']);
 });

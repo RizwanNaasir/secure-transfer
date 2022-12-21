@@ -28,7 +28,7 @@
                                 History Detail
                                 @if(!$fromSender)
                                 <span style="float: right">
-                                <button type="button" onclick="Livewire.emit('openModal', 'contracts.rating')"
+                                <button type="button" onclick="Livewire.emit('openModal', 'contracts.rating', {{ json_encode(["recipient_id" => $recipient->id]) }})"
                                         class="flex flex-row-reverse text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 shadow-lg shadow-yellow-500/50 dark:shadow-lg dark:shadow-yellow-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                                 <span class="ml-2">Rating </span>
                             </button>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -37,26 +38,25 @@ class ProductController extends Controller
 
     public function updateProduct(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'price' => 'required',
-            'image' => 'required',
-            'description' => 'required',
-        ]);
-        if (filled($data)) {
-            $products = Product::query()->find($request->input('id'));
-            if (filled($products)) {
-                $products->image = $request->file('image')->store('public');
-                $products->user_id = $request->user()->id;
-                $products->name = $request->input('name');
-                $products->price = $request->input('price');
-                $products->description = $request->input('description');
-                $products->update();
-                return $this->success(message: 'Product Updated Successfully');
-            } else {
-                return $this->notFound([]);
-            }
+
+        $product = Product::findOrFail($request->input('product_id'));
+
+        if (filled($request->input('name'))) {
+            $product->name = $request->input('name');
         }
+        if (filled($request->input('price'))) {
+            $product->price = $request->input('price');
+        }
+        if (filled($request->input('description'))) {
+            $product->description = $request->input('description');
+        }
+        if ($request->hasFile('image')) {
+            $product->image = $request->file('image')->store('public');
+        }
+
+        $product->save();
+
+        return $this->success(message: 'Product Updated Successfully');
     }
 
     public function destroy(Product $product)
