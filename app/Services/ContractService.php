@@ -64,12 +64,6 @@ class ContractService extends Service
         $contract->user()->attach($user->id, ['recipient_id' => $recipient->id]);
     }
 
-    public static function notifyBothUsersAboutContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
-    {
-        Mail::to($recipient)
-            ->send(new NewContractMail($contract, $user, $recipient));
-    }
-
     public static function getCode(Model|Builder $contract, User $recipient)
     {
         $code = self::createQrCode(
@@ -86,14 +80,19 @@ class ContractService extends Service
     {
         return QrCode::size(250)
             ->generate(
-                url('/contract/process?'
-                    . http_build_query([
-                            'contract_id' => $contract_id,
-                            'recipient_email' => $recipient_email
-                        ]
-                    )
+                '/api/contract/process?'
+                . http_build_query([
+                        'contract_id' => $contract_id,
+                        'recipient_email' => $recipient_email
+                    ]
                 )
             );
+    }
+
+    public static function notifyBothUsersAboutContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
+    {
+        Mail::to($recipient)
+            ->send(new NewContractMail($contract, $user, $recipient));
     }
 
     public static function updateContract(

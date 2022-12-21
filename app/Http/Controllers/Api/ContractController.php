@@ -7,6 +7,7 @@ use App\Http\Requests\ContractRequest;
 use App\Http\Resources\Api\ContractDetailResource;
 use App\Http\Resources\Api\ContractListResource;
 use App\Models\Contract;
+use App\Models\User;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
 use Psr\Container\ContainerExceptionInterface;
@@ -69,7 +70,7 @@ class ContractController extends Controller
      */
     public function contractDetails(Contract $contract)
     {
-        (bool)$fromSender = request()->get('from-sender',false);
+        (bool)$fromSender = request()->get('from-sender', false);
 
         $user = $fromSender ? $contract->user->first() : $contract->recipient->first();
 
@@ -102,5 +103,41 @@ class ContractController extends Controller
             ContractService::updateContract($contract, 'declined', \request()->input('description'));
             return $this->success(message: 'Contract declined');
         }
+    }
+
+    public function process(Request $request)
+    {
+        $contract = Contract::query()->where('id', $request->get('contract_id'))
+            ->firstOrFail();
+        if (!$contract->is_pending) {
+            return $this->error(message: 'Contract Already Resolved');
+        }
+
+        if ($contract->recipient_detail['email'] !== $request->user()->email) {
+            return $this->error(message: 'This contract does not belong to you');
+        }
+
+        $tempUser = $this->getUserVia(email: $request->get('recipient_email'));
+
+        if (filled($tempUser)) {
+            return $this->error(message: 'You need to register before you can perform any actions.');
+        }
+
+        $response = ContractService::updateContract($contract, 'accepted');
+
+        if (filled($response)) {
+            return $this->success(message: 'Contract Accepted Successfully');
+        } else {
+            return $this->error(message: 'Something Went Wrong!');
+        }
+
+    }
+
+    public function getUserVia(string $email): object|null
+    {
+        return User::query()
+            ->where(['email' => $email])
+            ->whereNull('password')
+            ->first();
     }
 }

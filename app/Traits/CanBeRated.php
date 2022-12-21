@@ -43,4 +43,13 @@ trait CanBeRated
             return true;
         }
     }
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->ratings->average('stars');
+    }
+    public function getReviewsCountAttribute()
+    {
+        return $this->ratings->count();
+    }
 }

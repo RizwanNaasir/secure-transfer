@@ -14,6 +14,7 @@
                 </div>
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">{{$recipient->fullname}}</h1>
+                    <x-average-ratings :model="$recipient"/>
                 </div>
             </div>
         </div>

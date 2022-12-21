@@ -56,6 +56,9 @@ Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_d
     Route::get('detail/{contract}', [ContractController::class, 'contractDetails']);
     Route::post('accept', [ContractController::class, 'acceptContract']);
     Route::post('decline', [ContractController::class, 'declineContract']);
+
+
+    Route::post('process',[ContractController::class,'process']);
 });
 
 //Products
