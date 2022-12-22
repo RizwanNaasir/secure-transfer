@@ -66,7 +66,8 @@ class EditProfile extends Component implements HasForms
     private function getDocuments(string $name): mixed
     {
         if (isset($this->$name)) {
-            $name = collect($this->$name)->map(static fn($file) => $file->store($name))->first();
+            $name = collect($this->$name)
+                ->map(static fn($file) => $file->store('public'))->first();
         } else {
             $name = null;
         }
@@ -122,11 +123,11 @@ class EditProfile extends Component implements HasForms
                     ->columnSpan(2),
             ]),
             Grid::make('4')->schema([
-                FileUpload::make('document1')->label('Select Image')->columnSpan(2)->image(),
-                FileUpload::make('document2')->label('Select Document')->columnSpan(2)
+                FileUpload::make('document1')
+                    ->label('Select Image')->columnSpan(2)->image(),
+                FileUpload::make('document2')
+                    ->label('Select Document')->columnSpan(2)
                     ->acceptedFileTypes(['application/pdf']),
-
-
             ])
 
         ];

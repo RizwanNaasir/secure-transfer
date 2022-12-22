@@ -6,6 +6,8 @@ use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\TextInput;
 use Filament\Pages\Actions\Action;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -29,24 +31,30 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('avatar')->avatar()->directory('public'),
-                Forms\Components\TextInput::make('name')
+                FileUpload::make('avatar')
+                    ->columnSpan(2)
+                    ->avatar()
+                    ->directory('public'),
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('surname')
+                TextInput::make('surname')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
+                TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255),
-//                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('phone')
+                TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
-//                Forms\Components\TextInput::make('password')
-//                    ->password()
-//                    ->maxLength(255),
-
+                FileUpload::make('document1')
+                    ->label('First Document')
+                    ->enableDownload()
+                    ->directory('public'),
+                FileUpload::make('document2')
+                    ->label('Second Document')
+                    ->directory('public')
+                    ->enableDownload(),
             ]);
     }
 

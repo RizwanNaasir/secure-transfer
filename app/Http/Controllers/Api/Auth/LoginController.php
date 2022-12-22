@@ -54,6 +54,12 @@ class LoginController extends Controller
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->store('public');
         }
+        if ($request->hasFile('document1')) {
+            $user->document1 = $request->file('document1')->store('public');
+        }
+        if ($request->hasFile('document2')) {
+            $user->document2 = $request->file('document2')->store('public');
+        }
         $user->save();
 
         return $this->success(['profile' => $user], message: 'Profile updated successfully');

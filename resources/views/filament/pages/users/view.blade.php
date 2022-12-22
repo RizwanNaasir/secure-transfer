@@ -7,7 +7,7 @@
                 <div class="flex items-center space-x-5">
                     <div class="flex-shrink-0">
                         <div class="relative">
-                            <img class="h-16 w-16 rounded-full" src="{{$recipient->avatar}}" alt="">
+                            <img class="h-16 w-16 rounded-full" src="{{$recipient->full_avatar}}" alt="">
                         </div>
                     </div>
                {{--     <div>
@@ -18,7 +18,7 @@
 
             <div class="mx-auto mt-8 grid max-w-full grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2">
                 <div class="space-y-6 lg:col-span-2 lg:col-start-1">
-                    <h1 class="text-2xl font-bold text-gray-900">{{$recipient->fullname}}</h1>
+                    <h1 class="text-2xl font-bold text-gray-900">{{$recipient->full_name}}</h1>
                     <!-- Description list-->
                     <section aria-labelledby="applicant-information-title">
                         <div class="bg-grey shadow sm:rounded-lg py-12 " style="padding-top: 0%" >
@@ -46,17 +46,16 @@
                                         <dt class="text-sm font-medium text-gray-500">Download Image</dt>
                                         <dd  class="mt-1 text-sm text-gray-900">
                                             @if(!empty($recipient->document1))
-                                                <a href="{{asset('media/'.$recipient->document1)}}">
+                                                <a href="{{$recipient->document1_path}}" target="_blank" download>
                                                     <svg class="w-8 h-8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></dd>
                                                 </a>
                                             @endif
-
                                     </div>
                                     <div class="sm:col-span-1">
                                         <dt class="text-sm font-medium text-gray-500">Download Pdf File</dt>
                                         <dd class="mt-1 text-sm text-gray-900 flex flex-row">
                                             @if(!empty($recipient->document2))
-                                                <a href="{{asset('media/'.$recipient->document2)}}">
+                                                <a href="{{$recipient->document2_path}}" target="_blank" download>
                                                     <svg class="w-8 h-8" fill="white" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                                 </a>
                                             @endif
