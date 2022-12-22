@@ -41,9 +41,9 @@ class Contract extends Model
     public function getCurrentStatusAttribute(): string
     {
         return match ($this->status()->first()->status) {
-            'accepted' => __('Accepted'),
-            'declined' => __('Declined'),
-            'pending' => __('Pending'),
+            'accepted' => __('lang.accepted'),
+            'declined' => __('lang.declined'),
+            'pending' => __('lang.pending'),
         };
     }
 

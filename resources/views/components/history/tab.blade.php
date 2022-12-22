@@ -37,7 +37,7 @@
                                     <div class="">
                                         <div>
                                             <p class="text-md text-gray-900">
-                                                Amount:
+                                                {{__('lang.amount')}}:
                                                 <time class="font-normal">{{$contract->amount}}$</time>
                                             </p>
                                             <p class="mt-2 flex items-center text-sm text-gray-500">
@@ -72,7 +72,7 @@
                 </li>
             @empty
                 <div class="text-center">
-                    <p class="text-2xl font-bold">No Contracts</p>
+                    <p class="text-2xl font-bold">{{ __('lang.no_contract') }}</p>
                 </div>
             @endforelse
             @if($contracts->count() > 0)

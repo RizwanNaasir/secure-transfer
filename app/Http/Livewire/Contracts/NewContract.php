@@ -41,18 +41,21 @@ class NewContract extends Component implements HasForms
     {
         return [
             TextInput::make('email')
+                ->label(__('lang.email'))
                 ->email()->required()
                 ->datalist(
                     options: User::query()->pluck('email')->toArray()
                 ),
             TextInput::make('amount')
+                ->label(__('lang.amount'))
                 ->numeric()->required(),
-            Textarea::make('description'),
+            Textarea::make('description')->label(__('lang.description')),
             Grid::make(4)
                 ->schema([
-                FileUpload::make('file')->columnSpan(4),
+                FileUpload::make('file')->label(__('lang.file'))->columnSpan(4),
                 ]),
             Radio::make('preferred_payment_method')
+                ->label(__('lang.preferred'))
                 ->options([
                     'crypto' => 'Crypto',
                     'bank' => 'Bank',

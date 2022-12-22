@@ -78,38 +78,42 @@ class RegisterFromHome extends Component implements HasForms
         return [
             Grid::make(4)->schema([
                 TextInput::make('name')
-                    ->label('First Name')
+                    ->label(__('lang.first_name'))
                     ->required()
                     ->placeholder('John')
                     ->maxLength(255)
                     ->columnSpan(2),
                 TextInput::make('surname')
-                    ->label('Last Name')
+                    ->label(__('lang.last_name'))
                     ->required()
                     ->placeholder('Doe')
                     ->maxLength(255)
                     ->columnSpan(2),
             ]),
             TextInput::make('email')
+                ->label(__('lang.email'))
                 ->required()
                 ->placeholder('email@example.com')
                 ->email()
                 ->unique('users', 'email', ignorable: $this->tempUser),
             TextInput::make('phone')
+                ->label(__('lang.phone'))
                 ->required()
                 ->placeholder('+92 (123) 456 7890')
                 ->unique('users', 'phone')
                 ->maxLength(255),
             Grid::make(4)->schema([
                 TextInput::make('password')
+                    ->label(__('lang.password'))
                     ->required()
-                    ->placeholder('Password')
+                    ->placeholder(__('lang.password'))
                     ->type('password')
                     ->confirmed()
                     ->columnSpan(2),
                 TextInput::make('password_confirmation')
+                    ->label(__('lang.password_confirmation'))
                     ->required()
-                    ->placeholder('Password Confirmation')
+                    ->placeholder(__('lang.password_confirmation'))
                     ->type('password')
                     ->columnSpan(2),
             ]),

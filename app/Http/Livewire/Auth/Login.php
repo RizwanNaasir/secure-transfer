@@ -68,14 +68,16 @@ class Login extends ModalComponent implements HasForms
     {
         return [
             TextInput::make('email')
+                ->label(__('lang.email'))
                 ->required()
                 ->placeholder('email@example.com'),
             TextInput::make('password')
+                ->label(__('lang.password'))
                 ->required()
                 ->password()
-                ->placeholder('password'),
+                ->placeholder(__('lang.password')),
             Checkbox::make('remember_me')
-                ->label('Remember me')
+                ->label(__('lang.remember-me'))
                 ->default(true),
         ];
     }

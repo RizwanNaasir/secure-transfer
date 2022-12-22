@@ -90,7 +90,7 @@
         {{--Start Testimonial--}}
         <section class="mb-20 text-gray-700 px-12 mt-6">
             <div class="text-center md:max-w-xl lg:max-w-3xl mx-auto">
-                <h3 class="text-3xl font-bold mb-6 text-gray-800">Testimonials</h3>
+                <h3 class="text-3xl font-bold mb-6 text-gray-800">{{__('lang.testimonials')}}</h3>
                 <p class="mb-6 pb-2 md:mb-12 md:pb-0">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam
                     iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum
@@ -552,8 +552,7 @@
             <div class="bg-warm-gray-50">
                 <div class="py-24 lg:py-32">
                     <div class="relative z-10 mx-auto max-w-7xl pl-4 pr-8 sm:px-6 lg:px-8">
-                        <h1 class="text-4xl font-bold tracking-tight text-warm-gray-900 sm:text-5xl lg:text-6xl">Sign Up
-                            Now!</h1>
+                        <h1 class="text-4xl font-bold tracking-tight text-warm-gray-900 sm:text-5xl lg:text-6xl">{{__('lang.sign_up_now')}}</h1>
                         <p class="mt-6 max-w-3xl text-xl text-warm-gray-500">
                             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus magnam voluptatum
                             cupiditate veritatis in accusamus quisquam.
@@ -580,7 +579,7 @@
                 </div>
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="relative bg-white shadow-xl">
-                        <h2 id="contact-heading" class="sr-only">Register Right Now</h2>
+                        <h2 id="contact-heading" class="sr-only">{{ __('lang.register_right_now') }}</h2>
 
                         <div class="grid grid-cols-2 lg:grid-cols-3">
                             <!-- Contact information -->
@@ -636,7 +635,7 @@
                                         </defs>
                                     </svg>
                                 </div>
-                                <h3 class="text-lg font-medium text-white">Sign up Righ now</h3>
+                                <h3 class="text-lg font-medium text-white">{{ __('lang.sign_up_right_now') }}</h3>
                                 <p class="mt-6 max-w-3xl text-base text-teal-50">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa libero labore natus,
                                     quod, quas, voluptatem quia voluptates quibusdam voluptatibus necessitatibus.
@@ -696,7 +695,7 @@
                                     </li>
                                     <li>
                                         <a class="text-teal-200 hover:text-teal-100" href="#">
-                                            <span class="sr-only">Twitter</span>
+                                            <span class="sr-only">{{ __('lang.twitter') }}</span>
                                             <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"
                                                  aria-hidden="true">
                                                 <path
@@ -717,8 +716,7 @@
             <!-- Contact grid -->
             <section aria-labelledby="offices-heading">
                 <div class="mx-auto max-w-7xl py-24 px-4 sm:py-32 sm:px-6 lg:px-8">
-                    <h2 id="offices-heading" class="text-3xl font-bold tracking-tight text-warm-gray-900">Our
-                        offices</h2>
+                    <h2 id="offices-heading" class="text-3xl font-bold tracking-tight text-warm-gray-900">{{ __('lang.our_offices') }}</h2>
                     <p class="mt-6 max-w-3xl text-lg text-warm-gray-500">Varius facilisi mauris sed sit. Non sed et duis
                         dui leo, vulputate id malesuada non. Cras aliquet purus dui laoreet diam sed lacus, fames.</p>
                     <div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">

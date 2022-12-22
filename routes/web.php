@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,13 @@ use App\Http\Controllers\ProductController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+
 
 Route::group([
     'prefix' => 'user',
@@ -35,7 +39,7 @@ Route::group([
     Route::post('add/product', [ProductController::class, 'addProduct']);
     Route::get('product-list', [ProductController::class, 'productList']);
     Route::get('edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
-    Route::post('update-product/{id}',[ProductController::class,'updateProduct']);
+    Route::post('update-product/{id}', [ProductController::class, 'updateProduct']);
 
     //    Payment method
     Route::get('create', [PaymentController::class, 'createCharge']);
@@ -52,6 +56,12 @@ Route::group([
     Route::get('deletecheckout', [PaymentController::class, 'deleteCheckout']);
 });
 
+/*Frontend pages*/
+
+Route::group([
+    '/{locale}',
+], function ($locale) {
+
 Route::get('home', [DashboardController::class, 'index'])->name('home');
 Route::get('add-contract', [DashboardController::class, 'viewContractForm']);
 Route::get('history', [DashboardController::class, 'history']);
@@ -63,10 +73,10 @@ Route::get('market_place', [DashboardController::class, 'marketingView'])->name(
 Route::get('market_details/{id}', [DashboardController::class, 'marketProduct']);
 Route::get('success', [DashboardController::class, 'successPayment']);
 Route::get('rating', [DashboardController::class, 'starRating']);
-
+});
 Route::group([
     'prefix' => 'contract',
-    'middleware' => ['web', 'auth','verify_document'],
+    'middleware' => ['web', 'auth', 'verify_document'],
     'as' => 'contract.'
 ], function () {
     Route::get('list/{tab}', [ContractController::class, 'list'])->name('list');

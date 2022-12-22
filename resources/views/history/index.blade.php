@@ -13,7 +13,7 @@
                                 'inline-block p-4 rounded-t-lg hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500' => $tab !== 'sent',
                                 'border-b-2 inline-block p-4 text-blue-600 rounded-t-lg hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500' => $tab === 'sent',
                             ])>
-                            Sent
+                            {{ __('lang.sent') }}
                         </button>
                     </li>
                     <li class="mr-2" role="presentation">
@@ -22,7 +22,7 @@
                                 'inline-block p-4 rounded-t-lg   hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500' => $tab !== 'received',
                                 'border-b-2 inline-block p-4 text-blue-600 rounded-t-lg hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-500 border-blue-600 dark:border-blue-500' => $tab === 'received',
                             ])>
-                            Received
+                            {{ __('lang.received') }}
                         </button>
                     </li>
                 </ul>

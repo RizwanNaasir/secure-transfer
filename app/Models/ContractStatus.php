@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ContractStatus extends Model
 {
-    use HasFactory;
-
     public function contract(): BelongsTo
     {
         return $this->belongsTo(Contract::class);
