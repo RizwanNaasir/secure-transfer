@@ -11,7 +11,7 @@ class RatingController extends Controller
     public function __invoke(Request $request)
     {
         $rated = $request->user()->review(
-            modelTobeReviewed: User::find($request->input('user_id')),
+            modelTobeReviewed: User::findOrFail($request->input('user_id')),
             reviewer: $request->user(),
             stars: $request->integer('stars'),
             review: $request->input('review')

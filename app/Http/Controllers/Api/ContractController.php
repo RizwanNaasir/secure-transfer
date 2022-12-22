@@ -77,8 +77,11 @@ class ContractController extends Controller
         return $this->success(data: [
             'contract' => ContractDetailResource::make($contract),
             'user' => [
+                'id' => $user->id,
                 'name' => $user->full_name,
-                'email' => $user->email
+                'email' => $user->email,
+                'average_rating' => $user->average_rating,
+                'total_reviews' => $user->ratings_count
             ],
         ]);
     }

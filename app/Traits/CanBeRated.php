@@ -44,11 +44,11 @@ trait CanBeRated
         }
     }
 
-    public function getAverageRatingAttribute()
+    public function getAverageRatingAttribute(): float|int
     {
-        return $this->ratings->average('stars');
+        return $this->ratings->average('stars') ?? 0;
     }
-    public function getReviewsCountAttribute()
+    public function getReviewsCountAttribute(): int
     {
         return $this->ratings->count();
     }

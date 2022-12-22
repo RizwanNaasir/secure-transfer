@@ -28,14 +28,14 @@
                                 <h2 id="applicant-information-title"
                                     class="text-lg font-medium leading-6 text-gray-900">
                                     {{ __('lang.history_detail') }}
-                                    @if(!$fromSender)
+                                    @if(!$contract->is_pending)
                                         <span style="float: right">
-                                <button type="button"
-                                        onclick="Livewire.emit('openModal', 'contracts.rating', {{ json_encode(["recipient_id" => $recipient->id]) }})"
-                                        class="flex flex-row-reverse text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 shadow-lg shadow-yellow-500/50 dark:shadow-lg dark:shadow-yellow-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4">
-                                <span class="ml-2">Rate This User</span>
-                            </button>
-                            </span>
+                                            <button type="button"
+                                                    onclick="Livewire.emit('openModal', 'contracts.rating', {{ json_encode(["recipient_id" => $recipient->id]) }})"
+                                                    class="flex flex-row-reverse text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 dark:focus:ring-yellow-800 shadow-lg shadow-yellow-500/50 dark:shadow-lg dark:shadow-yellow-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-4">
+                                                <span class="ml-2">Rate This User</span>
+                                            </button>
+                                        </span>
                                     @endif
                                 </h2>
 
