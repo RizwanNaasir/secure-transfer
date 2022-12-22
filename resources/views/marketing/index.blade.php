@@ -20,8 +20,8 @@
                             <div class="relative group/item">
                                 <a href="{{url('market_details/'.$product->id)}}">
                                     <div class="space-y-4">
-                                        <div class="object-cover shadow-lg h-[280px] w-auto h-[280px] w-auto">
-                                            <img class="rounded-lg " width="220" height="auto" src="{{$product->full_image}}" alt="">
+                                        <div class="object-cover w-auto">
+                                            <img class="rounded-lg shadow-lg max-h-[210px]" width="280" src="{{$product->full_image}}" alt="">
                                         </div>
 
                                         <div class="space-y-2">
