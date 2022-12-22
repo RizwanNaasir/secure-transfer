@@ -18,7 +18,7 @@ class ContractController extends Controller
 
     public function list($tab = 'sent')
     {
-        if(!in_array($tab, ['sent', 'received'])) {
+        if (!in_array($tab, ['sent', 'received'])) {
             Notification::make()->title('Invalid tab')->warning()->send();
             return redirect(url('/'));
         }
@@ -50,7 +50,14 @@ class ContractController extends Controller
     {
         $contract = Contract::query()->where('id', $request->get('contract_id'))
             ->firstOrFail();
-
+        if (!$contract->is_pending) {
+            Notification::make()
+                ->title('Contract Resolved')
+                ->body('Contract Already Resolved')
+                ->warning()
+                ->send();
+            return route('home');
+        }
         $tempUser = $this->getUserVia(email: $request->get('recipient_email'));
         if (!is_null($tempUser)) {
             Notification::make()
@@ -60,8 +67,6 @@ class ContractController extends Controller
                 ->send();
             return view('user.register', compact('tempUser'));
         }
-
-//        ContractService::acceptContract($request);
 
         return view('contract.accept-contract', compact('contract'));
     }

@@ -22,6 +22,7 @@ class Sent extends Component
                 ->user()
                 ->contracts()
                 ->with('status', 'recipient')
+                ->orderByDesc('id')
                 ->paginate(5),
             'tab' => $this->tab,
         ]);

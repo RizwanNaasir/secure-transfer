@@ -86,7 +86,7 @@ class EditProfile extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            FileUpload::make('avatar')->avatar()->directory('public')
+            FileUpload::make('avatar')
                 ->label('Avatar')
                 ->placeholder('Upload your avatar')
                 ->required()

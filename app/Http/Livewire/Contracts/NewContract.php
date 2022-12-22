@@ -32,6 +32,17 @@ class NewContract extends Component implements HasForms
 
     public function submit()
     {
+        $this->validate([
+            'email' => 'required|email|exists:users,email',
+            'amount' => 'required',
+            'description' => 'required',
+            'file' => 'required',
+            'preferred_payment_method' => 'required',
+        ],[
+            'email.exists' => 'User does not exists!'
+        ]);
+
+
         ContractService::create($this->formattedData(), auth()->user());
         Notification::make()->title('Contract sent successfully!')->success()->send();
         $this->emit('openModal', 'qr-code-modal');

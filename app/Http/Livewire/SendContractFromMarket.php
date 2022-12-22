@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
+use App\Models\Product;
+use App\Services\ContractService;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -12,26 +15,47 @@ use LivewireUI\Modal\ModalComponent;
 class SendContractFromMarket extends ModalComponent implements HasForms
 {
     use InteractsWithForms;
-    public int $price = 0;
-    public string $description = '';
-    public function render()
+
+    public string $preferred_payment_method = '';
+    public $product;
+
+    public function mount()
     {
-        return view('livewire.send-contract-from-market');
+        $this->product = Product::find(session()->get('product_id'));
     }
+
     public function getFormSchema(): array
     {
         return [
-            TextInput::make('price')->numeric(),
-            Textarea::make('description')
-
+            Card::make([
+                Placeholder::make('Price')
+                    ->content('Price of This Product is $' . $this->product->price),
+                Radio::make('preferred_payment_method')
+                    ->label('Select you preferred payment method')
+                    ->options([
+                        'crypto' => 'Crypto',
+                        'bank' => 'Bank',
+                    ])->inline()->required()
+                    ->extraAttributes(['class' => 'gap-10'])
+            ])
         ];
     }
 
     public function submit()
     {
-
-//        dd($this->form->getState());
-        $this->closeModal();
+        ContractService::create($this->getFormattedData(),auth()->user());
         Notification::make()->title('Contract sent successfully!')->success()->send();
+        $this->emit('openModal', 'qr-code-modal');
+    }
+
+    public function getFormattedData(): array
+    {
+        return [
+            'email' => $this->product->user->email,
+            'amount' => $this->product->price,
+            'description' => $this->product->description,
+            'file' => $this->product->image,
+            'preferred_payment_method' => $this->preferred_payment_method,
+        ];
     }
 }

@@ -20,8 +20,8 @@ class ContractDetailResource extends JsonResource
             'current_status' => $this->current_status,
             'file_path' => $this->file_path,
             'is_pending' => $this->is_pending,
-            'recipient_detail' => $this->recipient_detail,
-            'sender_detail' => $this->sender_detail,
+            'created_at' => $this->created_at->format('d-M-Y H-i-s A'),
+            'qr_code' => $this->status->qr_code
         ];
     }
 }

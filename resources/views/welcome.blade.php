@@ -1,3 +1,5 @@
+@php use App\Models\Banner; @endphp
+@php($banners = Banner::all())
 @extends('layouts.app')
 @section('content')
     @include('layouts.header')
@@ -11,43 +13,41 @@
                     <div id="default-carousel" class="relative" data-carousel="slide">
                         <!-- Carousel wrapper -->
                         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                            <!-- Item 1 -->
-                            <div
-                                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-0"
-                                data-carousel-item="">
+                            @forelse($banners as $banner)
+                                <a href="{{$banner->link}}" target="_blank">
+                                    <div
+                                            class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-0"
+                                            data-carousel-item="">
                                 <span
-                                    class="absolute text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-                                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                     alt="...">
-                            </div>
-                            <!-- Item 2 -->
-                            <div
-                                class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-full z-0"
-                                data-carousel-item="">
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-                                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                     alt="...">
-                            </div>
-                            <!-- Item 3 -->
-                            <div
-                                class="duration-700 ease-in-out absolute inset-0 transition-all transform -translate-x-full z-0"
-                                data-carousel-item="">
-                                <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
-                                     class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                     alt="...">
-                            </div>
+                                        class="absolute text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
+                                        <img src="{{$banner->image_path}}"
+                                             class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                             alt="{{$banner->name}}">
+                                    </div>
+                                </a>
+                            @empty
+                                <div
+                                        class="duration-700 ease-in-out absolute inset-0 transition-all transform translate-x-0 z-0"
+                                        data-carousel-item="">
+                                <span
+                                        class="absolute text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
+                                    <img src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
+                                         class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                         alt="...">
+                                </div>
+                            @endforelse
+
                         </div>
                         <!-- Slider indicators -->
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2 z-0">
-                            <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
-                                    aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                            <button type="button"
-                                    class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
-                                    aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                            <button type="button"
-                                    class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800"
-                                    aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                            @forelse($banners as $banner)
+                                @php($slider = 0)
+                                <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
+                                        aria-current="true" aria-label="Slide {{$slider + 1}}" data-carousel-slide-to="{{$slider++}}"></button>
+                            @empty
+                                <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800"
+                                        aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                            @endforelse
                         </div>
                         <!-- Slider controls -->
                         <button type="button"

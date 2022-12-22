@@ -29,7 +29,7 @@ class ContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|exists:users,email',
             'amount' => 'required',
             'description' => 'required',
             'file' => 'required|file',
