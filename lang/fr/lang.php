@@ -64,7 +64,16 @@ return [
     'accepted' => 'Accepté',
     'declined' => 'Diminué',
     'pending' => 'En attente',
-
+    'name' => 'Nom',
+    'price' => 'Prix',
+    'submit' => 'Nous faire parvenir',
+    'history_detail' => "Détail de l'historique",
+    'status' => 'Statut',
+    'attachment' => 'Attachement',
+    'download' => 'Télécharger',
+    'qr' => 'QR Code',
+    'approve' => 'Approuver',
+    'confirmation' => 'Voulez-vous vraiment supprimer ce produit ?',
 
 
 ]

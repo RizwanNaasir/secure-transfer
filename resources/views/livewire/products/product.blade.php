@@ -28,7 +28,7 @@
     <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
         <div class="container max-w-screen-lg mx-auto">
             <div style="margin-top: -2%">
-                <h2 class="font-semibold text-xl text-gray-600">Add Product</h2>
+                <h2 class="font-semibold text-xl text-gray-600">{{ __('lang.add_product') }}</h2>
                 {{--<p class="text-gray-500 mb-6">Form is mobile responsive. Give it a try.</p>--}}
 
                 <form class="mt-5" action="{{url('user/add/product')}}" method="post" enctype="multipart/form-data">
@@ -41,7 +41,6 @@
                                     <img id="blah" src="#" alt="" />
                                 </div>
                                 <div class="mt-4 flex justify-center">
-
                                     {{--{{url('media/'.$product->image)}}--}}
                                     <img src="" name="image" class="previewImage"
                                          height="30%" width="30%" alt="">
@@ -49,20 +48,20 @@
                             </div>
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-1">
                                 <div class="col-span-2">
-                                    <label for="full_name">Name</label>
+                                    <label for="full_name">{{ __('lang.name') }}</label>
                                     <input type="text" name="name" id="full_name"
                                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                            value=""/>
                                 </div>
 
                                 <div class="col-span-2">
-                                    <label for="price">Price</label>
+                                    <label for="price">{{ __('lang.price') }}</label>
                                     <input type="number" name="price" id="price"
                                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                            value=""/>
                                 </div>
                                 <div class="col-span-4">
-                                    <label for="address">Description</label>
+                                    <label for="address">{{__('lang.description')}}</label>
                                     <textarea name="description" class="w-full bg-gray-50"
                                               rows="5"></textarea>
                                 </div>
@@ -70,7 +69,7 @@
                                     <div class="inline-flex items-end">
                                         <button
                                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
-                                            Submit
+                                            {{ __('lang.submit') }}
                                         </button>
                                     </div>
                                 </div>

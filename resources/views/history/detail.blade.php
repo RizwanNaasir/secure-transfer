@@ -27,7 +27,7 @@
                             <div class="flex-row px-4 py-5 sm:px-6">
                                 <h2 id="applicant-information-title"
                                     class="text-lg font-medium leading-6 text-gray-900">
-                                    History Detail
+                                    {{ __('lang.history_detail') }}
                                     @if(!$fromSender)
                                         <span style="float: right">
                                 <button type="button"
@@ -43,27 +43,27 @@
                             <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
                                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Name</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('lang.name') }}</dt>
                                         <dd class="mt-1 text-sm text-gray-900">{{$recipient->fullname}}</dd>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Email address</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('lang.email') }}</dt>
                                         <dd class="mt-1 text-sm text-gray-900">{{$recipient->email}}</dd>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Amount</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('lang.amount') }}</dt>
                                         <dd class="mt-1 text-sm text-gray-900">${{$contract->amount}}</dd>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Preferred Payment Method</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{__('lang.preferred')}}</dt>
                                         <dd class="mt-1 text-sm text-gray-900">{{ucfirst($contract->preferred_payment_method)}}</dd>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Description</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{__('lang.description')}}</dt>
                                         <dd class="mt-1 text-sm text-gray-900">{{$contract->description}}</dd>
                                     </div>
                                     <div class="sm:col-span-1">
-                                        <dt class="text-sm font-medium text-gray-500">Status</dt>
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('lang.status') }}</dt>
                                         <dd class="mt-1 text-sm text-gray-900 flex flex-row">
                                             @switch($contract->current_status)
                                                 @case('Pending')
@@ -81,7 +81,7 @@
                                     </div>
                                     @if(isset($contract->file))
                                         <div class="sm:col-span-2">
-                                            <dt class="text-sm font-medium text-gray-500">Attachment</dt>
+                                            <dt class="text-sm font-medium text-gray-500">{{ __('lang.attachment') }}</dt>
                                             <dd class="mt-1 text-sm text-gray-900">
                                                 <ul role="list"
                                                     class="divide-y divide-gray-200 rounded-md border border-gray-200">
@@ -99,7 +99,7 @@
                                                         </div>
                                                         <div class="ml-4 flex-shrink-0">
                                                             <a href="{{$contract->file_path}}" target="_blank" download
-                                                               class="font-medium text-blue-600 hover:text-blue-500">Download</a>
+                                                               class="font-medium text-blue-600 hover:text-blue-500">{{ __('lang.download') }}</a>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -108,7 +108,7 @@
                                     @endif
                                     @if(!$fromSender and $contract->is_pending)
                                         <div class="sm:col-span-2">
-                                            <dt class="text-sm font-medium text-gray-500">QR Code</dt>
+                                            <dt class="text-sm font-medium text-gray-500">{{ __('lang.qr') }}</dt>
                                             <dd class="m-2 text-sm text-gray-900">
                                                 {!! $contract->status->qr_code !!}
                                             </dd>
@@ -120,12 +120,12 @@
                                             <button type="button"
                                                     onclick="Livewire.emit('openModal', 'contracts.accept')"
                                                     class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                                <span class="ml-2">Approve </span>
+                                                <span class="ml-2">{{ __('lang.approve') }} </span>
                                             </button>
                                             <button type="button"
                                                     onclick="Livewire.emit('openModal', 'contracts.decline')"
                                                     class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                                                <span class="ml-2">Decline</span>
+                                                <span class="ml-2">{{__('lang.declined')}}</span>
                                             </button>
                                         </div>
                                     @endif

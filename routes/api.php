@@ -63,4 +63,3 @@ Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_d
 
 //Products
 Route::post('/tmp-upload/{id}', [TempController::class, 'tmpUpload']);
-Route::delete('/tmp-delete', [TempController::class, 'tmpDelete']);
