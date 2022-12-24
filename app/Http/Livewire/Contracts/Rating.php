@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Contracts;
 
 use App\Models\User;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
@@ -14,6 +15,8 @@ class Rating extends ModalComponent implements HasForms
     use InteractsWithForms;
 
     public int $stars = 0;
+    public ?string $review = null;
+
     public $recipient;
 
     public function mount(int $recipient_id)
@@ -26,14 +29,14 @@ class Rating extends ModalComponent implements HasForms
         $rated = auth()->user()->review(
             modelTobeReviewed: $this->recipient,
             reviewer: auth()->user(),
-            stars: $this->stars
+            stars: $this->stars,
+            review: $this->review
         );
 
 
         if ($rated or gettype($rated) === 'integer') {
             Notification::make()->success()
-                ->title('Rated !')
-                ->body('You have successfully rated ' . $this->recipient->fullname)
+                ->title('You have successfully rated ' . $this->recipient->fullname)
                 ->send();
             $this->closeModal();
         }
@@ -46,7 +49,9 @@ class Rating extends ModalComponent implements HasForms
                 ->label('Rate')
                 ->size(10)
                 ->required()
-                ->columnSpan(2)
+                ->columnSpan(2),
+            Textarea::make('review')
+                ->maxLength(255)
         ];
     }
 }

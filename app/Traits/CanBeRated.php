@@ -29,7 +29,10 @@ trait CanBeRated
         if ($ratingOnThisModel->exists()) {
 
             $ratingOnThisModel->update([
-                'stars' => $stars
+                'stars' => $stars,
+                'review' => filled($review)
+                    ? $review
+                    : $modelTobeReviewed->review
             ]);
             return $ratingOnThisModel->first()?->stars;
         } else {

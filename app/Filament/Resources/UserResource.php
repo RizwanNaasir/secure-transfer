@@ -65,6 +65,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')->sortable(),
                 ImageColumn::make('avatar')->circular()->disk(''),
                 TextColumn::make('full_name'),
                 TextColumn::make('email'),
