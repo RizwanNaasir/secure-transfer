@@ -93,12 +93,14 @@ class ContractController extends Controller
         if ($contract->current_status === 'Accepted') {
             /*return $this->success(message: 'Contract already accepted');*/
             Notification::make()->title('Contract')->body('Contract already accepted')->success()->send();
-            return redirect(route('contract.accepted'));
+            return redirect(url('contract/list/received'));
         } else {
             ContractService::updateContract($contract, 'accepted');
             /*return $this->success(message: 'Contract accepted');*/
             Notification::make()->title('Contract')->body('Contract accepted')->success()->send();
-            return redirect(route('contract.accepted'));
+//            dd($contract->id);
+//            session()->put('contract_id', $contract->id);
+            return redirect(url('contract/list/received'));
         }
     }
 
