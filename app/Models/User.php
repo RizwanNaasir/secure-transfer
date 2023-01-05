@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\CanBeRated;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Notifications\Notification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,12 +72,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
             ? url(Storage::url($this->avatar))
             : 'https://ui-avatars.com/api/?name=' . $this->name . '+' . $this->surname;
     }
+
     public function getDocument1PathAttribute(): ?string
     {
         return filled($this->document1) && file_exists(Storage::path($this->document1))
             ? url(Storage::url($this->document1))
             : null;
     }
+
     public function getDocument2PathAttribute(): ?string
     {
         return filled($this->document2) && file_exists(Storage::path($this->document2))
@@ -133,7 +136,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
         return $this->status === 'active';
     }
 
-    public function isAdmin():bool
+    public function isAdmin(): bool
     {
         return auth()->user()->role == 'admin';
     }
@@ -146,5 +149,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     public function temporaryFile(): HasMany
     {
         return $this->hasMany(TemporaryFile::class);
+    }
+
+    public function changeStatus(string $status)
+    {
+        $this->update(['status' => $status]);
+        $notification = Notification::make()->title('User ' . $status);
+        $notification = $status === 'active'
+            ? $notification->success()
+            : $notification->danger();
+        $notification->send();
     }
 }
