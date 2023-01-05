@@ -43,7 +43,7 @@ class SendContractFromMarket extends ModalComponent implements HasForms
 
     public function submit()
     {
-        ContractService::create($this->getFormattedData(),auth()->user());
+        ContractService::create($this->getFormattedData(),auth()->user(),$this->product);
         Notification::make()->title('Contract sent successfully!')->success()->send();
         $this->emit('openModal', 'qr-code-modal');
     }

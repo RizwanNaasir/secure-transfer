@@ -76,4 +76,9 @@ class Contract extends Model
     {
         return $this->belongsToMany(related: User::class, relatedPivotKey: 'recipient_id');
     }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

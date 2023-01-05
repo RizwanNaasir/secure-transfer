@@ -74,7 +74,7 @@ return [
     'qr' => 'QR Code',
     'approve' => 'Approuver',
     'confirmation' => 'Voulez-vous vraiment supprimer ce produit ?',
-
+    'attached_products' => ''
 
 ]
 ?>"

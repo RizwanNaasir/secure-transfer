@@ -18,10 +18,10 @@ class EditProfile extends Component implements HasForms
     use InteractsWithForms;
 
     public string $name = '';
-    public string $surname = '';
+    public null|string $surname = '';
     public string $email = '';
     public array|string|null $avatar = [];
-    public string $phone = '';
+    public null|string $phone = '';
     private User|Authenticatable|null $user = null;
 
     public function render()

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ProductContractRequest;
 use App\Models\Product;
 use App\Models\User;
+use App\Services\ContractService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -121,5 +123,34 @@ class ProductController extends Controller
         }
     }
 
+    public function makeContract(ProductContractRequest $request)
+    {
+        $product = Product::query()->findOrFail($request->validated('product_id'));
+        $QRCode = ContractService::create(
+            $this->getFormattedData($product,$request),
+            \request()->user(),
+            $product
+        );
+        try {
+            return $this->success(
+                data: [
+                    'qr_code' => $QRCode->toHtml()
+                ],
+                message: 'Contract sent successfully'
+            );
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage(), 400);
+        }
+    }
+    public function getFormattedData($product,$request): array
+    {
+        return [
+            'email' => $product->user->email,
+            'amount' => $product->price,
+            'description' => $product->description,
+            'file' => $product->image,
+            'preferred_payment_method' => $request->validated('preferred_payment_method'),
+        ];
+    }
 
 }

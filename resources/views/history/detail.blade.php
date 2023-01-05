@@ -106,6 +106,17 @@
                                             </dd>
                                         </div>
                                     @endif
+                                    @if($contract->has('products'))
+                                        <dt class="text-sm font-medium text-gray-500">{{ __('lang.attached_products') }}</dt>
+                                        <dd class="m-2 text-sm text-gray-900">
+                                            <ul role="list" class="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8 gap-8">
+                                                @foreach($contract->products as $product)
+                                                    <x-product.card :product="$product"/>
+                                                @endforeach
+                                                <!-- More people... -->
+                                            </ul>
+                                        </dd>
+                                    @endif
                                     @if(!$fromSender and $contract->is_pending)
                                         <div class="sm:col-span-2">
                                             <dt class="text-sm font-medium text-gray-500">{{ __('lang.qr') }}</dt>

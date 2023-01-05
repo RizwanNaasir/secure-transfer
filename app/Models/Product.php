@@ -7,6 +7,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 
@@ -58,6 +59,11 @@ class Product extends Model
             ? $notification->success()
             : $notification->danger();
         $notification->send();
+    }
+
+    public function contracts(): BelongsToMany
+    {
+        return $this->belongsToMany(Contract::class);
     }
 }
 

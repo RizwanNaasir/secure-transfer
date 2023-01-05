@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\NewContractMail;
 use App\Models\Contract;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -13,11 +14,11 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ContractService extends Service
 {
-    public static function create(array $data, User|Authenticatable $user)
+    public static function create(array $data, User|Authenticatable $user, Product $product = null)
     {
         $recipient = self::getOrCreateAnonymousRecipient(email: $data['email']);
 
-        $contract = self::createContract(Contract::query(), $data);
+        $contract = self::createContract(Contract::query(), $data, $product);
 
         self::attachBothUsersToContract($contract, $user, $recipient);
 
@@ -49,14 +50,18 @@ class ContractService extends Service
             );
     }
 
-    public static function createContract(Builder $contract, array $data): Builder|Model
+    public static function createContract(Builder $contract, array $data, Product $product = null): Builder|Model
     {
-        return $contract->create([
+        $contract = $contract->create([
             'amount' => $data['amount'],
             'description' => $data['description'],
             'file' => $data['file'],
             'preferred_payment_method' => $data['preferred_payment_method']
         ]);
+        if (!is_null($product)){
+            $product->contracts()->attach($contract->id);
+        }
+        return $contract;
     }
 
     public static function attachBothUsersToContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
