@@ -4,7 +4,7 @@ return [
     /*header*/
     'home'=>'Domicile',
     'add_new_contract'=>'Ajouter un nouveau contrat',
-    'history'=>"L'histoire",
+    'contracts'=>"Contrats",
     'market_place'=>'Marché',
     'login'=>'Connexion',
     'sign_up'=>"S'inscrire",

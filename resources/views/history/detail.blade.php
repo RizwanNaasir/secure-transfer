@@ -27,7 +27,7 @@
                             <div class="flex-row px-4 py-5 sm:px-6">
                                 <h2 id="applicant-information-title"
                                     class="text-lg font-medium leading-6 text-gray-900">
-                                    {{ __('lang.history_detail') }}
+                                    {{ __('lang.contracts_detail') }}
                                     @if(!$contract->is_pending)
                                         <span style="float: right">
                                             <button type="button"

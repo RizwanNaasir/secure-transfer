@@ -63,7 +63,7 @@
                     <a href="{{route('contract.list','sent')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--History--}}
-                        <span class="mr-4">{{__('lang.history')}}</span><span class="ml-4 border-r-2"></span>
+                        <span class="mr-4">{{__('lang.contracts')}}</span><span class="ml-4 border-r-2"></span>
                     </a>
                 @endauth
                 <a href="{{route('all.products')}}"
@@ -224,7 +224,7 @@
                                                         <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
                                                         <title>
                                                             {{--history--}}
-                                                            {{__('lang.history')}}
+                                                            {{__('lang.contracts')}}
                                                         </title>
                                                         <desc>{{__('lang.created_with_sketch')}}.</desc>
                                                         <g id="Icons" stroke="none" stroke-width="1" fill="none"

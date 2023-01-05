@@ -4,7 +4,7 @@ return [
     /*header*/
     'home' => 'Home',
     'add_new_contract' => 'Add New Contract',
-    'history' => 'History',
+    'contracts' => 'Contracts',
     'market_place' => 'Market Place',
     'login' => 'Login',
     'sign_up' => 'Sign Up',
