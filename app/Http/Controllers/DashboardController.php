@@ -41,7 +41,7 @@ class DashboardController extends Controller
 
     public function marketingView()
     {
-       $products = Product::all();
+       $products = Product::query()->approved()->get();
         return view( 'marketing.index',['products'=>$products]);
     }
 

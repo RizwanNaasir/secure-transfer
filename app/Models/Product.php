@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\CanBeRated;
+use Filament\Notifications\Notification;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
@@ -40,10 +42,22 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('approved',1);
+    }
     public function authUserIsOwner(): bool
     {
         return (int) $this->user_id === (int) auth()->id();
     }
-
+    public function approve()
+    {
+        $this->update(['approved' => !$this->approved]);
+        $notification = Notification::make()->title('Product Updated');
+        $notification = $this->approved
+            ? $notification->success()
+            : $notification->danger();
+        $notification->send();
+    }
 }
 

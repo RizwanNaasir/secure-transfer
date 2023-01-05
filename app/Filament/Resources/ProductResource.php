@@ -12,8 +12,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductResource extends Resource
 {
@@ -35,6 +38,9 @@ class ProductResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -43,6 +49,26 @@ class ProductResource extends Resource
                 TextColumn::make('name'),
                 TextColumn::make('description'),
                 TextColumn::make('price')
+            ])->actions([
+                Action::make('Approve')
+                    ->action(fn(Product $record) => $record->approve())
+                    ->color('success')
+                    ->icon('heroicon-o-check-circle')
+                    ->visible(fn(Product $record) => !$record->approved),
+                Action::make('Block')
+                    ->action(fn(Product $record) => $record->approve())
+                    ->color('danger')
+                    ->icon('heroicon-o-x-circle')
+                    ->visible(fn(Product $record) => $record->approved)
+            ])->bulkActions([
+                BulkAction::make('Approve')
+                    ->action(fn(Collection $records) => $records->each(fn(Product $product) => $product->approve()))
+                    ->color('success')
+                    ->icon('heroicon-o-check-circle'),
+                BulkAction::make('Block')
+                    ->action(fn(Collection $records) => $records->each(fn(Product $product) => $product->approve()))
+                    ->color('danger')
+                    ->icon('heroicon-o-x-circle')
             ]);
     }
 
