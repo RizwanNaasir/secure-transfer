@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Products;
 use Filament\Pages\Actions\DeleteAction;
 use Filament\Pages\Actions\EditAction;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -22,7 +23,7 @@ class ProductList extends Component implements HasTable
     }
     protected function getTableQuery(): Builder
     {
-        return \App\Models\Product::query();
+        return \App\Models\Product::query()->where('user_id',auth()->id());
     }
     protected function getTableColumns(): array
     {
@@ -30,6 +31,8 @@ class ProductList extends Component implements HasTable
             TextColumn::make('name'),
             TextColumn::make('price'),
             TextColumn::make('description'),
+            IconColumn::make('approved')
+                ->boolean(),
             ImageColumn::make('full_image'),
         ];
     }

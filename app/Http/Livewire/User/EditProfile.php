@@ -124,9 +124,9 @@ class EditProfile extends Component implements HasForms
             ]),
             Grid::make('4')->schema([
                 FileUpload::make('document1')
-                    ->label('Select Image')->columnSpan(2)->image(),
+                    ->label('Select CNIC')->columnSpan(2)->image(),
                 FileUpload::make('document2')
-                    ->label('Select Document')->columnSpan(2)
+                    ->label('Select Passport')->columnSpan(2)
                     ->acceptedFileTypes(['application/pdf']),
             ])
 
