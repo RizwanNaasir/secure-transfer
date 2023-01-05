@@ -10,7 +10,25 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard.index');
+        $user = auth()->user();
+        $totalNumberOfContracts = $user->allContracts()->count();
+        $totalAmountReceived = $user->receivedContracts()
+            ->notPending()
+            ->sum('amount');
+        $currentActiveContract = $user->allContracts()
+            ->latest()
+            ->pending()
+            ->first()
+            ->load('status');
+        $totalAmountSent = $user->contracts()
+            ->notPending()
+            ->sum('amount');
+        return view('dashboard.index',[
+            'totalNumberOfContracts' => $totalNumberOfContracts,
+            'totalAmountReceived' => $totalAmountReceived,
+            'currentActiveContract' => $currentActiveContract,
+            'totalAmountSent' => $totalAmountSent,
+        ]);
     }
 
 

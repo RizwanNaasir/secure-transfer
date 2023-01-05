@@ -65,22 +65,7 @@ class ContractResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('id'),
-                TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
-                TextColumn::make('description'),
-                BadgeColumn::make('status.status')
-                    ->colors([
-                        'warning' => 'pending',
-                        'success' => 'accepted',
-                        'danger' => 'declined',
-                    ])
-                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
-                TextColumn::make('user.email')->label('Sender')->limit(12),
-                TextColumn::make('recipient.email')->label('Recipient')->limit(12),
-                TextColumn::make('preferred_payment_method')
-                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
-            ])->filters(self::getTableFilters());
+            ->columns(self::getTableColumns())->filters(self::getTableFilters());
     }
     protected static function getTableFilters(): array
     {
@@ -128,5 +113,28 @@ class ContractResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('id'),
+            TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
+            TextColumn::make('description'),
+            BadgeColumn::make('status.status')
+                ->colors([
+                    'warning' => 'pending',
+                    'success' => 'accepted',
+                    'danger' => 'declined',
+                ])
+                ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
+            TextColumn::make('user.email')->label('Sender')->limit(12),
+            TextColumn::make('recipient.email')->label('Recipient')->limit(12),
+            TextColumn::make('preferred_payment_method')
+                ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
+        ];
     }
 }

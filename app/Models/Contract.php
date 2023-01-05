@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\CanBeRated;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,6 +38,18 @@ class Contract extends Model
     public function status(): HasOne
     {
         return $this->hasOne(ContractStatus::class);
+    }
+    public function scopeNotPending(Builder $query): Builder
+    {
+        return $query->whereHas('status',function (Builder $query){
+            return $query->whereNot(['status' => 'pending']);
+        });
+    }
+    public function scopePending(Builder $query): Builder
+    {
+        return $query->whereHas('status',function (Builder $query){
+            return $query->where(['status' => 'pending']);
+        });
     }
 
     public function getCurrentStatusAttribute(): string
