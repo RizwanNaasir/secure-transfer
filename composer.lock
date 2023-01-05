@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98533d474787ee12712f51c372370b7c",
+    "content-hash": "fe6d60401cf81394bcd58323e031616e",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -3896,6 +3896,69 @@
                 }
             ],
             "time": "2022-11-05T23:03:38+00:00"
+        },
+        {
+            "name": "rizwannasir/mtn-momo-api-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RizwanNaasir/mtn-momo-api-php.git",
+                "reference": "3bf23f4a6485025d3f1de3b8a4aefddb4742474f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RizwanNaasir/mtn-momo-api-php/zipball/3bf23f4a6485025d3f1de3b8a4aefddb4742474f",
+                "reference": "3bf23f4a6485025d3f1de3b8a4aefddb4742474f",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.0.1",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.5.0",
+                "phpunit/phpunit": "^6.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RizwanNasir\\MtnMomo\\MtnMomoServiceProvider"
+                    ],
+                    "aliases": {
+                        "MtnMomoCollection": "RizwanNasir\\MtnMomo\\Facades\\MtnCollectionFacade",
+                        "MtnMomoRemittance": "RizwanNasir\\MtnMomo\\Facades\\MtnRemittanceFacade",
+                        "MtnMomoDisbursement": "RizwanNasir\\MtnMomo\\Facades\\MtnDisbursementFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RizwanNasir\\MtnMomo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patric Poba",
+                    "email": "poba.dev@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Php wrapper for MTN Momo API - https://momodeveloper.mtn.com",
+            "homepage": "https://github.com/rizwannaasir/mtn-momo-api-php",
+            "keywords": [
+                "RizwanNasir",
+                "mtn-momo-api-php"
+            ],
+            "support": {
+                "source": "https://github.com/RizwanNaasir/mtn-momo-api-php/tree/master"
+            },
+            "time": "2022-12-26T08:00:50+00:00"
         },
         {
             "name": "ryangjchandler/blade-capture-directive",
@@ -9788,7 +9851,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "rizwannasir/mtn-momo-api-php": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

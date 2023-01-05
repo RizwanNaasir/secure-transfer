@@ -91,5 +91,22 @@ Setup Application Encryption Key:
 ```bash
 sail key:genrate
 ```
+
+Now Install Project Dependencies
+
+```bash
+sail composer install
+```
+
 Once the application's Docker containers have been started, you can access the application in your web browser at: [http://localhost](http://localhost).
  
+
+Whenever you do git pull in future always make sure to run these commands.
+
+```bash
+sail composer install
+```
+
+```bash
+sail artisan migrate
+```

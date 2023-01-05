@@ -125,12 +125,17 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
 
     public function canAccessFilament(): bool
     {
-        return true;
+        return auth()->user()->isAdmin();
     }
 
     public function getIsApprovedByAdminAttribute(): bool
     {
         return $this->status === 'active';
+    }
+
+    public function isAdmin():bool
+    {
+        return auth()->user()->role == 'admin';
     }
 
     public function products(): HasMany

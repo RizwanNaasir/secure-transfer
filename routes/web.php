@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use RizwanNasir\MtnMomo\MtnCollection;
+use RizwanNasir\MtnMomo\MtnConfig;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,25 @@ Route::group([
 });
 Route::get('contract/process', [ContractController::class, 'process'])->name('contract.process');
 
+
+Route::get('mtn',function (){
+    $config = new  MtnConfig(config('mtn-momo'));
+    $collection = new MtnCollection($config);
+
+    $params = [
+        "mobileNumber"      => '233540000000',
+        "amount"            => '100',
+        "externalId"        => '774747234',
+        "payerMessage"      => 'some note',
+        "payeeNote"         => '1212'
+    ];
+
+    $transactionId = $collection->requestToPay($params);
+
+    $transaction = $collection->getTransaction($transactionId);
+
+    dd($transaction);
+});
 
 /*
 |--------------------------------------------------------------------------

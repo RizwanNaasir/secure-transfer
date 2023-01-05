@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
         "opcodesio/log-viewer": "^1.6",
+        "rizwannasir/mtn-momo-api-php": "dev-master",
         "simplesoftwareio/simple-qrcode": "~4",
         "wire-elements/modal": "^1.0",
         "yepsua/filament-rating-field": "^0.1.0"
