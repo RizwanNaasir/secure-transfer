@@ -73,7 +73,7 @@ class ContractController extends Controller
         (bool)$fromSender = request()->get('from-sender', false);
 
         $user = $fromSender ? $contract->user->first() : $contract->recipient->first();
-
+        $contract->load('products','products.ratings');
         return $this->success(data: [
             'contract' => ContractDetailResource::make($contract),
             'user' => [

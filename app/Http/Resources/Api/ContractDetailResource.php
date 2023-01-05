@@ -21,7 +21,10 @@ class ContractDetailResource extends JsonResource
             'file_path' => $this->file_path,
             'is_pending' => $this->is_pending,
             'created_at' => $this->created_at->format('d-M-Y H-i-s A'),
-            'qr_code' => $this->status->qr_code
+            'qr_code' => $this->status->qr_code,
+            'product' => $this->whenLoaded(
+                'products', ProductResource::make($this->products->first())
+            )
         ];
     }
 }
