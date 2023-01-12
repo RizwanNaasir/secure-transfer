@@ -1,4 +1,4 @@
-<div>
+<div wire:key="{{rand(4,12)}}">
 
     <div class="hidden sm:block" aria-hidden="true">
         <div class="py-5">
@@ -93,7 +93,6 @@
 </div>
 
 @push('scripts')
-    @once
         <x-forms.filepond
                 :element="'document1'"
                 :source-image="auth()->user()->document1_path"
@@ -104,6 +103,11 @@
                 :source-image="auth()->user()->document2_path"
                 :wire-model="'document2'"
         />
+{{--        <x-forms.filepond--}}
+{{--                :element="'avatar'"--}}
+{{--                :source-image="auth()->user()->avatar_path"--}}
+{{--                wire-model="'avatar'"--}}
+{{--        />--}}
         <script>
             const avatarImage = '{{auth()->user()->avatar_path}}';
             const avatarEl = document.querySelector('input[name="avatar"]');
@@ -137,5 +141,4 @@
                 }
             );
         </script>
-    @endonce
 @endpush

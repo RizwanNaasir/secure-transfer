@@ -130,5 +130,4 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 });
 
 
-Route::post('pond',[UploadController::class,'store']);
-Route::post('load',[UploadController::class,'load']);
+Route::post('user/update',[UserController::class,'update']);

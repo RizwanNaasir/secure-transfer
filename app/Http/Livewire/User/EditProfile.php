@@ -38,7 +38,6 @@ class EditProfile extends Component implements HasForms
      */
     public function submit()
     {
-        dd($this->document1,$this->document2);
         $this->validate();
 
         User::query()->updateOrCreate(

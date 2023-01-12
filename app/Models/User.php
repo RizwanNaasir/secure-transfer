@@ -75,16 +75,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
 
     public function getDocument1PathAttribute(): ?string
     {
-        return filled($this->document1) && file_exists(Storage::path($this->document1))
+        return filled($this->document1)
             ? url(Storage::url($this->document1))
-            : null;
+            : '';
     }
 
     public function getDocument2PathAttribute(): ?string
     {
-        return filled($this->document2) && file_exists(Storage::path($this->document2))
+        return filled($this->document2)
             ? url(Storage::url($this->document2))
-            : null;
+            : '';
     }
 
     public function fullName(): Attribute
