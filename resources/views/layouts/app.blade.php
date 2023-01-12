@@ -16,7 +16,7 @@
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     @livewireStyles
-
+    @stack('styles')
 </head>
 
 <body class="font-sans antialiased z-0">
@@ -24,11 +24,12 @@
         @yield('content')
         {{ $slot ?? '' }}
     </div>
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     @livewire('notifications')
     @livewire('livewire-ui-modal')
     @livewireScripts
-@yield('scripts')
+    @yield('scripts')
+    @stack('scripts')
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 </body>
 </html>

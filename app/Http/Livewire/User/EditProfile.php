@@ -10,6 +10,9 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
@@ -20,11 +23,12 @@ class EditProfile extends Component implements HasForms
     public string $name = '';
     public null|string $surname = '';
     public string $email = '';
-    public array|string|null $avatar = [];
+    public $avatar;
+    public $document1;
+    public $document2;
     public null|string $phone = '';
-    private User|Authenticatable|null $user = null;
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.user.edit-profile');
     }
@@ -34,12 +38,12 @@ class EditProfile extends Component implements HasForms
      */
     public function submit()
     {
+        dd($this->document1,$this->document2);
         $this->validate();
 
         User::query()->updateOrCreate(
-            [
-                'email' => $this->email]
-            , [
+            attributes: ['email' => $this->email],
+            values: [
                 'name' => $this->name,
                 'surname' => $this->surname,
                 'email' => $this->email,
@@ -79,9 +83,9 @@ class EditProfile extends Component implements HasForms
         $this->form->fill(auth()->user()->toArray());
     }
 
-    public function getFormModel(): User|Authenticatable|null
+    protected function getFormModel(): string
     {
-        return $this->user;
+        return User::class;
     }
 
     protected function getFormSchema(): array

@@ -75,5 +75,6 @@ return [
     'approve' => 'Approve',
     'confirmation' => 'Are you sure want to delete this product?',
     'attached_products' => 'Attached Products',
-    'products' => 'My Products'
+    'products' => 'My Products',
+    'avatar' => 'Avatar'
 ];

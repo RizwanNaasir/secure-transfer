@@ -4,6 +4,7 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -127,3 +128,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         return Artisan::output();
     });
 });
+
+
+Route::post('pond',[UploadController::class,'store']);
+Route::post('load',[UploadController::class,'load']);
