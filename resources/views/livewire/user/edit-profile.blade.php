@@ -103,42 +103,10 @@
                 :source-image="auth()->user()->document2_path"
                 :wire-model="'document2'"
         />
-{{--        <x-forms.filepond--}}
-{{--                :element="'avatar'"--}}
-{{--                :source-image="auth()->user()->avatar_path"--}}
-{{--                wire-model="'avatar'"--}}
-{{--        />--}}
-        <script>
-            const avatarImage = '{{auth()->user()->avatar_path}}';
-            const avatarEl = document.querySelector('input[name="avatar"]');
+        <x-forms.filepond-avatar
+                :element="'avatar'"
+                :source-image="auth()->user()->avatar_path"
+                wire-model="'avatar'"
+        />
 
-            FilePond.create(avatarEl,
-                {
-                    server: {
-                        process: '/pond',
-                        load: (source, load, error, progress, abort, headers) => {
-                            // now load it using XMLHttpRequest as a blob then load it.
-                            let request = new XMLHttpRequest();
-                            request.open('GET', source);
-                            request.responseType = "blob";
-                            request.onreadystatechange = () => request.readyState === 4 && load(request.response);
-                            request.send();
-                        },
-                    },
-                    acceptedFileTypes: ['image/png', 'image/jpeg'],
-                    files: [{
-                        source: avatarImage,
-                        options: {type: 'local'},
-                    }],
-                    labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-                    imagePreviewHeight: 170,
-                    imageCropAspectRatio: '1:1',
-                    imageResizeTargetWidth: 200,
-                    imageResizeTargetHeight: 200,
-                    stylePanelLayout: 'compact circle',
-                    styleLoadIndicatorPosition: 'center bottom',
-                    styleButtonRemoveItemPosition: 'center bottom',
-                }
-            );
-        </script>
 @endpush
