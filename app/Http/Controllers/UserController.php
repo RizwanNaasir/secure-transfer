@@ -22,13 +22,13 @@ class UserController extends Controller
         $user = User::whereId($request->input('id'))->first();
 
         if ($request->hasFile('avatar')) {
-            $user->avatar = basename($request->file('avatar')->store('public'));
+            $user->avatar = $request->file('avatar')->store('public');
         }
         if ($request->hasFile('document1')) {
-            $user->document1 = basename($request->file('document1')->store('public'));
+            $user->document1 = $request->file('document1')->store('public');
         }
         if ($request->hasFile('document2')) {
-            $user->document2 = basename($request->file('document2')->store('public'));
+            $user->document2 = $request->file('document2')->store('public');
         }
         $user->save();
         return $this->success(['profile' => $user], message: 'Profile updated successfully');

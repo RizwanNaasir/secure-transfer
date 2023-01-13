@@ -23,9 +23,6 @@ class EditProfile extends Component implements HasForms
     public string $name = '';
     public null|string $surname = '';
     public string $email = '';
-    public $avatar;
-    public $document1;
-    public $document2;
     public null|string $phone = '';
 
     public function render(): View
@@ -46,10 +43,7 @@ class EditProfile extends Component implements HasForms
                 'name' => $this->name,
                 'surname' => $this->surname,
                 'email' => $this->email,
-                'document1' => $this->getDocuments('document1'),
-                'document2' => $this->getDocuments('document2'),
                 'phone' => $this->phone,
-                'avatar' => $this->getAvatar(),
             ]
         );
         Notification::make()->title('Profile updated')->success()->send();

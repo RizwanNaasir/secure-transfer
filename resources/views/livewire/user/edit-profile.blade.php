@@ -29,27 +29,27 @@
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="name" class="block text-sm font-medium text-gray-700">First
                                         name</label>
-                                    <input type="text" name="name" id="name" autocomplete="given-name"
+                                    <input type="text" wire:model="name" autocomplete="given-name"
                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">
                                     <label for="surname" class="block text-sm font-medium text-gray-700">Last
                                         name</label>
-                                    <input type="text" name="surname" id="surname" autocomplete="family-name"
+                                    <input type="text" wire:model="surname" autocomplete="family-name"
                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-4">
                                     <label for="email-address" class="block text-sm font-medium text-gray-700">Email
                                         address</label>
-                                    <input type="text" name="email-address" id="email-address" autocomplete="email"
+                                    <input type="text" wire:model="email" id="email-address" autocomplete="email"
                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
 
                                 <div class="col-span-6">
                                     <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                                    <input type="tel" name="phone" id="phone"
+                                    <input type="tel" wire:model="phone" id="phone"
                                            autocomplete="tel"
                                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 </div>
