@@ -13,11 +13,14 @@ class EmailVerificationController extends Controller
 {
     public function store(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        info('mess',[$request->all()]);
+        $user = User::whereEmail($request->input('email'))->firstOrFail();
+
+        if ($user->hasVerifiedEmail()) {
             return $this->success('Your is email already verified');
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         return $this->success('Verification link sent');
     }

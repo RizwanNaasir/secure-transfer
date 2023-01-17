@@ -31,8 +31,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', RegisterController::class);
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('forgetpassword', [ResetPasswordController::class, 'send']);
-    Route::post('email/verification',[EmailVerificationController::class,'store'])
-        ->middleware('auth:sanctum');
+    Route::post('email/verification',[EmailVerificationController::class,'store']);
     Route::post('email/verify',[EmailVerificationController::class,'verify']);
 });
 

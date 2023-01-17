@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\Auth\Register;
+use App\Http\Requests\RegisterApiRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,35 +12,24 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(RegisterApiRequest $request): JsonResponse
     {
-        try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'surname' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'phone' => 'required|string|max:255|unique:users',
-                'password' => ['required', Password::defaults()],
-            ]);
-        } catch (\Exception $e) {
-            return $this->error(
-                message: $e->getMessage(),
-                code: 400
-            );
-        }
+        info('req',$request->all());
 
         User::query()->create([
-            'name' => $request->get('name'),
-            'surname' => $request->get('surname'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-            'password' => bcrypt($request->get('password')),
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'password' => bcrypt($request->input('password')),
         ]);
 
         auth()->attempt($request->only('email', 'password'));
 
+        auth()->user()->sendEmailVerificationNotification();
+
         return $this->success(
-            data: ['token' => auth()->user()->createToken('API Token')->plainTextToken],
+//            data: ['token' => auth()->user()->createToken('API Token')->plainTextToken],
             message: 'User created successfully'
         );
     }

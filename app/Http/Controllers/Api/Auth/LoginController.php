@@ -15,6 +15,10 @@ class LoginController extends Controller
             'email' => 'required|string|email|exists:users,email',
             'password' => 'required|string|min:6'
         ]);
+        if (!User::whereEmail($credentials['email'])->first()->hasVerifiedEmail()){
+            return $this->error(
+                message: 'Please verify your email address!',code: 421);
+        }
         try {
             auth()->attempt($credentials);
             if (auth()->check()) {
