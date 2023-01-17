@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Contract;
 use App\Models\ContractStatus;
+use App\Models\User;
+use App\Observers\UserObserver;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -33,5 +35,7 @@ class AppServiceProvider extends ServiceProvider
 //        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
         Model::unguard();
         Model::preventAccessingMissingAttributes(!app()->isProduction());
+
+        User::observe(UserObserver::class);
     }
 }

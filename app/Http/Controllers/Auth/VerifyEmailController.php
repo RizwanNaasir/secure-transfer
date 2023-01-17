@@ -3,28 +3,41 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\EmailVerificationApiRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Filament\Notifications\Notification;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class VerifyEmailController extends Controller
 {
-    /**
-     * Mark the authenticated user's email address as verified.
-     *
-     * @param  \Illuminate\Foundation\Auth\EmailVerificationRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function __invoke(EmailVerificationRequest $request)
+    public function __invoke(EmailVerificationApiRequest $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        $user = User::findOrFail(request()->id);
+        if ($user->hasVerifiedEmail()) {
+            if (!request()->expectsJson()) {
+                Notification::make()
+                    ->title('Email Already Verified')
+                    ->warning()
+                    ->send();
+                return redirect()->intended(RouteServiceProvider::HOME . '?verified=1');
+            } else {
+                return $this->success('Your is email already verified');
+            }
+        }
+        event(new Verified($user));
+        if ($user->markEmailAsVerified()) {
+            if (!request()->expectsJson()) {
+                Notification::make()
+                    ->title('Email Verified')
+                    ->success()
+                    ->send();
+            }
+            return redirect()->intended(RouteServiceProvider::HOME . '?verified=1');
+        } else {
+            return $this->success('Your email is successfully verified');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
-
-        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
     }
 }

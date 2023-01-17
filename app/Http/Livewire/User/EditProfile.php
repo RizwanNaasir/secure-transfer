@@ -84,14 +84,14 @@ class EditProfile extends Component implements HasForms
     protected function getFormSchema(): array
     {
         return [
-            FileUpload::make('avatar')
-                ->label('Avatar')
-                ->placeholder('Upload your avatar')
-                ->required()
-                ->avatar()
-                ->image()
-                ->imageCropAspectRatio(1),
-            Grid::make(4)->schema([
+//            FileUpload::make('avatar')
+//                ->label('Avatar')
+//                ->placeholder('Upload your avatar')
+//                ->required()
+//                ->avatar()
+//                ->image()
+//                ->imageCropAspectRatio(1),
+//            Grid::make(4)->schema([
                 TextInput::make('name')
                     ->label('First Name')
                     ->required()
@@ -104,8 +104,8 @@ class EditProfile extends Component implements HasForms
                     ->placeholder('Doe')
                     ->maxLength(255)
                     ->columnSpan(2),
-            ]),
-            Grid::make(4)->schema([
+//            ]),
+//            Grid::make(4)->schema([
                 TextInput::make('email')
                     ->required()
                     ->placeholder('email@example.com')
@@ -118,14 +118,14 @@ class EditProfile extends Component implements HasForms
                     ->unique('users', 'phone', ignorable: auth()->user())
                     ->maxLength(255)
                     ->columnSpan(2),
-            ]),
-            Grid::make('4')->schema([
-                FileUpload::make('document1')
-                    ->label('Select CNIC')->columnSpan(2)->image(),
-                FileUpload::make('document2')
-                    ->label('Select Passport')->columnSpan(2)
-                    ->acceptedFileTypes(['application/pdf']),
-            ])
+//            ]),
+//            Grid::make('4')->schema([
+//                FileUpload::make('document1')
+//                    ->label('Select CNIC')->columnSpan(2)->image(),
+//                FileUpload::make('document2')
+//                    ->label('Select Passport')->columnSpan(2)
+//                    ->acceptedFileTypes(['application/pdf']),
+//            ])
 
         ];
     }

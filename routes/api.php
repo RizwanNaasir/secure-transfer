@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
@@ -30,6 +31,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', RegisterController::class);
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('forgetpassword', [ResetPasswordController::class, 'send']);
+    Route::post('email/verification',[EmailVerificationController::class,'store'])
+        ->middleware('auth:sanctum');
+    Route::post('email/verify',[EmailVerificationController::class,'verify']);
 });
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
