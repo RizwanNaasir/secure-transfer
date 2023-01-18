@@ -6,6 +6,7 @@ use App\Filament\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers\RecipientRelationManager;
 use App\Filament\Resources\ContractResource\RelationManagers\UserRelationManager;
 use App\Models\Contract;
+use App\Models\User;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -121,7 +122,7 @@ class ContractResource extends Resource
     public static function getTableColumns(): array
     {
         return [
-            TextColumn::make('id'),
+            TextColumn::make('id')->sortable(),
             TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
             TextColumn::make('description'),
             BadgeColumn::make('status.status')
@@ -131,8 +132,26 @@ class ContractResource extends Resource
                     'danger' => 'declined',
                 ])
                 ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
-            TextColumn::make('user.email')->label('Sender')->limit(12),
-            TextColumn::make('recipient.email')->label('Recipient')->limit(12),
+            TextColumn::make('user.full_name')
+                ->label('Sender')
+                ->limit(19)
+                ->formatStateUsing(function (Contract $record){
+                    if($record->user->first()->id == auth()->id()){
+                        return 'Me!✋';
+                    }else{
+                        return  $record->user->first()->full_name;
+                    }
+                }),
+            TextColumn::make('recipient.full_name')
+                ->label('Recipient')
+                ->limit(19)
+                ->formatStateUsing(function (Contract $record){
+                    if($record->recipient->first()->id == auth()->id()){
+                        return 'Me!✋';
+                    }else{
+                        return $record->recipient->first()->full_name;
+                    }
+                }),
             TextColumn::make('preferred_payment_method')
                 ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
         ];

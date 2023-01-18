@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\ContractController;
+use App\Http\Controllers\Api\DashBoardController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
 use App\Http\Controllers\Api\UserController;
@@ -42,6 +43,10 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::post('review',RatingController::class);
 
     Route::get('product', [ProductController::class, 'myProducts']);
+});
+
+Route::group(['prefix' => 'home','middleware' => 'auth:sanctum'],function (){
+    Route::get('dashboard',DashBoardController::class);
 });
 
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {

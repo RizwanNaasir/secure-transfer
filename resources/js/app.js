@@ -1,6 +1,6 @@
 import './bootstrap';
-import './charts/bar-chart';
-import './charts/line-chart';
+// import './charts/bar-chart';
+// import './charts/line-chart';
 // import './filepond';
 import Alpine from 'alpinejs';
 import FormsAlpinePlugin from '../../vendor/filament/forms/dist/module.esm'
