@@ -14,6 +14,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.6",
         "laravel/tinker": "^2.7",
+        "laraveldaily/laravel-charts": "^0.1.29",
         "livewire/livewire": "^2.10",
         "opcodesio/log-viewer": "^1.6",
         "rizwannasir/mtn-momo-api-php": "dev-master",

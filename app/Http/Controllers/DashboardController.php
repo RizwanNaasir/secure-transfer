@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
 class DashboardController extends Controller
 {
 
+    /**
+     * @throws \Exception
+     */
     public function index()
     {
         $user = auth()->user();
@@ -28,7 +32,44 @@ class DashboardController extends Controller
             'totalAmountReceived' => $totalAmountReceived,
             'currentActiveContract' => $currentActiveContract,
             'totalAmountSent' => $totalAmountSent,
+            'chart1' => $this->getCart1(),
+            'chart2' => $this->getCart2()
         ]);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getCart1(): LaravelChart
+    {
+        $chart_options = [
+            'chart_title' => 'Users by months',
+            'report_type' => 'group_by_date',
+            'model' => 'App\Models\User',
+            'group_by_field' => 'created_at',
+            'group_by_period' => 'month',
+            'chart_type' => 'bar',
+            'filter_field' => 'created_at',
+            'filter_days' => 30, // show only last 30 days
+        ];
+        return new LaravelChart($chart_options);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function getCart2(): LaravelChart
+    {
+        $chart_options = [
+            'chart_title' => 'Users by names',
+            'report_type' => 'group_by_string',
+            'model' => 'App\Models\User',
+            'group_by_field' => 'name',
+            'chart_type' => 'line',
+            'filter_field' => 'created_at',
+            'filter_period' => 'month', // show users only registered this month
+        ];
+        return new LaravelChart($chart_options);
     }
 
 
