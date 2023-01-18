@@ -81,13 +81,17 @@
         <div class="col-span-2 md:col-span-1 sm:col-span-2">
             <div class="shadow-lg rounded-lg overflow-hidden">
                 <div class="py-3 px-5 bg-gray-50">Bar chart</div>
-                <canvas class="p-10" id="chartBar"></canvas>
+                {!! $chart1->renderHtml() !!}
+                {!! $chart1->renderChartJsLibrary() !!}
+                {!! $chart1->renderJs() !!}
             </div>
         </div>
         <div class="col-span-2 md:col-span-1: sm:col-span-2 ml-2">
             <div class="shadow-lg rounded-lg overflow-hidden">
                 <div class="py-3 px-5 bg-gray-50">Line chart</div>
-                <canvas class="p-10" id="chartLine"></canvas>
+                {!! $chart2->renderHtml() !!}
+                {!! $chart2->renderChartJsLibrary() !!}
+                {!! $chart2->renderJs() !!}
             </div>
         </div>
     </div>
