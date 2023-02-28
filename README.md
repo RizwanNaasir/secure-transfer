@@ -18,7 +18,18 @@ Laravel Sail is a light-weight command-line interface for interacting with Larav
 Sail installation may take several minutes while Sail's application containers are built on your local machine.
 
 ```bash
-cd your-application && ./vendor/bin/sail up
+cd your-application
+```
+
+do a composer install
+
+```bash
+composer install
+```
+then:
+
+```bash
+./vendor/bin/sail up
 ```
 
 However, instead of repeatedly typing vendor/bin/sail to execute Sail commands, you may wish to configure a shell alias that allows you to execute Sail's commands more easily:
@@ -89,7 +100,7 @@ sail artisan db:seed
 Setup Application Encryption Key:
 
 ```bash
-sail key:genrate
+sail artisan key:generate
 ```
 
 Now Install Project Dependencies
