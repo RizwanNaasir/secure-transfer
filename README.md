@@ -1,128 +1,142 @@
-## Secure Transfer Project
+# Installation
 
-> Version 0.0.1
-
-Getting Stared With Laravel on macOS.
-
+Getting Stared With Laravel on macOS.  
 There are Two ways you can start your development:
 
-+ Docker Desktop
 + Laravel Valet
++ Docker Desktop
 
+## Laravel Valet
 
-[Laravel & Docker](#laravel-and-docker)
----------------------------------------
+Requirements
++ PHP: 8.1 or greater
++ Composer: 2.5 greater
++ My SQL
++ git
 
-Laravel Sail is a light-weight command-line interface for interacting with Laravel's default Docker configuration. Sail provides a great starting point for building a Laravel application using PHP, MySQL, and Redis without requiring prior Docker experience.
+### How you can install php and composer via brew ?
 
-Sail installation may take several minutes while Sail's application containers are built on your local machine.
+To get started, you first need to ensure that Homebrew is up-to-date using the `update` command:
 
 ```bash
-cd your-application
+brew update
 ```
 
-do a composer install
+Next, you should use Homebrew to install PHP, composer and mysql:
+
+```bash
+brew install php composer mysql
+```
+![](/docs/screenshots/install-php-composer-mysql.png)
+### Installing Laravel Valet
+
+After installing PHP, you are ready to install the [Composer package manager](https://getcomposer.org/). In addition, you should make sure the `$HOME/.composer/vendor/bin` directory is in your system's "PATH".
+
+Example:
+
+open your `~/.zshrc` or `~/.bashrc` depending on your terminal and place this line anywhere.
+
+```bash
+...
+export PATH=$PATH:~/.composer/vendor/bin
+...
+```
+
+Screen Shot of where to find this file:
+
+![](/docs/screenshots/zshrc-file-path.png)
+![](/docs/screenshots/zshrc-file.png)
+After Composer has been installed, you may install Laravel Valet as a global Composer package:
+
+```
+composer global require laravel/valet
+```
+
+Finally, you may execute Valet's `install` command. This will configure and install Valet and Dns Masq. In addition, the daemons Valet depends on will be configured to launch when your system starts:
+
+```
+valet install
+```
+
+Valet will automatically start its required services each time your machine boots.
+
+### Project Installation
+
+Clone the project
+
+```bash
+cd ~/Documents && git clone https://github.com/mumar1052/secure-transfer.git
+```
+
+Change dir to project
+
+```bash
+cd secure-transfer
+```
+
+Install Dependencies
 
 ```bash
 composer install
 ```
-then:
-
-```bash
-./vendor/bin/sail up
-```
-
-However, instead of repeatedly typing vendor/bin/sail to execute Sail commands, you may wish to configure a shell alias that allows you to execute Sail's commands more easily:
-
-```bash
-alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
-```
-
-To make sure this is always available, you may add this to your shell configuration file in your home directory, such as `~/.zshrc` or `~/.bashrc`, and then restart your shell.
-
-
-[Starting & Stopping Sail](#starting-and-stopping-sail)
--------------------------------------------------------
-
-Laravel Sail's `docker-compose.yml` file defines a variety of Docker containers that work together to help you build Laravel applications. Each of these containers is an entry within the `services` configuration of your `docker-compose.yml` file. The `laravel.test` container is the primary application container that will be serving your application.
-
-Before starting Sail, you should ensure that no other web servers or databases are running on your local computer. To start all of the Docker containers defined in your application's `docker-compose.yml` file, you should execute the `up` command:
-
-```bash
-sail up
-```
-
-To start all the Docker containers in the background, you may start Sail in "detached" mode:
-
-```bash
-sail up -d
-```
-
-Once the application's containers have been started, you may access the project in your web browser at: [http://localhost](http://localhost).
-
-To stop all the containers, you may simply press Control + C to stop the container's execution. Or, if the containers are running in the background, you may use the `stop` command:
-
-```bash
-sail stop
-```
-
-Next Step is to access the running container and preparing our project environment
-
-## Setup Environment
+![](/docs/screenshots/composer-install.png)
+Environment Setup:
 
 ```bash
 cp .env.example .env
 ```
-Make sure your environment variables are reflecting in `docker-composer.yml`
 
-```dotenv
-APP_URL=http://localhost
+you will have `.env` file and make sure to make it look like following.
 
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=
-```
+![](/docs/screenshots/.env-file.png)
+at this point we are assuming that your mysql instance is running at port `3306` and have username of `root` with blank password.
 
-Now that your database hase been set up via docker container you may run:
+you can check out by:
 
 ```bash
-sail artisan migrate
+mysql -u root
 ```
-to populate tables and scheme's of your database. And now optionally populate
-it with data:
+
+![](/docs/screenshots/mysql-login.png)
+if terminal turn into mysql console then we are ready to connect our project to mysql database. `exit;` mysql
+
+Generate Application encryption Key
 
 ```bash
-sail artisan db:seed
+php artisan key:generate
 ```
-Setup Application Encryption Key:
+
+![](/docs/screenshots/key-generate.png)
+Migrate tables into database
 
 ```bash
-sail artisan key:generate
+php artisan migrate
 ```
-<<<<<<< Updated upstream
 
-Now Install Project Dependencies
+You will be prompted with:
+
+WARN  The database 'secure-transfer' does not exist on the 'mysql' connection.  
+ **Would you like to create it?** (yes/no) [yes]
+
+Reply with `yes` or `y` to create database as if it has not been created.
+![](/docs/screenshots/migration.png)
+Generate Fake Data to login
 
 ```bash
-sail composer install
+php artisan db:seed
 ```
 
-Once the application's Docker containers have been started, you can access the application in your web browser at: [http://localhost](http://localhost).
- 
+![](/docs/screenshots/db:seed.png)
+Now link you project with valet to served over the test domain
 
-Whenever you do git pull in future always make sure to run these commands.
-
-```bash
-sail composer install
 ```
-
-```bash
-sail artisan migrate
+valet link
 ```
-=======
-Once the application's Docker containers have been started, you can access the application in your web browser at: [http://localhost](http://localhost).
- 
->>>>>>> Stashed changes
+![](/docs/screenshots/valet:link.png)
+Now you can access your project in the browser at `{{your-project-name}}.test`
+which will be `secure-transfer.test` and admin will be at `secure-transfer.test/admin`
+
+You can log in to admin via these credentials
+
+Email : admin@gmail.com
+Pass: password
