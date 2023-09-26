@@ -135,6 +135,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
 
     public function canAccessPanel(Panel $panel): bool
     {
+        if ($panel->getId() == 'app') {
+            return auth()->user()->role == 'user';
+        }
         return auth()->user()->isAdmin();
     }
 
@@ -166,10 +169,5 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
             ? $notification->success()
             : $notification->danger();
         $notification->send();
-    }
-
-    public function canAcces()
-    {
-        // TODO: Implement canAcces() method.
     }
 }

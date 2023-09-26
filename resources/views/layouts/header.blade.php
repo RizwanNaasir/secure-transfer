@@ -1,7 +1,3 @@
-{{--<link--}}
-{{--    rel="stylesheet"--}}
-{{--    href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"--}}
-{{--/>--}}
 <header>
     <div class="relative bg-white">
         <div
@@ -13,7 +9,7 @@
                 </a>
             </div>
             <div class="mt-5 ml-16">
-                <button class="lg:hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900" id="btn">
+                <button class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900" id="btn">
                     <span class=" lg:block flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> <span class="mr-2">{{ Config::get('languages')[App::getLocale()]['display'] }}</span>
 
                     @foreach (Config::get('languages') as $lang => $language)
@@ -119,13 +115,13 @@
                 @guest
                     <button
                         class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
-                        onclick="Livewire.emit('openModal', 'auth.login')">
+                        onclick="window.location.href='{{url('app/login')}}'">
                         {{--Login--}}
                         {{__('lang.login')}}
                     </button>
                     <button
                         class="inline-flex items-center rounded-md border border-transparent bg-purple-100 px-3 py-2 text-sm font-medium leading-4 text-purple-700 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                        onclick="Livewire.emit('openModal', 'auth.register')">
+                        onclick="window.location.href='{{url('app/register')}}'">
                         {{--Sign Up--}}
                         {{__('lang.sign_up')}}
                     </button>
@@ -157,7 +153,7 @@
                                      class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
                                     <ul class="space-y-3">
                                         <li class="font-medium">
-                                            <a href="{{route('home')}}"
+                                            <a href="{{url('app')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
