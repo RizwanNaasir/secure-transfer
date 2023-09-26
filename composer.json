@@ -12,8 +12,8 @@
         "filament/spatie-laravel-media-library-plugin": "^3.0.9",
         "guzzlehttp/guzzle": "^7.2",
         "jeffgreco13/filament-breezy": "v2.1.10",
-        "laravel/framework": "^9.19",
-        "laravel/sanctum": "^3.0",
+        "laravel/framework": "^10.10",
+        "laravel/sanctum": "^3.2",
         "laravel/scout": "^9.6",
         "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.7",
@@ -32,9 +32,9 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "nunomaduro/collision": "^7.1",
+        "phpunit/phpunit": "^10.0",
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -78,6 +78,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
