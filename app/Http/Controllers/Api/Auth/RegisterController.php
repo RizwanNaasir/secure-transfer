@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Livewire\Auth\Register;
 use App\Http\Requests\RegisterApiRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {

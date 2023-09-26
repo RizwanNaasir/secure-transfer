@@ -10,7 +10,7 @@ class ListBanners extends ListRecords
 {
     protected static string $resource = BannerResource::class;
 
-    protected function getActions(): array
+    protected function getHeaderActions(): array
     {
         return [
             CreateAction::make(),

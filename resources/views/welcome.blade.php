@@ -20,9 +20,9 @@
                                             data-carousel-item="">
                                 <span
                                         class="absolute text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
-                                        <img src="{{$banner->image_path}}"
+                                        <img src="{{$banner->getFirstMediaUrl(Banner::BANNER_COLLECTION)}}"
                                              class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                             alt="{{$banner->name}}">
+                                             alt="{{$banner->getFirstMedia(Banner::BANNER_COLLECTION)->name}}">
                                     </div>
                                 </a>
                             @empty
@@ -707,7 +707,7 @@
                             </div>
 
                             <!-- Register form -->
-                            @livewire('auth.register-from-home')
+                            <livewire:auth.register-from-home />
                         </div>
                     </div>
                 </div>

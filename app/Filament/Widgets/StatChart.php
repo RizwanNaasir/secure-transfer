@@ -10,7 +10,7 @@ use Filament\Widgets\LineChartWidget;
 class StatChart extends BarChartWidget
 {
 
-    protected function getHeading(): string
+    public function getHeading(): string
     {
         return 'Contract Chart';
     }

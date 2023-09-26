@@ -1,7 +1,7 @@
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"
-/>
+{{--<link--}}
+{{--    rel="stylesheet"--}}
+{{--    href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css"--}}
+{{--/>--}}
 <header>
     <div class="relative bg-white">
         <div

@@ -5,10 +5,12 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BannerResource\Pages;
 use App\Models\Banner;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
+use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
@@ -25,9 +27,9 @@ class BannerResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name'),
-                FileUpload::make('image')
+                SpatieMediaLibraryFileUpload::make('image')
                     ->maxFiles(1)
-                    ->directory('public')
+                    ->collection(Banner::BANNER_COLLECTION)
                     ->rules('required'),
                 TextInput::make('link')
                     ->url()
@@ -41,7 +43,8 @@ class BannerResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                ImageColumn::make('image'),
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->collection(Banner::BANNER_COLLECTION),
                 TextColumn::make('link')
                     ->sortable()
                     ->searchable(),

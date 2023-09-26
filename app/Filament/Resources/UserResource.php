@@ -3,41 +3,36 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Closure;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                FileUpload::make('avatar')
+                SpatieMediaLibraryFileUpload::make('avatar')
                     ->columnSpan(2)
                     ->avatar()
-                    ->directory('public'),
+                    ->collection(User::AVATAR_COLLECTION),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -50,14 +45,14 @@ class UserResource extends Resource
                 TextInput::make('phone')
                     ->tel()
                     ->maxLength(255),
-                FileUpload::make('document1')
+                SpatieMediaLibraryFileUpload::make('document1')
                     ->label('First Document')
-                    ->enableDownload()
-                    ->directory('public'),
-                FileUpload::make('document2')
+                    ->downloadable()
+                    ->collection(User::DOCUMENTS_COLLECTION1),
+                SpatieMediaLibraryFileUpload::make('document2')
                     ->label('Second Document')
-                    ->directory('public')
-                    ->enableDownload(),
+                    ->collection(User::DOCUMENTS_COLLECTION2)
+                    ->downloadable(),
             ]);
     }
 
@@ -73,41 +68,24 @@ class UserResource extends Resource
                 TextColumn::make('full_name'),
                 TextColumn::make('email'),
                 BadgeColumn::make('status')
-                ->colors([
-                    'success' => 'active',
-                    'secondary' => 'pending',
-                    'danger' => 'blocked',
-                ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+                    ->colors([
+                        'success' => 'active',
+                        'secondary' => 'pending',
+                        'danger' => 'blocked',
+                    ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
                 BadgeColumn::make('email_verified_at')->label('Verified Email')
                     ->colors([
-                    'success',
-                    'danger' => null,
-                ])->formatStateUsing(function ($state) {
+                        'success',
+                        'danger' => null,
+                    ])->formatStateUsing(function ($state) {
                         return isset($state) ? 'Yes' : 'No';
-                }),
+                    }),
             ])
             ->filters([
                 //
             ])
             ->actions(self::getActions())
             ->bulkActions(self::getBulkActions());
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
-            'view' => Pages\EditUser::route('/{record}/view'),
-        ];
     }
 
     /**
@@ -129,8 +107,8 @@ class UserResource extends Resource
                 ->visible(fn(User $record) => $record->is_approved_by_admin),
             EditAction::make(),
             DeleteAction::make(),
-            Tables\Actions\Action::make('view')
-                ->url(fn(User $record): string => route('filament.pages.view', ['user' => $record]))
+//            Tables\Actions\Action::make('view')
+//                ->url(fn(User $record): string => route('filament.pages.view', ['user' => $record]))
         ];
     }
 
@@ -150,6 +128,23 @@ class UserResource extends Resource
                 ->action(fn(Collection $records) => $records->each(fn(User $user) => $user->changeStatus('blocked')))
                 ->color('danger')
                 ->icon('heroicon-o-x-circle')
+        ];
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\EditUser::route('/{record}/view'),
         ];
     }
 }

@@ -6,6 +6,7 @@ use App\Traits\CanBeRated;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Notifications\Notification;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,11 +16,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements MustVerifyEmail, HasAvatar, FilamentUser
+class User extends Authenticatable implements MustVerifyEmail, HasAvatar, FilamentUser, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, CanBeRated;
+    use HasApiTokens, HasFactory, Notifiable, CanBeRated, InteractsWithMedia;
 
+    const AVATAR_COLLECTION = 'avatars';
+    const DOCUMENTS_COLLECTION1 = 'documents-1';
+    const DOCUMENTS_COLLECTION2 = 'documents-2';
     /**
      * The attributes that are mass assignable.
      *
@@ -63,13 +69,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
 
     public function getAvatarPathAttribute(): ?string
     {
-        return $this->avatar ? Storage::url($this->avatar) : $this->getFilamentAvatarUrl();
+        return $this->getFilamentAvatarUrl();
     }
 
     public function getFilamentAvatarUrl(): ?string
     {
-        return filled($this->avatar) && file_exists(Storage::path($this->avatar))
-            ? url(Storage::url($this->avatar))
+        $media = $this->getFirstMedia(self::AVATAR_COLLECTION);
+        return filled($media)
+            ? $media->getFullUrl()
             : 'https://ui-avatars.com/api/?name=' . $this->name . '+' . $this->surname;
     }
 
@@ -126,7 +133,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
         return $this->hasMany(PaymentMethod::class);
     }
 
-    public function canAccessFilament(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
         return auth()->user()->isAdmin();
     }
@@ -151,7 +158,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
         return $this->hasMany(TemporaryFile::class);
     }
 
-    public function changeStatus(string $status)
+    public function changeStatus(string $status): void
     {
         $this->update(['status' => $status]);
         $notification = Notification::make()->title('User ' . $status);
@@ -159,5 +166,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
             ? $notification->success()
             : $notification->danger();
         $notification->send();
+    }
+
+    public function canAcces()
+    {
+        // TODO: Implement canAcces() method.
     }
 }
