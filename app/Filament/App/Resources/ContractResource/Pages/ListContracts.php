@@ -15,7 +15,14 @@ class ListContracts extends ListRecords
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make(),
+            'all' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query) {
+                    return $query->whereHas('user', function (Builder $query) {
+                        return $query->where('user_id', auth()->id());
+                    })->orWhereHas('recipient', function (Builder $query) {
+                        return $query->where('recipient_id', auth()->id());
+                    });
+                }),
             'sent' => Tab::make()
                 ->icon('heroicon-o-inbox')
                 ->modifyQueryUsing(function (Builder $query) {

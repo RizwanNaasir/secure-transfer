@@ -49,35 +49,7 @@ class ContractResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('id')->sortable(),
-                TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
-                TextColumn::make('description')->limit(30),
-                TextColumn::make('status.status')
-                    ->badge()
-                    ->colors([
-                        'warning' => 'pending',
-                        'success' => 'accepted',
-                        'danger' => 'declined',
-                    ])
-                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
-                TextColumn::make('user.full_name')
-                    ->label('Sender')
-                    ->limit(19)
-                    ->formatStateUsing(function (Contract $record) {
-                        return $record->user->first()->id === auth()->id()
-                            ? 'You' : $record->user->first()->full_name;
-                    }),
-                TextColumn::make('recipient.full_name')
-                    ->label('Recipient')
-                    ->limit(19)
-                    ->formatStateUsing(function (Contract $record) {
-                        return $record->recipient->first()->id === auth()->id()
-                            ? 'You' : $record->recipient->first()->full_name;
-                    }),
-                TextColumn::make('preferred_payment_method')
-                    ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
-            ])
+            ->columns(self::getContractColumns())
             ->filters(self::getTableFilters())
             ->actions([
                 EditAction::make(),
@@ -180,6 +152,42 @@ class ContractResource extends Resource
             'index' => Pages\ListContracts::route('/'),
             'create' => Pages\CreateContract::route('/create'),
             'edit' => Pages\EditContract::route('/{record}/edit'),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getContractColumns(): array
+    {
+        return [
+            TextColumn::make('id')->sortable(),
+            TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
+            TextColumn::make('description')->limit(30),
+            TextColumn::make('status.status')
+                ->badge()
+                ->colors([
+                    'warning' => 'pending',
+                    'success' => 'accepted',
+                    'danger' => 'declined',
+                ])
+                ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
+            TextColumn::make('user.full_name')
+                ->label('Sender')
+                ->limit(19)
+                ->formatStateUsing(function (Contract $record) {
+                    return $record->user->first()->id === auth()->id()
+                        ? 'You' : $record->user->first()->full_name;
+                }),
+            TextColumn::make('recipient.full_name')
+                ->label('Recipient')
+                ->limit(19)
+                ->formatStateUsing(function (Contract $record) {
+                    return $record->recipient->first()->id === auth()->id()
+                        ? 'You' : $record->recipient->first()->full_name;
+                }),
+            TextColumn::make('preferred_payment_method')
+                ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
         ];
     }
 }
