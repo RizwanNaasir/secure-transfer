@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Models\User;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -38,8 +40,14 @@ class AppPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->plugin(BreezyCore::make()
-                ->myProfile(hasAvatars: false
-                ))
+                ->myProfile(hasAvatars: true)
+                ->avatarUploadComponent(function () {
+                    return SpatieMediaLibraryFileUpload::make('avatar_url')
+                        ->avatar()
+                        ->collection(User::AVATAR_COLLECTION);
+                })
+            )
+            ->spa()
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([])
             ->middleware([

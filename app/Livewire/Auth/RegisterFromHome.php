@@ -3,10 +3,10 @@
 namespace App\Livewire\Auth;
 
 use App\Models\User;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
@@ -73,23 +73,21 @@ class RegisterFromHome extends Component implements HasForms
         return view('livewire.auth.register-from-home');
     }
 
-    protected function getFormSchema(): array
+    public function form(Form $form): Form
     {
-        return [
-            Grid::make(4)->schema([
-                TextInput::make('name')
-                    ->label(__('lang.first_name'))
-                    ->required()
-                    ->placeholder('John')
-                    ->maxLength(255)
-                    ->columnSpan(2),
-                TextInput::make('surname')
-                    ->label(__('lang.last_name'))
-                    ->required()
-                    ->placeholder('Doe')
-                    ->maxLength(255)
-                    ->columnSpan(2),
-            ]),
+        return $form->schema([
+            TextInput::make('name')
+                ->label(__('lang.first_name'))
+                ->required()
+                ->placeholder('John')
+                ->maxLength(255)
+                ->columnSpan(2),
+            TextInput::make('surname')
+                ->label(__('lang.last_name'))
+                ->required()
+                ->placeholder('Doe')
+                ->maxLength(255)
+                ->columnSpan(2),
             TextInput::make('email')
                 ->label(__('lang.email'))
                 ->required()
@@ -102,21 +100,19 @@ class RegisterFromHome extends Component implements HasForms
                 ->placeholder('+92 (123) 456 7890')
                 ->unique('users', 'phone')
                 ->maxLength(255),
-            Grid::make(4)->schema([
-                TextInput::make('password')
-                    ->label(__('lang.password'))
-                    ->required()
-                    ->placeholder(__('lang.password'))
-                    ->type('password')
-                    ->confirmed()
-                    ->columnSpan(2),
-                TextInput::make('password_confirmation')
-                    ->label(__('lang.password_confirmation'))
-                    ->required()
-                    ->placeholder(__('lang.password_confirmation'))
-                    ->type('password')
-                    ->columnSpan(2),
-            ]),
-        ];
+            TextInput::make('password')
+                ->label(__('lang.password'))
+                ->required()
+                ->placeholder(__('lang.password'))
+                ->type('password')
+                ->confirmed()
+                ->columnSpan(2),
+            TextInput::make('password_confirmation')
+                ->label(__('lang.password_confirmation'))
+                ->required()
+                ->placeholder(__('lang.password_confirmation'))
+                ->type('password')
+                ->columnSpan(2),
+        ]);
     }
 }

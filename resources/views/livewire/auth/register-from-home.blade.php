@@ -1,4 +1,4 @@
-<div class="py-10 px-6 sm:px-10 xl:p-12 col-span-2 sm:col-span-1">
+<div class="py-10 px-6 sm:px-10 xl:p-12 col-span-2 sm:col-span-2">
     <h3 class="text-lg font-medium text-warm-gray-900">
         {{__('lang.register')}}
     </h3>

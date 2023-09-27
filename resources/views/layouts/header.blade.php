@@ -52,7 +52,7 @@
                <span class="mr-4">{{__('lang.home')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
                 </a>
                 @auth
-                    <a href="{{url('app/contracts')}}"
+                    <a href="{{url('app/contracts/create')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--Add New Contract--}}
                        <span class="mr-4">{{__('lang.add_new_contract')}}</span>  <span class="ml-4 border-r-2"></span>
@@ -157,11 +157,11 @@
                                             <a href="{{url('app')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
-                                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                         fill="currentColor" viewBox="0 0 20 20">
-                                                        <path fill-rule="evenodd"
-                                                              d="M3 3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm1 0v14h12V3H4zm4 2a1 1 0 00-1 1v1a1 1 0 001 1h4a1 1 0 001-1V6a1 1 0 00-1-1H8zm0 3a1 1 0 00-1 1v1a1 1 0 001 1h4a1 1 0 001-1v-1a1 1 0 00-1-1H8z"
-                                                              clip-rule="evenodd"></path>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                         class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
                                                     </svg>
                                                 </div>
                                                 {{--Dashboard--}}
@@ -182,21 +182,6 @@
                                                 {{--Edit Profile--}}
                                                 {{__('lang.edit_profile')}}
                                             </a>
-                                        </li>
-                                        <li class="font-medium">
-                                            <button onclick="window.location.href='{{url('app/my-profile')}}'"
-                                                    class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
-                                                <div class="mr-3">
-                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor"
-                                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                              stroke-width="2"
-                                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                                    </svg>
-                                                </div>
-                                                {{--Change Password--}}
-                                                {{__('lang.change_password')}}
-                                            </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
                                             <button onclick="window.location.href='{{url('app/contract')}}'"
