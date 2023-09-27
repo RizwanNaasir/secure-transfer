@@ -6,15 +6,17 @@ use App\Mail\NewContractMail;
 use App\Models\Contract;
 use App\Models\Product;
 use App\Models\User;
+use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\HtmlString;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ContractService extends Service
 {
-    public static function create(array $data, User|Authenticatable $user, Product $product = null)
+    public static function create(array $data, User|Authenticatable $user, Product $product = null): string|HtmlString|null
     {
         $recipient = self::getOrCreateAnonymousRecipient(email: $data['email']);
 
@@ -50,15 +52,15 @@ class ContractService extends Service
             );
     }
 
-    public static function createContract(Builder $contract, array $data, Product $product = null): Builder|Model
+    public static function createContract(Builder $contract, array $data, Product $product = null): Contract
     {
         $contract = $contract->create([
-            'amount' => $data['amount'],
-            'description' => $data['description'],
-            'file' => $data['file'],
-            'preferred_payment_method' => $data['preferred_payment_method']
+            'amount' => @$data['amount'],
+            'description' => @$data['description'],
+            'file' => @$data['file'],
+            'preferred_payment_method' => @$data['preferred_payment_method']
         ]);
-        if (!is_null($product)){
+        if (!is_null($product)) {
             $product->contracts()->attach($contract->id);
         }
         return $contract;
@@ -111,5 +113,20 @@ class ContractService extends Service
             'description' => $description
         ]);
         return $contract;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function deleteContract(Contract|Model $contract): void
+    {
+        try {
+            $contract->products()->detach();
+            $contract->status()->delete();
+            $contract->user()->detach();
+            $contract->delete();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }

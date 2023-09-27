@@ -4,20 +4,19 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\ProductResource\Pages;
 use App\Models\Product;
-use App\Models\User;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductResource extends Resource
 {
@@ -31,11 +30,10 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('user_id')->options(User::all()->pluck('name','id')),
                 TextInput::make('name'),
                 Textarea::make('description'),
-                Textarea::make('price'),
-                FileUpload::make('image')->directory('public')
+                TextInput::make('price'),
+                SpatieMediaLibraryFileUpload::make('image')->collection(Product::IMAGE_COLLECTION)
             ]);
     }
 
@@ -45,35 +43,26 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn (Builder $query) => $query->where('user_id', auth()->id()))
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', auth()->id()))
             ->columns([
-                ImageColumn::make('full_image'),
+                SpatieMediaLibraryImageColumn::make('image')->collection(Product::IMAGE_COLLECTION),
                 TextColumn::make('name'),
                 TextColumn::make('description'),
-                TextColumn::make('price')
+                TextColumn::make('price'),
+                TextColumn::make('approved')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'Approved' => 'success',
+                        default => 'danger',
+                    })->state(fn(Model $record): string => $record->approved ? 'Approved' : 'Pending'),
             ])->actions([
-                Action::make('Approve')
-                    ->action(fn(Product $record) => $record->approve())
-                    ->color('success')
-                    ->icon('heroicon-o-check-circle')
-                    ->visible(fn(Product $record) => !$record->approved),
-                Action::make('Block')
-                    ->action(fn(Product $record) => $record->approve())
-                    ->color('danger')
-                    ->icon('heroicon-o-x-circle')
-                    ->visible(fn(Product $record) => $record->approved)
+                EditAction::make(),
+                DeleteAction::make(),
             ])->bulkActions([
-                BulkAction::make('Approve')
-                    ->action(fn(Collection $records) => $records->each(fn(Product $product) => $product->approve()))
-                    ->color('success')
-                    ->icon('heroicon-o-check-circle'),
-                BulkAction::make('Block')
-                    ->action(fn(Collection $records) => $records->each(fn(Product $product) => $product->approve()))
-                    ->color('danger')
-                    ->icon('heroicon-o-x-circle')
+                DeleteBulkAction::make(),
             ]);
     }
-
     public static function getPages(): array
     {
         return [

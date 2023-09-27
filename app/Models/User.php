@@ -62,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     protected $appends = [
         'full_name',
         'full_avatar',
+        'avatar_url',
         'is_approved_by_admin',
         'document1_path',
         'document2_path'
@@ -100,6 +101,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
     }
 
     public function getFullAvatarAttribute(): ?string
+    {
+        return $this->getFilamentAvatarUrl();
+    }
+
+    public function getAvatarUrlAttribute(): ?string
     {
         return $this->getFilamentAvatarUrl();
     }

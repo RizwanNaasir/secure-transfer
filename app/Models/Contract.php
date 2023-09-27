@@ -9,11 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Contract extends Model
+class Contract extends Model implements HasMedia
 {
-    use HasFactory,CanBeRated;
+    use HasFactory, CanBeRated, InteractsWithMedia;
 
+    const MEDIA_COLLECTION = 'contracts';
     protected $appends = [
         'current_status',
         'sender_detail',
@@ -54,10 +57,10 @@ class Contract extends Model
 
     public function getCurrentStatusAttribute(): string
     {
-        return match ($this->status()->first()->status) {
+        return match ($this->status?->status) {
             'accepted' => __('lang.accepted'),
             'declined' => __('lang.declined'),
-            'pending' => __('lang.pending'),
+            default => __('lang.pending'),
         };
     }
 
@@ -65,8 +68,8 @@ class Contract extends Model
     {
         $data = $this->user()->first();
         return [
-            'name' => $data->full_name,
-            'email' => $data->email,
+            'name' => $data?->full_name,
+            'email' => $data?->email,
         ];
     }
 
@@ -75,13 +78,13 @@ class Contract extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getRecipientDetailAttribute()
+    public function getRecipientDetailAttribute(): array
     {
         $data = $this->recipient()->first();
         return
             [
-                'name' => $data->full_name,
-                'email' => $data->email,
+                'name' => $data?->full_name,
+                'email' => $data?->email,
             ];
     }
 
