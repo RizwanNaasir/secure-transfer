@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class LoginController extends Controller
 {
@@ -15,9 +17,9 @@ class LoginController extends Controller
             'email' => 'required|string|email|exists:users,email',
             'password' => 'required|string|min:6'
         ]);
-        if (!User::whereEmail($credentials['email'])->first()->hasVerifiedEmail()){
+        if (!User::whereEmail($credentials['email'])->first()->hasVerifiedEmail()) {
             return $this->error(
-                message: 'Please verify your email address!',code: 421);
+                message: 'Please verify your email address!', code: 421);
         }
         try {
             auth()->attempt($credentials);
@@ -56,18 +58,33 @@ class LoginController extends Controller
             $user->phone = $request->input('phone');
         }
         if ($request->hasFile('avatar')) {
-            $user->avatar = $request->file('avatar')->store('public');
+            try {
+                $user->addMedia($request->file('avatar'))
+                    ->toMediaCollection(User::AVATAR_COLLECTION);
+            } catch (FileDoesNotExist|FileIsTooBig $e) {
+                return $this->error($e->getMessage(), 422);
+            }
         }
         if ($request->hasFile('document1')) {
-            $user->document1 = $request->file('document1')->store('public');
+            try {
+                $user->addMedia($request->file('document1'))
+                    ->toMediaCollection(User::DOCUMENTS_COLLECTION1);
+            } catch (FileDoesNotExist|FileIsTooBig $e) {
+                return $this->error($e->getMessage(), 422);
+            }
         }
         if ($request->hasFile('document2')) {
-            $user->document2 = $request->file('document2')->store('public');
+            try {
+                $user->addMedia($request->file('document2'))
+                    ->toMediaCollection(User::DOCUMENTS_COLLECTION2);
+            } catch (FileDoesNotExist|FileIsTooBig $e) {
+                return $this->error($e->getMessage(), 422);
+            }
         }
         $user->save();
 
         return $this->success(['profile' => $user], message: 'Profile updated successfully');
-        }
+    }
 
     public function logout(): array
     {

@@ -13,9 +13,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\HtmlString;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class ContractService extends Service
 {
+    /**
+     * @throws Exception
+     */
     public static function create(array $data, User|Authenticatable $user, Product $product = null): string|HtmlString|null
     {
         $recipient = self::getOrCreateAnonymousRecipient(email: $data['email']);
@@ -52,14 +57,27 @@ class ContractService extends Service
             );
     }
 
+    /**
+     * @throws Exception
+     */
     public static function createContract(Builder $contract, array $data, Product $product = null): Contract
     {
+        /** @var Contract $contract */
         $contract = $contract->create([
             'amount' => @$data['amount'],
             'description' => @$data['description'],
             'file' => @$data['file'],
             'preferred_payment_method' => @$data['preferred_payment_method']
         ]);
+
+        if (request()->hasFile('file'))
+            try {
+                $contract->addMedia(request()->file('file'))
+                    ->toMediaCollection(Contract::MEDIA_COLLECTION);
+            } catch (FileDoesNotExist|FileIsTooBig $e) {
+                throw new Exception($e->getMessage());
+            }
+
         if (!is_null($product)) {
             $product->contracts()->attach($contract->id);
         }
@@ -71,7 +89,7 @@ class ContractService extends Service
         $contract->user()->attach($user->id, ['recipient_id' => $recipient->id]);
     }
 
-    public static function getCode(Model|Builder $contract, User $recipient)
+    public static function getCode(Model|Contract $contract, User $recipient): HtmlString|string|null
     {
         $code = self::createQrCode(
             contract_id: $contract->id,
@@ -83,7 +101,7 @@ class ContractService extends Service
         return $code;
     }
 
-    private static function createQrCode(int $contract_id, string $recipient_email)
+    private static function createQrCode(int $contract_id, string $recipient_email): HtmlString|string|null
     {
         return QrCode::size(250)
             ->generate(
@@ -96,7 +114,7 @@ class ContractService extends Service
             );
     }
 
-    public static function notifyBothUsersAboutContract(Model|Builder $contract, User|Authenticatable $user, User $recipient): void
+    public static function notifyBothUsersAboutContract(Model|Contract $contract, User|Authenticatable $user, User $recipient): void
     {
         Mail::to($recipient)
             ->send(new NewContractMail($contract, $user, $recipient));
@@ -118,7 +136,7 @@ class ContractService extends Service
     /**
      * @throws Exception
      */
-    public static function deleteContract(Contract|Model $contract): void
+    public static function deleteContract(Contract $contract): void
     {
         try {
             $contract->products()->detach();

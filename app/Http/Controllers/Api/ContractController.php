@@ -39,7 +39,7 @@ class ContractController extends Controller
             'email' => $request->input('email'),
             'amount' => $request->input('amount'),
             'description' => $request->input('description'),
-            'file' => $request->file('file')->store('public'),
+            'file' => $request->input('file'),
             'preferred_payment_method' => $request->input('preferred_payment_method'),
         ];
     }
@@ -74,6 +74,7 @@ class ContractController extends Controller
 
         $user = $fromSender ? $contract->user->first() : $contract->recipient->first();
         $contract->load('products','products.ratings');
+        $user->loadCount('products', 'ratings');
         return $this->success(data: [
             'contract' => ContractDetailResource::make($contract),
             'user' => [

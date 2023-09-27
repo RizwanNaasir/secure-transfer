@@ -14,10 +14,10 @@ class DashBoardController extends Controller
         $user = request()->user();
         $currentActiveContract = $user
             ->allContracts()
+            ->with('status')
             ->latest()
             ->pending()
-            ->first()
-            ?->load('status');
+            ->first();
 
         return $this->success([
             'totalNumberOfContracts' => $user
@@ -35,11 +35,15 @@ class DashBoardController extends Controller
                 'amount' => $currentActiveContract->amount,
                 'status' => ucfirst($currentActiveContract->status->status)
             ] : null,
-            'activeContracts' => ContractListResource::collection(Contract::query()->whereHas('user', function (Builder $query) {
-                return $query
-                    ->where('user_id', auth()->id())
-                    ->orWhere('recipient_id', auth()->id());
-            })->notPending()->paginate(5)->items())
+            'activeContracts' => ContractListResource::collection(
+                Contract::query()
+                    ->with('status')
+                    ->whereHas('user', function (Builder $query) {
+                        return $query
+                            ->where('user_id', auth()->id())
+                            ->orWhere('recipient_id', auth()->id());
+                    })->notPending()->paginate(5)->items()
+            )
         ]);
     }
 }

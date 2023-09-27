@@ -13,14 +13,15 @@ class ProductResource extends JsonResource
      * @param Request $request
      * @return array
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
+        $media = $this->getFirstMedia(Product::IMAGE_COLLECTION);
         return [
             'id' => $this->id,
             'name'=> $this->name,
             'price' => $this->price,
             'description' => $this->description,
-            'image' => $this->full_image,
+            'image' => $media?->getFullUrl()
         ];
     }
 }

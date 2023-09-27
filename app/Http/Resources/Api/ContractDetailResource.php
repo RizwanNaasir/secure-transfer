@@ -10,6 +10,7 @@ class ContractDetailResource extends JsonResource
 {
     public function toArray($request): array
     {
+        $file = $this->getFirstMedia(Contract::MEDIA_COLLECTION);
         return [
             'id' => $this->id,
             'amount' => $this->amount,
@@ -18,7 +19,7 @@ class ContractDetailResource extends JsonResource
             'preferred_payment_method' => $this->preferred_payment_method,
             'amount_received_via' => $this->amount_received_via,
             'current_status' => $this->current_status,
-            'file_path' => $this->file_path,
+            'file_path' => $file?->getFullUrl(),
             'is_pending' => $this->is_pending,
             'created_at' => $this->created_at->format('d-M-Y H-i-s A'),
             'qr_code' => $this->status->qr_code,

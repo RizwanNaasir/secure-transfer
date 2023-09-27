@@ -8,7 +8,6 @@ use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,12 +31,14 @@ class Product extends Model implements HasMedia
     protected $hidden = [
         'created_at',
         'updated_at',
+        'media'
     ];
 
     public function getFullImageAttribute(): string
     {
-        return filled($this->image) && file_exists(Storage::path($this->image))
-            ? url(Storage::url($this->image))
+        $media = $this->getFirstMedia(Product::IMAGE_COLLECTION);
+        return filled($media)
+            ? $media->getFullUrl()
             : 'https://via.placeholder.com/150';
     }
 
@@ -48,13 +49,15 @@ class Product extends Model implements HasMedia
 
     public function scopeApproved(Builder $query): Builder
     {
-        return $query->where('approved',1);
+        return $query->where('approved', 1);
     }
+
     public function authUserIsOwner(): bool
     {
-        return (int) $this->user_id === (int) auth()->id();
+        return (int)$this->user_id === (int)auth()->id();
     }
-    public function approve()
+
+    public function approve(): void
     {
         $this->update(['approved' => !$this->approved]);
         $notification = Notification::make()->title('Product Updated');
