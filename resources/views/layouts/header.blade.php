@@ -154,7 +154,7 @@
                                      class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
                                     <ul class="space-y-3">
                                         <li class="font-medium">
-                                            <a href="{{url('app')}}"
+                                            <a href="{{url('panel')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -169,7 +169,7 @@
                                             </a>
                                         </li>
                                         <li class="font-medium">
-                                            <a href="{{url('panel/my-profile')}}"
+                                            <a href="{{url('panel/users/'.auth()->id().'/edit')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
