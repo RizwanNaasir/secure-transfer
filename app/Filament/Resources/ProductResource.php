@@ -11,11 +11,11 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductResource extends Resource
@@ -47,7 +47,7 @@ class ProductResource extends Resource
             ->columns([
                 ImageColumn::make('full_image'),
                 TextColumn::make('name'),
-                TextColumn::make('description'),
+                TextColumn::make('description')->limit(30),
                 TextColumn::make('price')
             ])->actions([
                 Action::make('Approve')
