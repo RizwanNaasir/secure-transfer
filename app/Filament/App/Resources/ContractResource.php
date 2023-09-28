@@ -6,7 +6,6 @@ use App\Filament\App\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers\RecipientRelationManager;
 use App\Filament\Resources\ContractResource\RelationManagers\UserRelationManager;
 use App\Models\Contract;
-use App\Models\Product;
 use App\Services\ContractService;
 use Exception;
 use Filament\Forms\Components\Grid;
@@ -99,6 +98,13 @@ class ContractResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->disabled(function (?Contract $contract) {
+                $contractIsReceived = \DB::table('contract_user')
+                    ->where('contract_id', $contract->id)
+                    ->where('recipient_id', auth()->id())
+                    ->exists();
+                return $contractIsReceived && $contract->is_pending;
+            })
             ->schema([
                 Grid::make(3)->schema([
                     Section::make()->schema([
@@ -115,6 +121,9 @@ class ContractResource extends Resource
                             ->required()
                             ->prefix('$')
                             ->minValue(1)
+                            ->disabled(function (Pages\EditContract|Pages\CreateContract $livewire) {
+                                return $livewire->getRecord() !== null;
+                            })
                             ->numeric(),
 
                         TextInput::make('description'),
@@ -129,13 +138,16 @@ class ContractResource extends Resource
                             ]),
                         Tabs::make('Product/File')
                             ->tabs([
-                                Tabs\Tab::make('Product')
-                                    ->schema([
-                                        Select::make('product')
-                                            ->searchable()
-                                            ->options(Product::query()->get()->pluck('name', 'id')),
-                                    ]),
+//                                Tabs\Tab::make('Product')
+//                                    ->schema([
+//                                        Select::make('product')
+//                                            ->searchable()
+//                                            ->options(Product::query()->get()->pluck('name', 'id')),
+//                                    ]),
                                 Tabs\Tab::make('File')
+                                    ->badge(function (?Contract $record) {
+                                        return $record?->hasMedia(Contract::MEDIA_COLLECTION) ? 1 : null;
+                                    })
                                     ->schema([
                                         SpatieMediaLibraryFileUpload::make('file')->collection(Contract::MEDIA_COLLECTION),
                                     ]),
