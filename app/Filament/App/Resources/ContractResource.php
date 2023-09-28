@@ -32,8 +32,7 @@ use Illuminate\Support\Collection;
 class ContractResource extends Resource
 {
     protected static ?string $model = Contract::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-right';
 
     public static function getRelations(): array
     {

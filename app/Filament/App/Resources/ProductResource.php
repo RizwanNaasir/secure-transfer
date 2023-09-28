@@ -23,6 +23,8 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $slug = 'products';
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-shopping-cart';
 
     protected static ?string $recordTitleAttribute = 'id';
 
