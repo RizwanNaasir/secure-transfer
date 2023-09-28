@@ -4,7 +4,7 @@
     <div class="bg-white">
         <section
                 class="mx-auto max-w-auto py-16 px-4 sm:py-24 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8"
-                style="padding-top: 0px">
+                style="padding-top: 0">
             <!-- Product details -->
             <div class="lg:max-w-lg lg:self-end">
                 <div class="mt-4">
@@ -62,10 +62,6 @@
                     </button>
                 @else
                     <livewire:send-contract-from-market/>
-                    {{--<button onclick="Livewire.emit('openModal','send-contract-from-market')"
-                            class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
-                        {{ __('lang.make_contract') }}
-                    </button>--}}
                 @endif
             </div>
         </section>

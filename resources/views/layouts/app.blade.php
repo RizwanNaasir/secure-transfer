@@ -15,7 +15,6 @@
         }
     </style>
 
-    @filamentStyles
     @vite('resources/css/app.css')
 </head>
     <body class="antialiased">
@@ -23,10 +22,8 @@
         {{ $slot ?? ''}}
 
         @vite('resources/js/app.js')
-        @filamentScripts
         @livewire('notifications')
         @yield('scripts')
         @stack('scripts')
-        <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
     </body>
 </html>

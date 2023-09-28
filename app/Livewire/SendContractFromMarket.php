@@ -4,15 +4,14 @@ namespace App\Livewire;
 
 use App\Models\Product;
 use App\Services\ContractService;
+use Exception;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use LivewireUI\Modal\ModalComponent;
 
 class SendContractFromMarket extends ModalComponent implements HasForms, HasActions
@@ -31,27 +30,42 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
     {
         return $form->schema([
             Section::make([
-                Placeholder::make('Price')
-                    ->content('Price of This Product is $' . $this->product->price),
                 Radio::make('preferred_payment_method')
                     ->label('Select you preferred payment method')
                     ->options([
                         'crypto' => 'Crypto',
                         'bank' => 'Bank',
-                    ])->inline()->required()
-                    ->extraAttributes(['class' => 'gap-10'])
+                    ])->inline()
+                    ->required()
             ])
         ]);
     }
 
-    public function submit()
+    public function submit(): void
     {
-        ContractService::create($this->getFormattedData(),auth()->user(),$this->product);
-        Notification::make()->title('Contract sent successfully!')->success()->send();
+        $contractThatAlreadyExists = $this->product->contracts()->with('user', function ($query) {
+            $query->where('id', auth()->id());
+        })->where('preferred_payment_method', $this->preferred_payment_method)->exists();
+
+        if ($contractThatAlreadyExists) {
+            $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
+        }
+        try {
+            ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
+            $this->addMessagesFromOutside('Contract sent successfully');
+        } catch (Exception $e) {
+            $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
+        }
     }
 
     public function getFormattedData(): array
     {
+        $file = file_get_contents($this->product->getFirstMedia(Product::IMAGE_COLLECTION)?->getFullUrl());
+        if ($file) {
+            request()->merge([
+                'file' => $file
+            ]);
+        }
         return [
             'email' => $this->product->user->email,
             'amount' => $this->product->price,
