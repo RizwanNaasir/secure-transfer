@@ -1,4 +1,6 @@
-@php use App\Models\User; @endphp
+@php use App\Models\User;use Filament\Facades\Filament;
+$currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel';
+@endphp
 <header>
     <div class="relative bg-white">
         <div
@@ -10,8 +12,11 @@
                 </a>
             </div>
             <div class="mt-5 ml-16">
-                <button class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900" id="btn">
-                    <span class=" lg:block flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> <span class="mr-2">{{ Config::get('languages')[App::getLocale()]['display'] }}</span>
+                <button class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                        id="btn">
+                    <span
+                        class=" lg:block flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
+                    <span class="mr-2">{{ Config::get('languages')[App::getLocale()]['display'] }}</span>
 
                     @foreach (Config::get('languages') as $lang => $language)
                         @if ($lang != App::getLocale())
@@ -42,22 +47,21 @@
                     @endforeach
 
 
-
                 </button>
             </div>
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0 gap-8 md:gap-4">
                 <a href="{{url('/')}}"
                    class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                     {{--Home--}}
-               <span class="mr-4">{{__('lang.home')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
+                    <span class="mr-4">{{__('lang.home')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
                 </a>
                 @auth
-                    <a href="{{url('panel/contracts/create')}}"
+                    <a href="{{url($currentPanel.'/contracts/create')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--Add New Contract--}}
-                       <span class="mr-4">{{__('lang.add_new_contract')}}</span>  <span class="ml-4 border-r-2"></span>
+                        <span class="mr-4">{{__('lang.add_new_contract')}}</span> <span class="ml-4 border-r-2"></span>
                     </a>
-                    <a href="{{url('panel/contracts')}}"
+                    <a href="{{url($currentPanel.'/contracts')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--History--}}
                         <span class="mr-4">{{__('lang.contracts')}}</span><span class="ml-4 border-r-2"></span>
@@ -66,7 +70,9 @@
                 <a href="{{route('all.products')}}"
                    class="hidden lg:block">
                     {{--Market Place--}}
-                   <span class="mr-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> {{__('lang.market_place')}}</span>  <span class="ml-4 border-r-2"></span>
+                    <span
+                        class="mr-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> {{__('lang.market_place')}}</span>
+                    <span class="ml-4 border-r-2"></span>
                 </a>
 
                 <div class="flex justify-center items-center">
@@ -77,8 +83,13 @@
                              x-transition:leave="transition ease-in duration-75"
                              x-transition:leave-start="transform opacity-100 scale-100">
                             <div class="hidden lg:block flex justify-center items-center space-x-3 cursor-pointer">
-                                <a href="#" class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                                    <span class=" lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span> <span class="mr-6">{{ Config::get('languages')[App::getLocale()]['display'] }}</span><span class="ml-4 border-r-2"></span>
+                                <a href="#"
+                                   class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                                    <span
+                                        class=" lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
+                                    <span
+                                        class="mr-6">{{ Config::get('languages')[App::getLocale()]['display'] }}</span><span
+                                        class="ml-4 border-r-2"></span>
                                 </a>
                             </div>
 
@@ -98,7 +109,8 @@
                                                 <a href="{{ route('lang.switch', $lang) }}"
                                                    class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700 lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                                                     <div class="mr-3">
-                                                        <span class="flag-icon flag-icon-{{$language['flag-icon']}}"></span>
+                                                        <span
+                                                            class="flag-icon flag-icon-{{$language['flag-icon']}}"></span>
                                                     </div>
                                                     {{--Dashboard--}}
                                                     {{--                                            {{__('lang.dashboard')}}--}}
@@ -116,13 +128,13 @@
                 @guest
                     <button
                         class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
-                        onclick="window.location.href='{{url('panel/login')}}'">
+                        onclick="window.location.href='{{url($currentPanel.'/login')}}'">
                         {{--Login--}}
                         {{__('lang.login')}}
                     </button>
                     <button
                         class="inline-flex items-center rounded-md border border-transparent bg-purple-100 px-3 py-2 text-sm font-medium leading-4 text-purple-700 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                        onclick="window.location.href='{{url('panel/register')}}'">
+                        onclick="window.location.href='{{url($currentPanel.'/register')}}'">
                         {{--Sign Up--}}
                         {{__('lang.sign_up')}}
                     </button>
@@ -154,7 +166,7 @@
                                      class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
                                     <ul class="space-y-3">
                                         <li class="font-medium">
-                                            <a href="{{url('panel')}}"
+                                            <a href="{{url($currentPanel)}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -169,7 +181,7 @@
                                             </a>
                                         </li>
                                         <li class="font-medium">
-                                            <a href="{{url('panel/users/'.auth()->id().'/edit')}}"
+                                            <a href="{{url($currentPanel.'/users/'.auth()->id().'/edit')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -184,7 +196,7 @@
                                             </a>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="window.location.href='{{url('panel/contract')}}'"
+                                            <button onclick="window.location.href='{{url($currentPanel.'/contract')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -198,7 +210,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="location.href='{{url('panel/contract')}}'"
+                                            <button onclick="location.href='{{url($currentPanel.'/contract')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1"
@@ -234,7 +246,7 @@
                                             </button>
                                         </li>
                                         <li class="font-medium">
-                                            <button onclick="location.href='{{url('panel/products')}}'"
+                                            <button onclick="location.href='{{url($currentPanel.'/products')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1"
@@ -300,11 +312,11 @@
 </header>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         $("#drop").hide();
 
-        $("#btn").click(function(){
+        $("#btn").click(function () {
 
             $("#drop").toggle();
 

@@ -3,14 +3,18 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
+use App\Models\User;
 use Closure;
+use Exception;
+use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Notifications\Notification;
-use Filament\Pages\Actions\Action;
-use Filament\Pages\Actions\ActionGroup;
-use Filament\Pages\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Tables\Actions\Concerns\InteractsWithRecords;
 
+/**
+ * @property User $record
+ */
 class EditUser extends EditRecord
 {
     use InteractsWithRecords;
@@ -18,21 +22,23 @@ class EditUser extends EditRecord
     protected static string $resource = UserResource::class;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()->hidden(fn() => $this->record->id === auth()->id()),
             Action::make('Approve')
                 ->action($this->changeStatus('active'))
                 ->color('success')
                 ->icon('heroicon-o-check-circle')
+                ->hidden(fn() => $this->record->id === auth()->id())
                 ->visible(!$this->record->is_approved_by_admin),
             Action::make('Block')
                 ->action($this->changeStatus('blocked'))
                 ->color('danger')
                 ->icon('heroicon-o-x-circle')
+                ->hidden(fn() => $this->record->id === auth()->id())
                 ->visible($this->record->is_approved_by_admin),
         ];
     }
