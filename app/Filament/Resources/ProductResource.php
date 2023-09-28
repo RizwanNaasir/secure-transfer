@@ -5,15 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use App\Models\User;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
-use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,7 +37,7 @@ class ProductResource extends Resource
                 TextInput::make('name'),
                 Textarea::make('description'),
                 Textarea::make('price'),
-                FileUpload::make('image')->directory('public')
+                SpatieMediaLibraryFileUpload::make('image')->collection(Product::IMAGE_COLLECTION)
             ]);
     }
 
@@ -48,7 +48,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('full_image'),
+                SpatieMediaLibraryImageColumn::make('image'),
                 TextColumn::make('name'),
                 TextColumn::make('description')->limit(30),
                 TextColumn::make('price')
