@@ -45,7 +45,7 @@ class NewContract extends Component implements HasForms
 
         ContractService::create($this->formattedData(), auth()->user());
         Notification::make()->title('Contract sent successfully!')->success()->send();
-        $this->emit('openModal', 'qr-code-modal');
+        $this->dispatch('openModal', 'qr-code-modal');
     }
 
     protected function getFormSchema(): array

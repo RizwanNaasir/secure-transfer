@@ -41,7 +41,7 @@ class Accept extends ModalComponent implements HasForms
             ->body('Contract has been accepted successfully.')
             ->success()
             ->send();
-        $this->emit('openModal', 'contracts.rating');
+        $this->dispatch('openModal', 'contracts.rating');
     }
 
     public function render()
