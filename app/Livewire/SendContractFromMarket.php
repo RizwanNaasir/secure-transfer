@@ -49,6 +49,7 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
 
         if ($contractThatAlreadyExists) {
             $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
+            return;
         }
         try {
             ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
