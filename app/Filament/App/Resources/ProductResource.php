@@ -47,7 +47,7 @@ class ProductResource extends Resource
             ->columns([
                 SpatieMediaLibraryImageColumn::make('image')->collection(Product::IMAGE_COLLECTION),
                 TextColumn::make('name'),
-                TextColumn::make('description'),
+                TextColumn::make('description')->limit(30),
                 TextColumn::make('price'),
                 TextColumn::make('approved')
                     ->label('Status')

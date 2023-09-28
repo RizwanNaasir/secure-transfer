@@ -4,7 +4,6 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +20,10 @@ use RizwanNasir\MtnMomo\MtnConfig;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//Route::get('call/{command}', function ($command) {
+//    Artisan::call($command);
+//    return Artisan::output();
+//});
 
 Route::get('/', function () {
     return view('welcome');
