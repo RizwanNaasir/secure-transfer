@@ -67,6 +67,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasAvatar, Filame
         'document1_path',
         'document2_path'
     ];
+
+    protected function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFilamentAvatarUrl(),
+        );
+    }
     public function getAvatarPathAttribute(): ?string
     {
         return $this->getFilamentAvatarUrl();

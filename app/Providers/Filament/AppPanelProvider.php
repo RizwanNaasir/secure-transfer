@@ -2,11 +2,10 @@
 
 namespace App\Providers\Filament;
 
-use App\Models\User;
-use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -18,35 +17,35 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Jeffgreco13\FilamentBreezy\BreezyCore;
 
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('app')
-            ->path('app')
+            ->id('panel')
+            ->path('panel')
             ->topNavigation()
             ->login()
             ->registration()
+            ->profile()
             ->passwordReset()
             ->colors([
-                'primary' => Color::Cyan,
+                'primary' => Color::Purple,
             ])
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\\Filament\\App\\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\\Filament\\App\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->plugin(BreezyCore::make()
-                ->myProfile(hasAvatars: true)
-                ->avatarUploadComponent(function () {
-                    return SpatieMediaLibraryFileUpload::make('avatar_url')
-                        ->avatar()
-                        ->collection(User::AVATAR_COLLECTION);
-                })
-            )
+            ->userMenuItems([
+                'profile' => MenuItem::make()
+                    ->url(function () use ($panel) {
+                        $userId = auth()->id();
+                        return "/{$panel->getId()}/users/$userId/edit";
+                    })
+                    ->label('Edit profile'),
+            ])
             ->spa()
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\\Filament\\App\\Widgets')
             ->widgets([])

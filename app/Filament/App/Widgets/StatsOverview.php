@@ -18,14 +18,14 @@ class StatsOverview extends BaseWidget
             ->latest()
             ->pending()
             ->first()
-            ->load('status');
+            ?->load('status');
         $totalAmountSent = $user->contracts()
             ->notPending()
-            ->sum('amount');
+            ?->sum('amount');
         return [
-            Stat::make('Current Active Contracts', "$currentActiveContract->amount $")
-                ->description(ucfirst($currentActiveContract->status->status))
-                ->color(match ($currentActiveContract->status->status) {
+            Stat::make('Current Active Contracts', "$currentActiveContract?->amount $")
+                ->description(ucfirst($currentActiveContract?->status?->status))
+                ->color(match ($currentActiveContract?->status?->status) {
                     'pending' => 'warning',
                     'accepted' => 'success',
                     'rejected' => 'danger',

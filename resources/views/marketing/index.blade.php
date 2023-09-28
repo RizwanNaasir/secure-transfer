@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end">
-                    <button onclick="window.location.href='{{url('app/products/create')}}'" type="button"
+                    <button onclick="window.location.href='{{url('panel/products/create')}}'" type="button"
                             class=" text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">{{ __('lang.add_product') }}</button>
                 </div>
                 <ul role="list" class="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8 gap-8">

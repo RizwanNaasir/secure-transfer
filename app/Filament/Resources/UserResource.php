@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -28,32 +27,7 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                SpatieMediaLibraryFileUpload::make('avatar')
-                    ->columnSpan(2)
-                    ->avatar()
-                    ->collection(User::AVATAR_COLLECTION),
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('surname')
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(255),
-                SpatieMediaLibraryFileUpload::make('document1')
-                    ->label('First Document')
-                    ->downloadable()
-                    ->collection(User::DOCUMENTS_COLLECTION1),
-                SpatieMediaLibraryFileUpload::make('document2')
-                    ->label('Second Document')
-                    ->collection(User::DOCUMENTS_COLLECTION2)
-                    ->downloadable(),
-            ]);
+            ->schema(self::retrieveFormFields());
     }
 
     /**
@@ -62,25 +36,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('id')->sortable(),
-                ImageColumn::make('avatar')->circular()->disk(''),
-                TextColumn::make('full_name'),
-                TextColumn::make('email'),
-                BadgeColumn::make('status')
-                    ->colors([
-                        'success' => 'active',
-                        'secondary' => 'pending',
-                        'danger' => 'blocked',
-                    ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
-                BadgeColumn::make('email_verified_at')->label('Verified Email')
-                    ->colors([
-                        'success',
-                        'danger' => null,
-                    ])->formatStateUsing(function ($state) {
-                        return isset($state) ? 'Yes' : 'No';
-                    }),
-            ])
+            ->columns(self::generateUserColumns())
             ->filters([
                 //
             ])
@@ -145,6 +101,65 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
             'view' => Pages\EditUser::route('/{record}/view'),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function retrieveFormFields(): array
+    {
+        return [
+            SpatieMediaLibraryFileUpload::make('avatar')
+                ->columnSpan(2)
+                ->avatar()
+                ->collection(User::AVATAR_COLLECTION),
+            TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+            TextInput::make('surname')
+                ->maxLength(255),
+            TextInput::make('email')
+                ->email()
+                ->required()
+                ->maxLength(255),
+            TextInput::make('phone')
+                ->tel()
+                ->maxLength(255),
+            SpatieMediaLibraryFileUpload::make('document1')
+                ->label('First Document')
+                ->downloadable()
+                ->collection(User::DOCUMENTS_COLLECTION1),
+            SpatieMediaLibraryFileUpload::make('document2')
+                ->label('Second Document')
+                ->collection(User::DOCUMENTS_COLLECTION2)
+                ->downloadable(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function generateUserColumns(): array
+    {
+        return [
+            TextColumn::make('id')->sortable(),
+            ImageColumn::make('avatar')->circular()->disk(''),
+            TextColumn::make('full_name'),
+            TextColumn::make('email'),
+            BadgeColumn::make('status')
+                ->colors([
+                    'success' => 'active',
+                    'secondary' => 'pending',
+                    'danger' => 'blocked',
+                ])->formatStateUsing(static fn(string $state): string => ucfirst($state)),
+            BadgeColumn::make('email_verified_at')->label('Verified Email')
+                ->colors([
+                    'success',
+                    'danger' => null,
+                ])->formatStateUsing(function ($state) {
+                    return isset($state) ? 'Yes' : 'No';
+                }),
         ];
     }
 }

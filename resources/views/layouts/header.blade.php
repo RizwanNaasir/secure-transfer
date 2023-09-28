@@ -52,12 +52,12 @@
                <span class="mr-4">{{__('lang.home')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
                 </a>
                 @auth
-                    <a href="{{url('app/contracts/create')}}"
+                    <a href="{{url('panel/contracts/create')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--Add New Contract--}}
                        <span class="mr-4">{{__('lang.add_new_contract')}}</span>  <span class="ml-4 border-r-2"></span>
                     </a>
-                    <a href="{{url('app/contracts')}}"
+                    <a href="{{url('panel/contracts')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
                         {{--History--}}
                         <span class="mr-4">{{__('lang.contracts')}}</span><span class="ml-4 border-r-2"></span>
@@ -116,13 +116,13 @@
                 @guest
                     <button
                         class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 mr-1"
-                        onclick="window.location.href='{{url('app/login')}}'">
+                        onclick="window.location.href='{{url('panel/login')}}'">
                         {{--Login--}}
                         {{__('lang.login')}}
                     </button>
                     <button
                         class="inline-flex items-center rounded-md border border-transparent bg-purple-100 px-3 py-2 text-sm font-medium leading-4 text-purple-700 hover:bg-purple-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
-                        onclick="window.location.href='{{url('app/register')}}'">
+                        onclick="window.location.href='{{url('panel/register')}}'">
                         {{--Sign Up--}}
                         {{__('lang.sign_up')}}
                     </button>
@@ -169,7 +169,7 @@
                                             </a>
                                         </li>
                                         <li class="font-medium">
-                                            <a href="{{url('app/my-profile')}}"
+                                            <a href="{{url('panel/my-profile')}}"
                                                class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -184,7 +184,7 @@
                                             </a>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="window.location.href='{{url('app/contract')}}'"
+                                            <button onclick="window.location.href='{{url('panel/contract')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -198,7 +198,7 @@
                                             </button>
                                         </li>
                                         <li class="block lg:hidden font-medium">
-                                            <button onclick="location.href='{{url('app/contract')}}'"
+                                            <button onclick="location.href='{{url('panel/contract')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1"
@@ -234,7 +234,7 @@
                                             </button>
                                         </li>
                                         <li class="font-medium">
-                                            <button onclick="location.href='{{url('app/products')}}'"
+                                            <button onclick="location.href='{{url('panel/products')}}'"
                                                     class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700">
                                                 <div class="mr-3">
                                                     <svg width="21px" height="18px" viewBox="0 0 21 18" version="1.1"
