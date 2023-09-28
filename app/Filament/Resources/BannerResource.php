@@ -4,21 +4,22 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BannerResource\Pages;
 use App\Models\Banner;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class BannerResource extends Resource
 {
     protected static ?string $model = Banner::class;
 
     protected static ?string $slug = 'banners';
+
+    protected static ?string $activeNavigationIcon = 'heroicon-s-photo';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
 
     protected static ?string $recordTitleAttribute = 'id';
 

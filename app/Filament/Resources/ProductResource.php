@@ -24,6 +24,9 @@ class ProductResource extends Resource
 
     protected static ?string $slug = 'products';
 
+    protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-shopping-cart';
+
     protected static ?string $recordTitleAttribute = 'id';
 
     public static function form(Form $form): Form

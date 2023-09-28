@@ -6,7 +6,6 @@ use App\Filament\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers\RecipientRelationManager;
 use App\Filament\Resources\ContractResource\RelationManagers\UserRelationManager;
 use App\Models\Contract;
-use App\Models\User;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -15,10 +14,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Table;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
 class ContractResource extends Resource
@@ -27,7 +25,7 @@ class ContractResource extends Resource
 
     protected static ?string $slug = 'contracts';
 
-    protected static ?string $navigationGroup = 'Contracts';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3-bottom-right';
     protected static ?string $recordTitleAttribute = 'id';
 
     public static function form(Form $form): Form
@@ -124,8 +122,9 @@ class ContractResource extends Resource
         return [
             TextColumn::make('id')->sortable(),
             TextColumn::make('amount')->icon('heroicon-s-currency-dollar'),
-            TextColumn::make('description'),
-            BadgeColumn::make('status.status')
+            TextColumn::make('description')->limit(30),
+            TextColumn::make('status.status')
+                ->badge()
                 ->colors([
                     'warning' => 'pending',
                     'success' => 'accepted',
