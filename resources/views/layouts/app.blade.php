@@ -14,7 +14,8 @@
             display: none !important;
         }
     </style>
-
+    <wireui:scripts />
+    <script src="//unpkg.com/alpinejs" defer></script>
     @vite('resources/css/app.css')
 </head>
     <body class="antialiased">

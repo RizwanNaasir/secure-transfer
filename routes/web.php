@@ -151,4 +151,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     });
 });
 Route::post('user/update',[UserController::class,'update']);
+Route::get('/remove-message', function (){
+    Session::forget('message');
+});
 Route::stripeWebhooks('stripe/webhook');
