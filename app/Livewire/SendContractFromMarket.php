@@ -62,7 +62,8 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
             }
             else {
                 auth()->user()->withdraw($product->price);
-                $this->addMessagesFromOutside('Contract sent successfully');
+                \Session::put('message', 'Contract sent successfully');
+
             }
             $this->redirect(url('/market_details', $product->id));
         }
