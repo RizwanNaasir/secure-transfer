@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'livewire/message/livewire-ui-modal',
+        'stripe/webhook',
         'pond'
     ];
 }

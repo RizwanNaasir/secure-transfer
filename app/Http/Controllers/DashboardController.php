@@ -23,7 +23,7 @@ class DashboardController extends Controller
             ->latest()
             ->pending()
             ->first()
-            ->load('status');
+            ?->load('status');
         $totalAmountSent = $user->contracts()
             ->notPending()
             ->sum('amount');

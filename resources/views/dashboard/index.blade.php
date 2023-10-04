@@ -12,10 +12,10 @@
                     </div>
                     <div class="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
                         <p class="flex md:justify-around">STATUS : <span
-                                    class="text-sm ml-5 text-black">{{\Str::upper($currentActiveContract->status->status)}}</span>
+                                    class="text-sm ml-5 text-black">{{\Str::upper($currentActiveContract?->status->status)}}</span>
                         </p>
                     </div>
-                    <p class="py-4 text-3xl ml-5">Amount: <small>{{$currentActiveContract->amount}}$</small></p>
+                    <p class="py-4 text-3xl ml-5">Amount: <small>{{$currentActiveContract?->amount}}$</small></p>
                     <!-- <hr > -->
                 </div>
             </div>

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\CanBeRated;
+use Bavix\Wallet\Interfaces\Wallet;
+use Bavix\Wallet\Traits\HasWallet;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Notifications\Notification;
@@ -15,13 +17,27 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements MustVerifyEmail, HasAvatar, FilamentUser, HasMedia
+class User extends Authenticatable implements
+    Wallet,
+    HasMedia,
+    HasAvatar,
+    FilamentUser,
+    MustVerifyEmail
+
 {
-    use HasApiTokens, HasFactory, Notifiable, CanBeRated, InteractsWithMedia;
+    use
+        Billable,
+        HasWallet,
+        Notifiable,
+        CanBeRated,
+        HasFactory,
+        HasApiTokens,
+        InteractsWithMedia;
 
     const AVATAR_COLLECTION = 'avatars';
     const DOCUMENTS_COLLECTION1 = 'documents-1';

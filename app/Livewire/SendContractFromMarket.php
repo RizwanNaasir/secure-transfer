@@ -35,6 +35,7 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
                     ->options([
                         'crypto' => 'Crypto',
                         'bank' => 'Bank',
+                        'stripe' => 'Payment by Wallet',
                     ])->inline()
                     ->required()
             ])
@@ -51,6 +52,21 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
             $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
             return;
         }
+
+        if ($this->preferred_payment_method === 'stripe') {
+            $product = $this->product;
+            $balance = auth()->user()->balance_int;
+            if ($balance < $product->price) {
+                $this->addError('preferred_payment_method', 'You don\'t have enough balance to send this contract');
+                return;
+            }
+            else {
+                auth()->user()->withdraw($product->price);
+                $this->addMessagesFromOutside('Contract sent successfully');
+            }
+            $this->redirect(url('/market_details', $product->id));
+        }
+
         try {
             ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
             $this->addMessagesFromOutside('Contract sent successfully');

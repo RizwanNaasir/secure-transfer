@@ -4,7 +4,10 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
+use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use RizwanNasir\MtnMomo\MtnCollection;
@@ -31,6 +34,23 @@ Route::get('/', function () {
 
 Route::get('language/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 
+/*Route::group([
+    'prefix' => 'wallet',
+    'middleware' => ['web', 'auth'],
+], function (){
+    Route::get('checkout', [WalletController::class, 'checkWallet'])->name('check-wallet');
+});*/
+
+
+Route::group([
+    'prefix' => 'stripe',
+    'middleware' => ['web', 'auth'],
+], function (){
+   /* Route::get('checkout', [StripeController::class, 'checkOut'])->name('checkout');
+    Route::post('checkout-payment', [StripeController::class, 'checkoutDetails'])->name('checkout-details');*/
+    Route::get('payment', [StripeController::class, 'index'])->name('payment');
+    Route::get('wallet', [StripeController::class, 'topUpWallet'])->name('stripe.top-up-wallet');
+});
 
 Route::group([
     'prefix' => 'user',
@@ -130,6 +150,5 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         return Artisan::output();
     });
 });
-
-
 Route::post('user/update',[UserController::class,'update']);
+Route::stripeWebhooks('stripe/webhook');
