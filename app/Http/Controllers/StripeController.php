@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Laravel\Cashier\Cashier;
-use Stripe\PaymentIntent;
 
 class StripeController extends Controller
 {
@@ -50,13 +48,13 @@ class StripeController extends Controller
      */
     public function topUpWallet(Request $request)
     {
-        $amount = $request['amount'];
+        $amount = $request->integer('amount');
         $user = auth()->user();
         $stripeSecretKey = config('services.stripe.secret_key');
         \Stripe\Stripe::setApiKey($stripeSecretKey);
         header('Content-Type: application/json');
         $url = $user->checkoutCharge(
-            amount: $amount,
+            amount: $amount * 100,
             name: 'myWallet',
             sessionOptions: [
                 'payment_method_types' => ['card'],
