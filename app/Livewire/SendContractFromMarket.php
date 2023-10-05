@@ -73,7 +73,6 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
                 }
                 $this->redirect(url('/market_details', $product->id));
             }*/
-
             switch ($this->preferred_payment_method) {
                 case 'wallet':
                     $product = $this->product;
@@ -90,9 +89,9 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
                                 'preferred_payment_method' => $this->preferred_payment_method,
                             ];
                             ContractService::create($data, auth()->user(), $product);
-                           $this->addMessagesFromOutside('Contract sent successfully');
-                            auth()->user()->withdraw($this->$product->price);
+                            auth()->user()->withdraw($data['amount']);
                             \Session::put('message', 'Contract sent successfully by ' . $this->preferred_payment_method);
+
                             $this->redirect(url('/market_details', $product->id));
                         } catch (Exception $e) {
                             $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
