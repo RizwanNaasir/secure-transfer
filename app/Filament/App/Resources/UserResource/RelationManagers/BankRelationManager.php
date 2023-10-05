@@ -2,11 +2,14 @@
 
 namespace App\Filament\App\Resources\UserResource\RelationManagers;
 
+use App\Models\BankDetail;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class BankRelationManager extends RelationManager
 {
@@ -16,7 +19,15 @@ class BankRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\TextInput::make('account_holder_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('bank_name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('account_number')
+                    ->numeric()
+                    ->maxValue(16)
                     ->required()
                     ->maxLength(255),
             ]);
@@ -25,15 +36,23 @@ class BankRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('id')
+            ->recordTitleAttribute('bank_account_title')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('account_holder_name'),
+                Tables\Columns\TextColumn::make('bank_name'),
+                Tables\Columns\TextColumn::make('account_number'),
+                Tables\Columns\IconColumn::make('active')->boolean(),
+
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                ->hidden(function (){
+                    return BankDetail::where('user_id', auth()->user()->id)->exists();
+                })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -205,4 +205,9 @@ class User extends Authenticatable implements
     {
         return $this->hasOne(BankDetail::class);
     }
+
+    public function payout(): HasOne
+    {
+        return $this->hasOne(PayoutRequest::class);
+    }
 }
