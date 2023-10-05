@@ -17,6 +17,7 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
@@ -27,6 +28,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ContractResource extends Resource
@@ -142,16 +144,12 @@ class ContractResource extends Resource
                             ->tabs([
                                 Tabs\Tab::make('Product')
                                     ->schema([
-                                        Select::make('product')
-                                            ->searchable()
-                                            ->options(function () {
-                                                return Product::query()
-                                                    ->where('user_id', auth()->id())
-                                                    ->get()
-                                                    ->mapWithKeys(function (Product $product) {
-                                                        return [$product->id => $product->name];
-                                                    });
+                                        Select::make('products')
+                                            ->relationship('products', 'name')
+                                            ->options(function (){
+                                                return Product::all()->pluck('name','id');
                                             })
+
                                     ]),
                                 Tabs\Tab::make('File')
                                     ->badge(function (?Contract $record) {

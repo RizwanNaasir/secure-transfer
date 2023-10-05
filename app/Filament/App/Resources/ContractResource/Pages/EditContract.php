@@ -29,7 +29,14 @@ class EditContract extends EditRecord
                 ->requiresConfirmation()
                 ->modalDescription('Scan the QR code with your phone to accept the contract')
                 ->action(function () {
+                    $product_owner  = $this->record->recipient->first();
+                    $amount = $this->record->amount;
                     ContractService::updateContract(contract: $this->record, status: 'accepted');
+                    if ($this->record->preferred_payment_method === 'wallet')
+                    {
+                        $product_owner->deposit($amount);
+                    }
+
                 });
         } else {
             Actions\DeleteAction::make();
