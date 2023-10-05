@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\App\Resources\UserResource\RelationManagers\BankRelationManager;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -92,7 +91,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            BankRelationManager::class,
+            //
         ];
     }
 
