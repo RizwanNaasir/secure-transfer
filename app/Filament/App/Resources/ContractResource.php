@@ -6,6 +6,7 @@ use App\Filament\App\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers\RecipientRelationManager;
 use App\Filament\Resources\ContractResource\RelationManagers\UserRelationManager;
 use App\Models\Contract;
+use App\Models\Product;
 use App\Services\ContractService;
 use Exception;
 use Filament\Forms\Components\Grid;
@@ -135,15 +136,23 @@ class ContractResource extends Resource
                             ->options([
                                 'bank_transfer' => 'Bank Transfer',
                                 'crypto' => 'Crypto',
+                                'wallet' => 'Payment by Wallet',
                             ]),
                         Tabs::make('Product/File')
                             ->tabs([
-//                                Tabs\Tab::make('Product')
-//                                    ->schema([
-//                                        Select::make('product')
-//                                            ->searchable()
-//                                            ->options(Product::query()->get()->pluck('name', 'id')),
-//                                    ]),
+                                Tabs\Tab::make('Product')
+                                    ->schema([
+                                        Select::make('product')
+                                            ->searchable()
+                                            ->options(function () {
+                                                return Product::query()
+                                                    ->where('user_id', auth()->id())
+                                                    ->get()
+                                                    ->mapWithKeys(function (Product $product) {
+                                                        return [$product->id => $product->name];
+                                                    });
+                                            })
+                                    ]),
                                 Tabs\Tab::make('File')
                                     ->badge(function (?Contract $record) {
                                         return $record?->hasMedia(Contract::MEDIA_COLLECTION) ? 1 : null;

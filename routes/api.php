@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\DashBoardController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RatingController;
+use App\Http\Controllers\Api\StripeController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ProductController as TempController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,12 @@ Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_d
 
     Route::post('process',[ContractController::class,'process']);
 });
+
+
+Route::group(['prefix' => 'stripe', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('checkout', [StripeController::class, 'store']);
+});
+
 
 //Products
 Route::post('/tmp-upload/{id}', [TempController::class, 'tmpUpload']);

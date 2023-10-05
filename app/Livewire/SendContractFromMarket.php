@@ -35,7 +35,7 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
                     ->options([
                         'crypto' => 'Crypto',
                         'bank' => 'Bank',
-                        'stripe' => 'Payment by Wallet',
+                        'wallet' => 'Payment by Wallet',
                     ])->inline()
                     ->required()
             ])
@@ -52,44 +52,75 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
             $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
             return;
         }
+        if (\Auth::check())
+        {
+            /*if ($this->preferred_payment_method === 'stripe') {
+                $product = $this->product;
+                $balance = auth()->user()->balance_int;
+                if ($balance < $product->price) {
+                    $this->addError('preferred_payment_method', 'You don\'t have enough balance to send this contract');
+                    return;
+                }
+                else {
+                    try {
+                        ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
+                        $this->addMessagesFromOutside('Contract sent successfully');
+                    } catch (Exception $e) {
+                        $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
+                    }
 
-        if ($this->preferred_payment_method === 'stripe') {
-            $product = $this->product;
-            $balance = auth()->user()->balance_int;
-            if ($balance < $product->price) {
-                $this->addError('preferred_payment_method', 'You don\'t have enough balance to send this contract');
-                return;
+
+                }
+                $this->redirect(url('/market_details', $product->id));
+            }*/
+
+            switch ($this->preferred_payment_method) {
+                case 'wallet':
+                    $product = $this->product;
+                    $balance = auth()->user()->balance_int;
+                    if ($balance < $product->price) {
+                        $this->addError('preferred_payment_method', 'You don\'t have enough balance to send this contract');
+                    } else {
+                        try
+                        {
+                            $data = [
+                                'email' => $this->product->user->email,
+                                'amount' => $this->product->price,
+                                'description' => $this->product->description,
+                                'preferred_payment_method' => $this->preferred_payment_method,
+                            ];
+                            ContractService::create($data, auth()->user(), $product);
+                           $this->addMessagesFromOutside('Contract sent successfully');
+                            \Session::put('message', 'Contract sent successfully by ' . $this->preferred_payment_method);
+                            $this->redirect(url('/market_details', $product->id));
+                        } catch (Exception $e) {
+                            $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
+                        }
+                    }
+                    break;
+
+                case 'bank':
+                case 'crypto':
+                    $data = [
+                        'email' => $this->product->user->email,
+                        'amount' => $this->product->price,
+                        'description' => $this->product->description,
+                        'preferred_payment_method' => $this->preferred_payment_method,
+                    ];
+                    try {
+                        ContractService::create($data, auth()->user(), $this->product);
+                        $this->addMessagesFromOutside('Contract sent successfully');
+                        \Session::put('message', 'Contract sent successfully by ' . $this->preferred_payment_method);
+                        $this->redirect(url('/market_details', $this->product->id));
+                    } catch (Exception $e) {
+                        $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
+                    }
+                    break;
             }
-            else {
-                auth()->user()->withdraw($product->price);
-                \Session::put('message', 'Contract sent successfully');
-
-            }
-            $this->redirect(url('/market_details', $product->id));
         }
-
-        try {
-            ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
-            $this->addMessagesFromOutside('Contract sent successfully');
-        } catch (Exception $e) {
-            $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
+        else {
+            $this->addError('preferred_payment_method', 'You need to login to send contract');
+            return;
         }
-    }
-
-    public function getFormattedData(): array
-    {
-        $file = file_get_contents($this->product->getFirstMedia(Product::IMAGE_COLLECTION)?->getFullUrl());
-        if ($file) {
-            request()->merge([
-                'file' => $file
-            ]);
-        }
-        return [
-            'email' => $this->product->user->email,
-            'amount' => $this->product->price,
-            'description' => $this->product->description,
-            'file' => $this->product->image,
-            'preferred_payment_method' => $this->preferred_payment_method,
-        ];
     }
 }
