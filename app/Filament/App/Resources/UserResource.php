@@ -23,6 +23,13 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\BankRelationManager::class,
+        ];
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,7 +39,7 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) => $query->where('id', auth()->id()))
+            ->modifyQueryUsing(fn(Builder $query) => $query->where('user_id', auth()->id()))
             ->columns(\App\Filament\Resources\UserResource::generateUserColumns())
             ->actions([
                 Tables\Actions\EditAction::make(),
