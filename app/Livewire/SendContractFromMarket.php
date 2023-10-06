@@ -94,6 +94,7 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
 
                             $this->redirect(url('/market_details', $product->id));
                         } catch (Exception $e) {
+                            dd($e->getMessage(), $e);
                             $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
                         }
                     }
