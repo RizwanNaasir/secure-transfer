@@ -21,21 +21,21 @@ class ListContracts extends ListRecords
                         return $query->where('user_id', auth()->id());
                     })->orWhereHas('recipient', function (Builder $query) {
                         return $query->where('recipient_id', auth()->id());
-                    });
+                    })->orderByDesc('created_at');
                 }),
             'sent' => Tab::make()
                 ->icon('heroicon-o-inbox')
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query->whereHas('user', function (Builder $query) {
                         return $query->where('user_id', auth()->id());
-                    });
+                    })->orderByDesc('created_at');
                 }),
             'received' => Tab::make()
                 ->icon('heroicon-o-inbox-arrow-down')
                 ->modifyQueryUsing(function (Builder $query) {
                     return $query->whereHas('recipient', function (Builder $query) {
                         return $query->where('recipient_id', auth()->id());
-                    });
+                    })->orderByDesc('created_at');
                 }),
         ];
     }

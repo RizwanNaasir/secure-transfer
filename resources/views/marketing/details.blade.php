@@ -27,13 +27,13 @@
                 </div>
                 @endif
                 <div class="mt-4">
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{$product->name}}</h1>
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{$product?->name}}</h1>
                 </div>
                 <section aria-labelledby="information-heading" class="mt-4">
                     <h2 id="information-heading" class="sr-only">Product information</h2>
 
                     <div class="flex items-center">
-                        <p class="text-lg text-gray-900 sm:text-xl">${{$product->price}}</p>
+                        <p class="text-lg text-gray-900 sm:text-xl">${{$product?->price}}</p>
 
                         <div class="ml-4 border-l border-gray-300 pl-4">
                             <h2 class="sr-only">Reviews</h2>
@@ -43,14 +43,14 @@
                         </div>
                     </div>
                     <div class="mt-4 space-y-6">
-                        <p class="text-base text-gray-500">{{$product->description}}.</p>
+                        <p class="text-base text-gray-500">{{$product?->description}}.</p>
                     </div>
                 </section>
             </div>
             <!-- Product image -->
             <div class="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
                 <div class="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg">
-                    <img src="{{$product->full_image}}" class="h-full w-full object-cover object-center">
+                    <img src="{{$product?->full_image}}" class="h-full w-full object-cover object-center">
                 </div>
             </div>
 
@@ -69,8 +69,8 @@
                 {{--                    </a>--}}
 
                 {{--                </div>--}}
-                @php session()->put('product_id',$product->id) @endphp
-                @if($product->authUserIsOwner())
+                @php session()->put('product_id',$product?->id) @endphp
+                @if($product?->authUserIsOwner())
                     <button onclick=""
                             class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
                         Edit Product

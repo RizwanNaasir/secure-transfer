@@ -25,19 +25,37 @@ class EditContract extends EditRecord
             ->exists();
 
         if ($contractIsReceived && $this->record->is_pending) {
-            $actions[] = Actions\Action::make('accept_contract')
-                ->requiresConfirmation()
-                ->modalDescription('Scan the QR code with your phone to accept the contract')
-                ->action(function () {
-                    $product_owner  = $this->record->recipient->first();
-                    $amount = $this->record->amount;
-                    ContractService::updateContract(contract: $this->record, status: 'accepted');
-                    if ($this->record->preferred_payment_method === 'wallet')
-                    {
-                        $product_owner->deposit($amount);
-                    }
+            $actions = [
+                Actions\Action::make('accept_contract')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalDescription('Scan the QR code with your phone to accept the contract')
+                    ->action(function () {
+                        $product_owner  = $this->record->recipient->first();
+                        $amount = $this->record->amount;
+                        ContractService::updateContract(contract: $this->record, status: 'accepted');
+                        if ($this->record->preferred_payment_method === 'wallet')
+                        {
+                            $product_owner->deposit($amount);
+                        }
 
-                });
+                    }),
+
+                Actions\Action::make('cancel_contract')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalDescription('Are you sure you want to cancel this contract?')
+                    ->action(function () {
+                        $contract_send_owner  = $this->record->user->first();
+                        $amount = $this->record->amount;
+                        ContractService::updateContract(contract: $this->record, status: 'accepted');
+                        if ($this->record->preferred_payment_method === 'wallet')
+                        {
+                            $contract_send_owner->deposit($amount, meta: ['description' => 'Contract cancelled']);
+                        }
+
+                    })
+            ];
         } else {
             Actions\DeleteAction::make();
         }

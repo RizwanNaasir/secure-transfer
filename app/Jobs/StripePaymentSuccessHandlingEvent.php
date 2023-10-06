@@ -32,7 +32,7 @@ class StripePaymentSuccessHandlingEvent implements ShouldQueue
             $customer = $this->webhookCall->payload['data']['object']['customer'];
             $amount = $this->webhookCall->payload['data']['object']['amount_total'];
             $user = User::where('stripe_id',$customer)->first();
-            $user->deposit($amount);
+            $user->deposit($amount / 100);
         }
     }
 }

@@ -26,8 +26,6 @@ class BankRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('account_number')
-                    ->numeric()
-                    ->maxValue(16)
                     ->required()
                     ->maxLength(255),
             ]);
