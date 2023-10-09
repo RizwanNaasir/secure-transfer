@@ -32,6 +32,31 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+
+    return "Cache cleared successfully";
+});
+
+/*Route::get('migrate', function () {
+    Artisan::call('migrate --path=database/migrations/2019_05_03_000001_create_customer_columns.php --force');
+    return Artisan::output();
+});
+*/
+
+/*Route::group(['middleware' => ['web', 'auth']], function () {
+    Route::get('call/{command}', function ($command) {
+        if ($command == 'migrate') {
+            Artisan::call('migrate', ['--force' => true]);
+        } else {
+            Artisan::call($command);
+        }
+        return Artisan::output();
+    });
+});*/
+
 Route::get('language/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 
 /*Route::group([
