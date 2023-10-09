@@ -72,8 +72,19 @@ Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_d
 });
 
 
-Route::group(['prefix' => 'stripe', 'middleware' => ['auth:sanctum']], function () {
-    Route::post('checkout', [StripeController::class, 'store']);
+Route::group(['prefix' => 'bank', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('detail', [StripeController::class, 'store']);
+    Route::get('user-detail', [StripeController::class, 'show']);
+});
+
+Route::group(['prefix' => 'payout', 'middleware' => ['auth:sanctum']], function () {
+    Route::post('submit-request', [StripeController::class, 'submitRequest']);
+    Route::post('cancel-request', [StripeController::class, 'cancelSubmitRequest']);
+    Route::get('request-detail', [StripeController::class, 'requestDetails']);
+});
+
+Route::group(['prefix' => 'wallet', 'middleware' => ['auth:sanctum']], function () {
+    Route::get('balance-transaction', [StripeController::class, 'balanceTransaction']);
 });
 
 

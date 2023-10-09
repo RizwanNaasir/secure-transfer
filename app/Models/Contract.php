@@ -20,7 +20,7 @@ class Contract extends Model implements HasMedia
     protected $appends = [
         'current_status',
         'sender_detail',
-        'recipient_detail'
+        'recipient_detail',
     ];
 
     public function getFilePathAttribute(): ?string

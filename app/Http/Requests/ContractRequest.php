@@ -30,10 +30,17 @@ class ContractRequest extends FormRequest
     {
         return [
             'email' => 'required|email|exists:users,email',
-            'amount' => 'required',
+            'amount' => ['required', function ($attribute, $value, $fail) {
+                if(request()->input('preferred_payment_method') == 'wallet'){
+                    if ($value > request()->user()->balanceInt) {
+                        $fail('Insufficient balance in wallet');
+                    }
+                }
+            }],
             'description' => 'required',
             'file' => 'required|file',
             'preferred_payment_method' => 'required',
+            'product_id' => 'required|exists:products,id',
         ];
     }
     protected function failedValidation(Validator $validator)

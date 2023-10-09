@@ -7,6 +7,7 @@ use App\Http\Requests\ContractRequest;
 use App\Http\Resources\Api\ContractDetailResource;
 use App\Http\Resources\Api\ContractListResource;
 use App\Models\Contract;
+use App\Models\Product;
 use App\Models\User;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
@@ -17,9 +18,22 @@ class ContractController extends Controller
 {
     public function store(ContractRequest $request)
     {
+        $contract_sender = auth()->user();
+        $product = Product::findOrFail($request->input('product_id'));
+        if ($contract_sender->email == $request->input('email')) {
+            return $this->error(message: 'You cannot make a contract with yourself');
+        }
+        if ($product->user_id == $contract_sender->id) {
+            return $this->error(message: 'You cannot make a contract with your own product');
+        }
+        if ($request->input('preferred_payment_method') == 'wallet') {
+            $contract_sender->withdraw($request->input('amount'));
+        }
+
         $QRCode = ContractService::create(
             data: $this->formattedData($request),
-            user: $request->user()
+            user: $request->user(),
+            product: $product
         );
         try {
             return $this->success(
@@ -90,10 +104,18 @@ class ContractController extends Controller
     public function acceptContract(Request $request)
     {
         $contract = Contract::findOrFail($request->input('contract_id'));
-        if ($contract->current_status === 'Accepted') {
-            return $this->success(message: 'Contract already accepted');
+        /*$contract_sender = $contract->user()->first();*/
+        $contract_receiver = $contract->recipient()->first();
+        if($contract_receiver->id !== $request->user()->id){
+            return $this->error(message: 'This contract does not belong to you');
+        }
+        if ($contract->current_status !== 'Pending'){
+            return $this->success(message: 'This Contract cannot be accepted');
         } else {
             ContractService::updateContract($contract, 'accepted');
+            if ($contract->preferred_payment_method == 'wallet') {
+                $contract_receiver->deposit($contract->amount);
+            }
             return $this->success(message: 'Contract accepted');
         }
     }
@@ -101,10 +123,15 @@ class ContractController extends Controller
     public function declineContract(Request $request)
     {
         $contract = Contract::findOrFail($request->input('contract_id'));
-        if ($contract->current_status === 'Declined') {
-            return $this->success(message: 'Contract already declined');
+        /*$contract_receiver = $contract->recipient()->first();*/
+        $contract_sender = $contract->user()->first();
+        if ($contract->current_status !== 'Pending'){
+            return $this->success(message: 'This Contract cannot be declined');
         } else {
             ContractService::updateContract($contract, 'declined', \request()->input('description'));
+            if ($contract->preferred_payment_method == 'wallet') {
+                $contract_sender->deposit($contract->amount);
+            }
             return $this->success(message: 'Contract declined');
         }
     }
