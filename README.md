@@ -140,3 +140,49 @@ You can log in to admin via these credentials
 
 Email : admin@gmail.com
 Pass: password
+
+
+## Docker Desktop
+Now firstly you need to clone the project
+
+```bash
+cd ~/Documents && git clone https://github.com/mumar1052/secure-transfer.git && cd secure-transfer
+```
+![](/docs/screenshots/git-clone.png)
+
+Before you can clone the project you will need to check the following ports (3306 or 80) are free on your system.
+
+For check out the ports you can run the following command:
+```bash
+    nc -zv localhost 3306 80
+```
+
+After Clone the project you need to run the following command to install the composer.
+```bash
+    docker run --rm \
+      -u "$(id -u):$(id -g)" \
+      -v "$(pwd):/var/www/html" \
+      -w /var/www/html \
+      laravelsail/php82-composer:latest \
+      composer install --ignore-platform-reqs
+```
+![](/docs/screenshots/docker-composer-install.png)
+
+After composer install you need to run the following command to create a env file.
+```bash
+    cp .env.example .env
+```
+![](/docs/screenshots/create-env.png)
+
+![](/docs/screenshots/.env-file.png)
+
+After create the env file you need to run the following command to generate the key.
+```bash
+     docker run --rm \
+      -u "$(id -u):$(id -g)" \
+      -v "$(pwd):/var/www/html" \
+      -w /var/www/html \
+      laravelsail/php82-composer:latest \
+      php artisan sail:install --with=mysql
+```
+![](/docs/screenshots/install-sail.png)
