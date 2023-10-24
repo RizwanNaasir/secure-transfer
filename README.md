@@ -142,6 +142,10 @@ Email : admin@gmail.com
 Pass: password
 
 
+
+
+
+
 ## Docker Desktop
 Now firstly you need to clone the project
 
@@ -186,3 +190,40 @@ After create the env file you need to run the following command to generate the 
       php artisan sail:install --with=mysql
 ```
 ![](/docs/screenshots/install-sail.png)
+
+
+Generate Application encryption Key
+
+```bash
+php artisan key:generate
+```
+
+![](/docs/screenshots/key-generate.png)
+Migrate tables into database
+
+```bash
+php artisan migrate
+```
+
+You will be prompted with:
+
+WARN  The database 'secure-transfer' does not exist on the 'mysql' connection.  
+ **Would you like to create it?** (yes/no) [yes]
+
+Reply with `yes` or `y` to create database as if it has not been created.
+![](/docs/screenshots/migration.png)
+Generate Fake Data to login
+
+```bash
+php artisan db:seed
+```
+
+![](/docs/screenshots/db:seed.png)
+Now link you project with valet to served over the test domain
+
+```
+valet link
+```
+![](/docs/screenshots/valet:link.png)
+Now you can access your project in the browser at `localhost`
+which will be `secure-transfer.test` and admin will be at `localhost/admin`
