@@ -18,7 +18,6 @@ class StripeController extends Controller
         \Stripe\Stripe::setApiKey($stripeSecretKey);
         header('Content-Type: application/json');
 
-
         $url = $user->checkoutCharge(
             $product->price,
             $unit
@@ -29,17 +28,13 @@ class StripeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function checkOut()
-    {
-        return view('checkout.checkout');
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function checkoutDetails(Request $request)
     {
-        dd($request->all());
+       //
     }
 
 
@@ -68,7 +63,7 @@ class StripeController extends Controller
                 ]
             ]
         );
-       return redirect($url->url);
+       return redirect($url);
     }
 
     /**

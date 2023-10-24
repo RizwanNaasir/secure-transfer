@@ -23,10 +23,10 @@ use RizwanNasir\MtnMomo\MtnConfig;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Route::get('call/{command}', function ($command) {
-//    Artisan::call($command);
-//    return Artisan::output();
-//});
+/*Route::get('call/{command}', function ($command) {
+    Artisan::call($command);
+    return Artisan::output();
+});*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,20 +59,11 @@ Route::get('/clear', function () {
 
 Route::get('language/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
 
-/*Route::group([
-    'prefix' => 'wallet',
-    'middleware' => ['web', 'auth'],
-], function (){
-    Route::get('checkout', [WalletController::class, 'checkWallet'])->name('check-wallet');
-});*/
-
 
 Route::group([
     'prefix' => 'stripe',
     'middleware' => ['web', 'auth'],
 ], function (){
-   /* Route::get('checkout', [StripeController::class, 'checkOut'])->name('checkout');
-    Route::post('checkout-payment', [StripeController::class, 'checkoutDetails'])->name('checkout-details');*/
     Route::get('payment', [StripeController::class, 'index'])->name('payment');
     Route::get('wallet', [StripeController::class, 'topUpWallet'])->name('stripe.top-up-wallet');
 });
