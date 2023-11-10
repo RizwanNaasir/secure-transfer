@@ -22,7 +22,7 @@ class ProductController extends Controller
 
     public function product(Request $request)
     {
-        $data = $request->user()->products()->select('name', 'image', 'price', 'description')->get();
+        $data = $request->user()->products()->select('id','name', 'image', 'price', 'description')->get();
         return $this->success([
             'product' => $data->each(function ($product) {
                 return $product;

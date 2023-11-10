@@ -53,7 +53,7 @@ Route::group(['prefix' => 'home','middleware' => 'auth:sanctum'],function (){
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::post('add', [ProductController::class, 'addProduct']);
     Route::get('all', [ProductController::class, 'allProducts']);
-    Route::get('our-products', [ProductController::class, 'product']);
+    /*Route::get('our-products', [ProductController::class, 'product']);*/
     Route::get('detail/{product}', [ProductController::class, 'productDetail']);
     Route::post('update/product', [ProductController::class, 'updateProduct']);
     Route::delete('delete/{product}', [ProductController::class, 'destroy']);
