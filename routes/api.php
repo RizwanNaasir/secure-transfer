@@ -55,10 +55,10 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::post('add', [ProductController::class, 'addProduct']);
     Route::get('all', [ProductController::class, 'allProducts']);
     /*Route::get('our-products', [ProductController::class, 'product']);*/
-    Route::get('detail/{product}', [ProductController::class, 'productDetail']);
+    Route::get('detail/{product}', [ProductController::class, 'productDetail'])->middleware('verify_document');
     Route::post('update/product', [ProductController::class, 'updateProduct']);
     Route::delete('delete/{product}', [ProductController::class, 'destroy']);
-    Route::post('make-contract',[ProductController::class,'makeContract']);
+    Route::post('make-contract',[ProductController::class,'makeContract'])->middleware('verify_document');
 });
 
 Route::group(['prefix' => 'contract', 'middleware' => ['auth:sanctum', 'verify_document']], function () {
