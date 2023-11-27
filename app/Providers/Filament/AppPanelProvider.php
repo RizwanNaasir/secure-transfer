@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -26,6 +27,40 @@ class AppPanelProvider extends PanelProvider
             ->id('panel')
             ->path('panel')
             ->topNavigation()
+            ->navigationItems([
+                NavigationItem::make('Contract')
+                    ->url(function (){
+                        return '/panel/users/' . auth()->user()->id.'/edit';
+                    })
+                    ->icon('heroicon-o-document-text')
+                    ->sort(1)->hidden(function (){
+                        return auth()->user()->is_approved_by_admin;
+                    }),
+                NavigationItem::make('Payout Requests')
+                    ->url(function (){
+                        return '/panel/users/' . auth()->user()->id.'/edit';
+                    })
+                    ->icon('heroicon-o-rectangle-stack')
+                    ->sort(2)->hidden(function (){
+                        return auth()->user()->is_approved_by_admin;
+                    }),
+                NavigationItem::make('Products')
+                    ->url(function (){
+                        return '/panel/users/' . auth()->user()->id.'/edit';
+                    })
+                    ->icon('heroicon-o-shopping-cart')
+                    ->sort(3)->hidden(function (){
+                        return auth()->user()->is_approved_by_admin;
+                    }),
+                NavigationItem::make('Wallet')
+                    ->url(function (){
+                        return '/panel/users/' . auth()->user()->id.'/edit';
+                    })
+                    ->icon('heroicon-o-wallet')
+                    ->sort(4)->hidden(function (){
+                        return auth()->user()->is_approved_by_admin;
+                    }),
+            ])
             ->login()
             ->registration()
             ->profile()

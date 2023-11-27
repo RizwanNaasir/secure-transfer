@@ -208,4 +208,6 @@ class ContractResource extends Resource
                 ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
         ];
     }
+
+
 }

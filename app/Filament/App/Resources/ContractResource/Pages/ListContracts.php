@@ -46,4 +46,10 @@ class ListContracts extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function mount(): void
+    {
+        parent::mount();
+
+    }
 }

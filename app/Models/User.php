@@ -55,6 +55,7 @@ class User extends Authenticatable implements
         'phone',
         'password',
         'avatar',
+        'status'
     ];
 
     /**

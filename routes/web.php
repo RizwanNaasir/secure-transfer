@@ -8,6 +8,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Models\User;
+use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use RizwanNasir\MtnMomo\MtnCollection;
@@ -28,6 +29,9 @@ use RizwanNasir\MtnMomo\MtnConfig;
     return Artisan::output();
 });*/
 
+Route::get('login', function (){
+    return redirect()->to('/panel');
+})->name('login');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -113,7 +117,7 @@ Route::get('card-detail', [DashboardController::class, 'cardDetail']);
 Route::get('payment', [DashboardController::class, 'approvePayment']);
 Route::get('description', [DashboardController::class, 'description']);
 Route::get('market_place', [DashboardController::class, 'marketingView'])->name('all.products');
-Route::get('market_details/{id}', [DashboardController::class, 'marketProduct'])->name('product.details');
+Route::get('market_details/{id}', [DashboardController::class, 'marketProduct'])->name('product.details')->middleware('verify_document');
 Route::get('success', [DashboardController::class, 'successPayment']);
 Route::get('rating', [DashboardController::class, 'starRating']);
 });

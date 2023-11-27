@@ -23,4 +23,13 @@ class Wallet extends Page
        return [];
     }
 
+    public function mount()
+    {
+       $user = auth()->user();
+       if (!$user->is_approved_by_admin)
+       {
+           $this->redirect('/panel');
+       }
+    }
+
 }

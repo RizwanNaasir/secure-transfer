@@ -31,7 +31,7 @@ class VerifyDocument
                 ->body('Admin verify your document. you will get response in 48 hours')
                 ->warning()
                 ->send();
-            return \redirect('/');
+            return \redirect()->back();
         }
         return $next($request);
     }
