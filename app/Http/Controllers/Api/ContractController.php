@@ -55,6 +55,7 @@ class ContractController extends Controller
             'description' => $request->input('description'),
             'file' => $request->input('file'),
             'preferred_payment_method' => $request->input('preferred_payment_method'),
+            'currency' => 'usd',
         ];
     }
 
