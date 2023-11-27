@@ -153,6 +153,7 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                                         class="w-12 h-12 rounded-full overflow-hidden border-2 dark:border-white border-gray-900">
                                         <img src="{{auth()->user()->getFirstMediaUrl(User::AVATAR_COLLECTION)}}"
                                              alt=""
+                                             onerror="this.src='{{asset('assets/images/avatar.png')}}'"
                                              class="w-full h-full object-cover">
                                     </div>
                                 </div>

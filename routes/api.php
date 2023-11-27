@@ -44,7 +44,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:sanctum'], function () {
     Route::post('review',RatingController::class);
 
     Route::get('product', [ProductController::class, 'myProducts']);
-});
+    Route::post('payment-intent', [StripeController::class, 'paymentIntend']);
+    });
 
 Route::group(['prefix' => 'home','middleware' => 'auth:sanctum'],function (){
     Route::get('dashboard',DashBoardController::class);
@@ -85,6 +86,7 @@ Route::group(['prefix' => 'payout', 'middleware' => ['auth:sanctum']], function 
 
 Route::group(['prefix' => 'wallet', 'middleware' => ['auth:sanctum']], function () {
     Route::get('balance-transaction', [StripeController::class, 'balanceTransaction']);
+    Route::post('confirm-transaction', [StripeController::class, 'confirmTransaction']);
 });
 
 

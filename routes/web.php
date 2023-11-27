@@ -36,6 +36,7 @@ Route::get('/clear', function () {
     Artisan::call('optimize:clear');
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
+    Artisan::call('storage:link');
 
     return "Cache cleared successfully";
 });

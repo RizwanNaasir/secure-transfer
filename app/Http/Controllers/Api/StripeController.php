@@ -13,6 +13,10 @@ use App\Http\Resources\Api\BankDetailResource;
 use App\Models\BankDetail;
 use Bavix\Wallet\Models\Transaction;
 use Illuminate\Http\Request;
+use Laravel\Cashier\Cashier;
+use Stripe\Exception\ApiErrorException;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class StripeController extends Controller
 {
@@ -120,17 +124,47 @@ class StripeController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @throws ApiErrorException
      */
-    public function update(Request $request, string $id)
+    public function paymentIntend(Request $request)
     {
-        //
+        Stripe::setApiKey(config('services.stripe.secret_key'));
+        $user = $request->user();
+        $stripeCustomerId = $user?->stripe_id;
+        if (!$stripeCustomerId) {
+            $stripeCustomer = \Stripe\Customer::create([
+                'email' => $user->email,
+            ]);
+            $user->update([
+                'stripe_id' => $stripeCustomer->id,
+            ]);
+        }
+            $customer = $stripeCustomerId;
+            $ephemeralKey = \Stripe\EphemeralKey::create(
+                ['customer' => $customer],
+                ['stripe_version' => '2020-08-27']
+            );
+            $intent = PaymentIntent::create([
+                'amount' => $request->input('amount')*100,
+                'currency' => 'usd',
+                'customer' => $customer,
+            ]);
+            return $this->success(
+                data: [
+                    'payment_intent' => $intent->client_secret,
+                    'customer_id' => $customer,
+                    'ephemeral_key' => $ephemeralKey->secret
+                ],
+            );
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function confirmTransaction(Request $request)
     {
-        //
+        $user = $request->user();
+        $amount = $request->input('amount', 0);
+        $user->deposit($amount);
     }
 }
