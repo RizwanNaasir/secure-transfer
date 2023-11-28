@@ -7,6 +7,7 @@ use App\Models\User;
 use Filament\Actions\Action;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Notifications\Notification;
 
 class ViewContract extends ViewRecord
 {
@@ -21,6 +22,11 @@ class ViewContract extends ViewRecord
                    $user = $this->record->recipient->first();
                    $amount = $this->record->amount;
                    $user->deposit($amount);
+                   \Filament\Notifications\Notification::make()
+                       ->title('Payment Approved')
+                       ->body('Payment released successfully')
+                       ->success()
+                       ->send();
                })
        ];
     }

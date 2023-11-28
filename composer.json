@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.1",
         "bavix/laravel-wallet": "^10.0",
+        "dedoc/scramble": "^0.8.4",
         "filament/filament": "^3.0.9",
         "filament/forms": "^v3.0.9",
         "filament/notifications": "^3.0.9",
