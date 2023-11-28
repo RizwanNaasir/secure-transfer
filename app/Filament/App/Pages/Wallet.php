@@ -28,7 +28,7 @@ class Wallet extends Page
        $user = auth()->user();
        if (!$user->is_approved_by_admin)
        {
-           $this->redirect('/panel');
+           $this->redirect('/panel/users/' . $user->id.'/edit');
        }
     }
 

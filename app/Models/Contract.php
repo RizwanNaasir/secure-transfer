@@ -38,7 +38,26 @@ class Contract extends Model implements HasMedia
         return $this->status()->where(['status' => 'pending'])->exists();
     }
 
+    public function getIsAcceptedAttribute(): bool
+    {
+        return $this->status()->where(['status' => 'accepted'])->exists();
+    }
+
+    public function getIsDeliveredAttribute(): bool
+    {
+        return $this->status()->where(['seller_status' => 'delivered'])->exists();
+    }
+
+    public function getIsCompleteAttribute(): bool
+    {
+        return $this->status()->where(['buyer_status' => 'complete'])->exists();
+    }
+
     public function status(): HasOne
+    {
+        return $this->hasOne(ContractStatus::class);
+    }
+    public function description(): HasOne
     {
         return $this->hasOne(ContractStatus::class);
     }

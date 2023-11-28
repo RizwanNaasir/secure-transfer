@@ -2,8 +2,11 @@
 
 namespace App\Services;
 
+use App\Mail\AcceptContractMail;
 use App\Mail\NewContractMail;
+use App\Mail\RejectContractMail;
 use App\Models\Contract;
+use App\Models\ContractStatus;
 use App\Models\Product;
 use App\Models\User;
 use Exception;
@@ -120,16 +123,41 @@ class ContractService extends Service
             ->send(new NewContractMail($contract, $user, $recipient));
     }
 
+    public static function notifyUsersAboutRejectContract(Model|Contract $contract, User|Authenticatable $user, User $recipient): void
+    {
+        Mail::to($user)
+            ->send(new RejectContractMail($contract, $user, $recipient));
+    }
+
+    public static function notifyUsersAboutAcceptContract(Model|Contract $contract, User|Authenticatable $user, User $recipient): void
+    {
+        Mail::to($user)
+            ->send(new AcceptContractMail($contract, $user, $recipient));
+    }
+
     public static function updateContract(
         Contract|Builder|Model $contract,
-        string                 $status,
+        string                 $status = null,
+        string                 $buyer_status = null,
+        string                 $seller_status = null,
         string                 $description = null
     ): Contract|Model|Builder
     {
         $contract->status()->update([
             'status' => $status,
+            'buyer_status' => $buyer_status,
+            'seller_status' => $seller_status,
             'description' => $description
         ]);
+
+        $contractStatus = ContractStatus::where('contract_id', $contract->id)->first();
+        if ($contractStatus->status === 'declined'){
+            self::notifyUsersAboutRejectContract($contract, $contract->user->first(), $contract->recipient->first());
+        }
+
+        if ($contractStatus->status === 'accepted'){
+            self::notifyUsersAboutAcceptContract($contract, $contract->user->first(), $contract->recipient->first());
+        }
         return $contract;
     }
 

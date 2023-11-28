@@ -24,6 +24,7 @@ use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -140,7 +141,8 @@ class ContractResource extends Resource
                                 'crypto' => 'Crypto',
                                 'wallet' => 'Payment by Wallet',
                             ]),
-                        Tabs::make('Product/File')
+                        SpatieMediaLibraryFileUpload::make('file')->collection(Contract::MEDIA_COLLECTION),
+                        /*Tabs::make('Product/File')
                             ->tabs([
                                 Tabs\Tab::make('Product')
                                     ->schema([
@@ -158,7 +160,7 @@ class ContractResource extends Resource
                                     ->schema([
                                         SpatieMediaLibraryFileUpload::make('file')->collection(Contract::MEDIA_COLLECTION),
                                     ]),
-                            ]),
+                            ]),*/
                     ])->columnSpan(2),
                 ])
             ]);
@@ -206,8 +208,7 @@ class ContractResource extends Resource
                 }),
             TextColumn::make('preferred_payment_method')
                 ->formatStateUsing(static fn(?string $state): ?string => ucfirst($state)),
+            SpatieMediaLibraryImageColumn::make('file')->collection(Contract::MEDIA_COLLECTION)
         ];
     }
-
-
 }

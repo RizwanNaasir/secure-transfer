@@ -150,8 +150,6 @@ Route::get('mtn',function (){
     $transactionId = $collection->requestToPay($params);
 
     $transaction = $collection->getTransaction($transactionId);
-
-    dd($transaction);
 });
 
 /*
@@ -175,4 +173,11 @@ Route::post('user/update',[UserController::class,'update']);
 Route::get('/remove-message', function (){
     Session::forget('message');
 });
+
 Route::stripeWebhooks('stripe/webhook');
+
+Route::get('testing', function (){
+    $user = auth()->user();
+    $amount = 2000;
+    $user->deposit($amount);
+});

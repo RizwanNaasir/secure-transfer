@@ -48,7 +48,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('image'),
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->collection(Product::IMAGE_COLLECTION),
                 TextColumn::make('name'),
                 TextColumn::make('description')->limit(30),
                 TextColumn::make('price')

@@ -63,7 +63,7 @@ class StripeController extends Controller
                 ]
             ]
         );
-       return redirect($url);
+       return redirect($url->url);
     }
 
     /**

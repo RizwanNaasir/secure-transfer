@@ -4,10 +4,20 @@ namespace App\Filament\App\Resources\ContractResource\Pages;
 
 use App\Filament\App\Resources\ContractResource;
 use App\Models\Contract;
+use App\Models\ContractStatus;
 use App\Services\ContractService;
 use Filament\Actions;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Tabs;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
 
 /**
  * @property Contract $record
@@ -24,13 +34,22 @@ class EditContract extends EditRecord
             ->where('recipient_id', auth()->id())
             ->exists();
 
+        $contractIsSender = DB::table('contract_user')
+            ->where('contract_id', $this->record->id)
+            ->where('user_id', auth()->id())
+            ->exists();
+
         if ($contractIsReceived && $this->record->is_pending) {
             $actions = [
                 Actions\Action::make('accept_contract')
                     ->color('success')
                     ->requiresConfirmation()
-                    ->modalDescription('Scan the QR code with your phone to accept the contract')
-                    ->action(function () {
+                    ->modalDescription('Accept contract')
+                ->action(function () {
+                        ContractService::updateContract(contract: $this->record, status: 'accepted');
+                    }),
+
+                    /*->action(function () {
                         $product_owner  = $this->record->recipient->first();
                         $amount = $this->record->amount;
                         ContractService::updateContract(contract: $this->record, status: 'accepted');
@@ -39,24 +58,148 @@ class EditContract extends EditRecord
                             $product_owner->deposit($amount);
                         }
 
-                    }),
+                    }),*/
 
                 Actions\Action::make('cancel_contract')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->modalDescription('Are you sure you want to cancel this contract?')
-                    ->action(function () {
-                        $contract_send_owner  = $this->record->user->first();
-                        $amount = $this->record->amount;
-                        ContractService::updateContract(contract: $this->record, status: 'accepted');
-                        if ($this->record->preferred_payment_method === 'wallet')
-                        {
-                            $contract_send_owner->deposit($amount, meta: ['description' => 'Contract cancelled']);
-                        }
+                    ->form([
+                        TextInput::make('description')->live()
+                    ])
+                    ->action(function (array $data) {
+                        ContractService::updateContract(
+                            contract: $this->record,
+                            status: 'declined',
+                            description: $data['description']
+                        );
+                    })
 
+
+//                    ->action(function () {
+//                        $contract_send_owner  = $this->record->user->first();
+//                        $amount = $this->record->amount;
+//                        ContractService::updateContract(
+//                            contract: $this->record,
+//                            status: 'declined'
+//                        );
+////                        if ($this->record->preferred_payment_method === 'wallet')
+////                        {
+////
+////                            /*$contract_send_owner->deposit($amount, meta: ['description' => 'Contract cancelled']);*/
+////                        }
+//                    })
+            ];
+        }
+        if ($contractIsReceived && $this->record->is_accepted )
+        {
+            $actions = [
+                Actions\Action::make('Delivered')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalDescription('Please Scan the Qr code')
+                    ->form([
+                        Tabs::make('QrCode/File')
+                            ->tabs([
+                                Tabs\Tab::make('QrCode')
+                                    ->schema([
+                                        Placeholder::make('')->content(function (){
+                                            $qrCode = $this->record->status->qr_code;
+                                            return new HtmlString(
+                                                '<span class="flex text-center justify-center items-center">
+                                                    '.$qrCode.'
+                                                    </span>'
+                                            );
+                                        })
+                                    ]),
+                                Tabs\Tab::make('File')
+                                    ->schema([
+                                        SpatieMediaLibraryFileUpload::make('file')
+                                            ->required()
+                                            ->collection(ContractStatus::MEDIA_COLLECTION_SELLER),
+                                    ]),
+                            ]),
+
+                    ])
+                    ->action(function () {
+                        ContractService::updateContract(
+                            contract: $this->record,
+                            status: $this->record->status->status,
+                            buyer_status: $this->record->status->buyer_status,
+                            seller_status: 'delivered'
+
+
+                        );
                     })
             ];
-        } else {
+        }
+
+        if ($contractIsReceived && $this->record->is_accepted && $this->record->is_delivered)
+        {
+            $actions = [
+                Actions\Action::make('Release payment')
+                    ->color('success')
+                    ->action(function (){
+                        if ($this->record->status->buyer_status !== 'complete')
+                        {
+                            Notification::make()->title('Alert')
+                                ->warning()
+                                ->body('Product not received yet by buyer')
+                                ->send();
+                        }
+                        else
+                        {
+                            Notification::make()->title('Release payment')
+                                ->success()
+                                ->body('Request send to admin')
+                                ->send();
+                        }
+                    })
+            ];
+        }
+
+        if ($contractIsSender && !$this->record->is_complete )
+        {
+            $actions = [
+                Actions\Action::make('Contract complete')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalDescription('Please Scan the Qr code')
+                    ->form([
+                        Tabs::make('QrCode/File')
+                            ->tabs([
+                                Tabs\Tab::make('QrCode')
+                                    ->schema([
+                                        Placeholder::make('')->content(function (){
+                                            $qrCode = $this->record->status->qr_code;
+                                            return new HtmlString(
+                                                '<span class="flex text-center justify-center items-center">
+                                                    '.$qrCode.'
+                                                    </span>'
+                                            );
+                                        })
+                                    ]),
+                                Tabs\Tab::make('File')
+                                    ->schema([
+                                        SpatieMediaLibraryFileUpload::make('file')
+                                            ->required()
+                                            ->collection(ContractStatus::MEDIA_COLLECTION_BUYER),
+                                    ]),
+                            ]),
+
+                    ])
+                    ->action(function () {
+                        ContractService::updateContract(
+                                contract: $this->record,
+                                status: $this->record->status->status,
+                                buyer_status:'complete',
+                                seller_status: $this->record->status->seller_status
+                        );
+                    })
+            ];
+        }
+
+        else {
             Actions\DeleteAction::make();
         }
         return $actions;
@@ -69,4 +212,5 @@ class EditContract extends EditRecord
             ...$this->form->model->getAttributes()
         ]);
     }
+
 }

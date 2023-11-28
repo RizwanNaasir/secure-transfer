@@ -52,14 +52,14 @@ class AppPanelProvider extends PanelProvider
                     ->sort(3)->hidden(function (){
                         return auth()->user()->is_approved_by_admin;
                     }),
-                NavigationItem::make('Wallet')
+                /*NavigationItem::make('Wallet')
                     ->url(function (){
                         return '/panel/users/' . auth()->user()->id.'/edit';
                     })
                     ->icon('heroicon-o-wallet')
                     ->sort(4)->hidden(function (){
                         return auth()->user()->is_approved_by_admin;
-                    }),
+                    }),*/
             ])
             ->login()
             ->registration()
