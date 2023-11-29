@@ -7,12 +7,16 @@ use App\Http\Requests\ContractRequest;
 use App\Http\Resources\Api\ContractDetailResource;
 use App\Http\Resources\Api\ContractListResource;
 use App\Models\Contract;
+use App\Models\ContractStatus;
 use App\Models\Product;
 use App\Models\User;
 use App\Services\ContractService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class ContractController extends Controller
 {
@@ -113,11 +117,90 @@ class ContractController extends Controller
             return $this->success(message: 'This Contract cannot be accepted');
         } else {
             ContractService::updateContract($contract, 'accepted');
-            if ($contract->preferred_payment_method == 'wallet') {
+            /*if ($contract->preferred_payment_method == 'wallet') {
                 $contract_receiver->deposit($contract->amount);
-            }
+            }*/
             return $this->success(message: 'Contract accepted');
         }
+    }
+
+    public function deliveredContract(Request $request)
+    {
+        $contractIsReceived = DB::table('contract_user')
+            ->where('contract_id', $request->input('contract_id'))
+            ->where('recipient_id', $request->user()->id)
+            ->exists();
+        $contract = ContractStatus::query()
+        ->where('contract_id', $request->input('contract_id'))
+        ->where('status', 'accepted')
+        ->first();
+        if ($contractIsReceived && $contract?->seller_status !== 'delivered' )
+        {
+            if ($request->hasFile('file')) {
+                try {
+                    $contract->addMedia($request->file('file'))
+                        ->toMediaCollection(ContractStatus::MEDIA_COLLECTION_SELLER);
+                } catch (FileDoesNotExist|FileIsTooBig $e) {
+                    return $this->error($e->getMessage(), 422);
+                }
+            }
+            ContractService::updateContract(
+                $contract->contract()->first(),
+                $contract->status,
+                $contract->buyer_status,
+                'delivered'
+            );
+        }
+        $sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_SELLER);
+        return $this->success(
+
+            data: [
+            'qr_code' => $contract->qr_code,
+            'file' => $sellerFile?->getFullUrl(),
+                'buyer_status' => $contract->buyer_status,
+                'seller_status' => $contract->seller_status
+            ],
+            message: 'Contract delivered successfully'
+        );
+    }
+
+    public function completeContract(Request $request)
+    {
+        $contractIsSender = DB::table('contract_user')
+            ->where('contract_id', $request->input('contract_id'))
+            ->where('user_id', $request->user()->id)
+            ->exists();
+        /*$contractSeler = Contract::where('id', $request->input('contract_id'))->with('status')->exists();*/
+        $contract = ContractStatus::query()
+            ->where('contract_id', $request->input('contract_id'))
+            ->where('status', 'accepted')
+            ->first();
+        if ($contractIsSender && $contract?->buyer_status !== 'complete' )
+        {
+            if ($request->hasFile('file')) {
+                try {
+                    $contract->addMedia($request->file('file'))
+                        ->toMediaCollection(ContractStatus::MEDIA_COLLECTION_BUYER);
+                } catch (FileDoesNotExist|FileIsTooBig $e) {
+                    return $this->error($e->getMessage(), 422);
+                }
+            }
+            ContractService::updateContract(
+                $contract->contract()->first(),
+                $contract->status,
+                'complete',
+                $contract->seller_status,
+            );
+        }
+        $sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);
+        return $this->success(
+
+            data: [
+                'qr_code' => $contract->qr_code,
+                'file' => $sellerFile?->getFullUrl()
+            ],
+            message: 'Contract delivered successfully'
+        );
     }
 
     public function declineContract(Request $request)

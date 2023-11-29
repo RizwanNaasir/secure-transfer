@@ -148,15 +148,20 @@ class ProductController extends Controller
             $products = new Product();
 
             if ($request->hasFile('image')) {
-                $products->image = $request->file('image')->store('public');
-                $products->user_id = $request->user()->id;
-                $products->name = $request->input('name');
-                $products->price = $request->input('price');
-                $products->description = $request->input('description');
-                $products->save();
-
-                return $this->success(message: 'Product Added Successfully');
+                try {
+                    $products->addMedia($request->file('image'))
+                        ->toMediaCollection(Product::IMAGE_COLLECTION);
+                } catch (FileDoesNotExist|FileIsTooBig $e) {
+                    return $this->error($e->getMessage(), 422);
+                }
             }
+            $products->user_id = $request->user()->id;
+            $products->name = $request->input('name');
+            $products->price = $request->input('price');
+            $products->description = $request->input('description');
+            $products->save();
+
+            return $this->success(message: 'Product Added Successfully');
         }
     }
 
