@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api;
 
 use App\Models\Contract;
+use App\Models\ContractStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin Contract */
@@ -11,6 +12,8 @@ class ContractDetailResource extends JsonResource
     public function toArray($request): array
     {
         $file = $this->getFirstMedia(Contract::MEDIA_COLLECTION);
+        $sellerFile =  $this->status->getFirstMedia(ContractStatus::MEDIA_COLLECTION_SELLER);
+        $buyerFile =  $this->status->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);
         return [
             'id' => $this->id,
             'amount' => $this->amount,
@@ -25,7 +28,11 @@ class ContractDetailResource extends JsonResource
             'qr_code' => $this->status->qr_code,
             'product' => $this->whenLoaded(
                 'products', ProductResource::make($this->products->first())
-            )
+            ),
+            'seller_status' => $this->status->seller_status,
+            'buyer_status' => $this->status->buyer_status,
+            'sellerProof' => $sellerFile,
+            'buyerProof' => $buyerFile
         ];
     }
 }

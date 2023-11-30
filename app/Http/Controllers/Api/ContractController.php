@@ -89,7 +89,6 @@ class ContractController extends Controller
     public function contractDetails(Contract $contract)
     {
         (bool)$fromSender = request()->get('from-sender', false);
-
         $user = $fromSender ? $contract->user->first() : $contract->recipient->first();
         $contract->load('products','products.ratings');
         $user->loadCount('products', 'ratings');
@@ -126,6 +125,7 @@ class ContractController extends Controller
 
     public function deliveredContract(Request $request)
     {
+        $contractStatus = '';
         $contractIsReceived = DB::table('contract_user')
             ->where('contract_id', $request->input('contract_id'))
             ->where('recipient_id', $request->user()->id)
@@ -154,11 +154,22 @@ class ContractController extends Controller
 
         }
 
-        $seller = $contractStatus->status->seller_status ?? $contract->seller_status;
-        $buyer = $contractStatus->status->buyer_status ?? $contract->buyer_status;
+        if(filled($contractStatus))
+        {
+            $buyer = $contractStatus?->status?->buyer_status;
+            $seller = $contractStatus?->status?->seller_status;
+            $qrCode = $contractStatus?->status?->qr_code;
+        }
+        else{
+            $seller =  $contract?->seller_status;
+            $buyer = $contract?->buyer_status;
+            $qrCode = $contract?->qr_code;
+        }
+
+        /*        $seller = $contractStatus?->status?->seller_status ?? $contract?->seller_status;
+                $buyer = $contractStatus?->status?->buyer_status ?? $contract?->buyer_status;*/
 
         $sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_SELLER);
-        $qrCode = $contract->qr_code;
         return $this->success(
 
             data: [
@@ -173,6 +184,7 @@ class ContractController extends Controller
 
     public function completeContract(Request $request)
     {
+        $contractStatus = '';
         $contractIsSender = DB::table('contract_user')
             ->where('contract_id', $request->input('contract_id'))
             ->where('user_id', $request->user()->id)
@@ -192,21 +204,40 @@ class ContractController extends Controller
                     return $this->error($e->getMessage(), 422);
                 }
             }
-            $contractStatus = ContractService::updateContract(
+            ContractService::updateContract(
                 $contract->contract()->first(),
                 $contract->status,
                 'complete',
                 $contract->seller_status,
             );
         }
-        $buyerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);
+
+        /*$buyerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);*/
+
+       /* if(filled($contractStatus))
+        {
+            $buyer = $contractStatus?->status?->buyer_status;
+            $seller = $contractStatus?->status?->seller_status;
+            $qrCode = $contractStatus?->status?->qr_code;
+        }
+        else{
+            $seller =  $contract?->seller_status;
+            $buyer = $contract?->buyer_status;
+            $qrCode = $contract?->qr_code;
+        }*/
+
+        /*        $seller = $contractStatus?->status?->seller_status ?? $contract?->seller_status;
+                $buyer = $contractStatus?->status?->buyer_status ?? $contract?->buyer_status;*/
+
+        /*$sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_SELLER);*/
+
         return $this->success(
 
-            data: [
+           /* data: [
                 'qr_code' => $contract->qr_code,
                 'file' => $buyerFile?->getFullUrl()
-            ],
-            message: 'Contract delivered successfully'
+            ],*/
+            message: 'Contract complete successfully'
         );
     }
 
