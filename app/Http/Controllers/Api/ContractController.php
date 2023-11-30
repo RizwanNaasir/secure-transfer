@@ -131,11 +131,12 @@ class ContractController extends Controller
             ->where('recipient_id', $request->user()->id)
             ->exists();
         $contract = ContractStatus::query()
-        ->where('contract_id', $request->input('contract_id'))
-        ->where('status', 'accepted')
-        ->first();
+            ->where('contract_id', $request->input('contract_id'))
+            ->where('status', 'accepted')
+            ->first();
         if ($contractIsReceived && $contract?->seller_status !== 'delivered' )
         {
+
             if ($request->hasFile('file')) {
                 try {
                     $contract->addMedia($request->file('file'))
@@ -144,21 +145,27 @@ class ContractController extends Controller
                     return $this->error($e->getMessage(), 422);
                 }
             }
-            ContractService::updateContract(
+            $contractStatus = ContractService::updateContract(
                 $contract->contract()->first(),
                 $contract->status,
                 $contract->buyer_status,
                 'delivered'
             );
+
         }
+
+        $seller = $contractStatus->status->seller_status ?? $contract->seller_status;
+        $buyer = $contractStatus->status->buyer_status ?? $contract->buyer_status;
+
         $sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_SELLER);
+        $qrCode = $contract->qr_code;
         return $this->success(
 
             data: [
-            'qr_code' => $contract->qr_code,
-            'file' => $sellerFile?->getFullUrl(),
-                'buyer_status' => $contract->buyer_status,
-                'seller_status' => $contract->seller_status
+                'qr_code' => $qrCode,
+                'file' => $sellerFile?->getFullUrl(),
+                'buyer_status' => $buyer,
+                'seller_status' => $seller
             ],
             message: 'Contract delivered successfully'
         );
@@ -185,19 +192,19 @@ class ContractController extends Controller
                     return $this->error($e->getMessage(), 422);
                 }
             }
-            ContractService::updateContract(
+            $contractStatus = ContractService::updateContract(
                 $contract->contract()->first(),
                 $contract->status,
                 'complete',
                 $contract->seller_status,
             );
         }
-        $sellerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);
+        $buyerFile =  $contract?->getFirstMedia(ContractStatus::MEDIA_COLLECTION_BUYER);
         return $this->success(
 
             data: [
                 'qr_code' => $contract->qr_code,
-                'file' => $sellerFile?->getFullUrl()
+                'file' => $buyerFile?->getFullUrl()
             ],
             message: 'Contract delivered successfully'
         );
