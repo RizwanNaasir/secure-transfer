@@ -14,22 +14,25 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                     <x-application-logo class="h-8 w-auto sm:h-10"/>
                 </a>
             </div>
-            <div class="mt-5 ml-16">
-                <button class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+            <div class="mt-5 ml-16" x-data="{mobileDropdown: false}" >
+                <button @click="mobileDropdown = !mobileDropdown" class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
                         id="btn">
                     <span class="mr-2">{{ Config::get('languages')[App::getLocale()]['display'] }}</span>
 
                     @foreach (Config::get('languages') as $lang => $language)
                         @if ($lang != App::getLocale())
 
-                            <div id="drop" x-show="open" style="left: 30%; top: 65px;z-index: 1;width: 27%"
+                            <div id="drop"
+                                 :class="{hidden : !mobileDropdown}" x-show="open"
+                                 class="hidden absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5"
+                                 style="left: 30%; top: 65px;z-index: 1;width: 27%"
                                  x-transition:enter="transition ease-out duration-100"
                                  x-transition:enter-start="transform opacity-0 scale-95"
                                  x-transition:enter-end="transform opacity-100 scale-100"
                                  x-transition:leave="transition ease-in duration-75"
                                  x-transition:leave-start="transform opacity-100 scale-100"
                                  x-transition:leave-end="transform opacity-0 scale-95"
-                                 class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
+                                 >
                                 <ul class="space-y-3" x-cloak>
                                     <li class="font-medium" >
                                         <a href="{{ route('lang.switch', $lang) }}"
@@ -146,7 +149,7 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                 @endguest
                 @auth
                     <div class="flex justify-center items-center">
-                        <div x-data="{ open: false }" class=" flex justify-center items-center z-50">
+                        <div x-data="{ open: false , dashboard :false }" class=" flex justify-center items-center z-50">
                             <div @click="open = !open" class="relative py-3"
                                  :class="{'border-indigo-700 transform transition duration-300 ': open}"
                                  x-transition:enter-end="transform opacity-100 scale-100"
@@ -154,21 +157,24 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                                  x-transition:leave-start="transform opacity-100 scale-100">
                                 <div class="flex justify-center items-center space-x-3 cursor-pointer">
                                     <div
+
                                         class="w-12 h-12 rounded-full overflow-hidden border-2 dark:border-white border-gray-900">
-                                        <img src="{{auth()->user()->getFirstMediaUrl(User::AVATAR_COLLECTION)}}"
+                                        <img @click="dashboard = !dashboard" src="{{auth()->user()->getFirstMediaUrl(User::AVATAR_COLLECTION)}}"
                                              alt=""
                                              onerror="this.src='{{asset('assets/images/avatar.png')}}'"
                                              class="w-full h-full object-cover">
                                     </div>
                                 </div>
                                 <div x-show="open" style="left: -212px; top: 65px;"
+                                     class="hidden absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5"
+                                     :class="{hidden : !dashboard}"
                                      x-transition:enter="transition ease-out duration-100"
                                      x-transition:enter-start="transform opacity-0 scale-95"
                                      x-transition:enter-end="transform opacity-100 scale-100"
                                      x-transition:leave="transition ease-in duration-75"
                                      x-transition:leave-start="transform opacity-100 scale-100"
                                      x-transition:leave-end="transform opacity-0 scale-95"
-                                     class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
+                                     >
                                     <ul class="space-y-3">
                                         <li class="font-medium">
                                             <a href="{{url($currentPanel)}}"
