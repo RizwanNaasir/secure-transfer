@@ -1,6 +1,9 @@
 @php use App\Models\User;use Filament\Facades\Filament;
 $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel';
 @endphp
+<style>
+    [x-cloak] { display: none !important; }
+</style>
 <header>
     <div class="relative bg-white">
         <div
@@ -14,8 +17,6 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
             <div class="mt-5 ml-16">
                 <button class="lg:hidden whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
                         id="btn">
-                    <span
-                        class=" lg:block flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
                     <span class="mr-2">{{ Config::get('languages')[App::getLocale()]['display'] }}</span>
 
                     @foreach (Config::get('languages') as $lang => $language)
@@ -29,13 +30,13 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                                  x-transition:leave-start="transform opacity-100 scale-100"
                                  x-transition:leave-end="transform opacity-0 scale-95"
                                  class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
-                                <ul class="space-y-3 ">
-                                    <li class="font-medium">
+                                <ul class="space-y-3" x-cloak>
+                                    <li class="font-medium" >
                                         <a href="{{ route('lang.switch', $lang) }}"
                                            class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-indigo-700 lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                                            <div class="mr-3">
+                                          {{--  <div class="mr-3">
                                                 <span class="flag-icon flag-icon-{{$language['flag-icon']}}"></span>
-                                            </div>
+                                            </div>--}}
                                             {{--Dashboard--}}
                                             {{--                                            {{__('lang.dashboard')}}--}}
                                             {{$language['display']}}
@@ -45,8 +46,6 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                             </div>
                         @endif
                     @endforeach
-
-
                 </button>
             </div>
             <div class="items-center justify-end md:flex md:flex-1 lg:w-0 gap-8 md:gap-4">
@@ -76,34 +75,39 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                 </a>
 
                 <div class="flex justify-center items-center">
-                    <div x-data="{ open: false }" class=" flex justify-center items-center z-50">
+                    <div x-data="{ open: false, dropdown: false  }" class=" flex justify-center items-center z-50">
                         <div @click="open = !open" class="relative py-3"
                              :class="{'border-indigo-700 transform transition duration-300 ': open}"
                              x-transition:enter-end="transform opacity-100 scale-100"
                              x-transition:leave="transition ease-in duration-75"
                              x-transition:leave-start="transform opacity-100 scale-100">
                             <div class="hidden lg:block flex justify-center items-center space-x-3 cursor-pointer">
-                                <a href="#"
+                                <a href="#" @click="dropdown = !dropdown"
                                    class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
-                                    <span
-                                        class=" lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}"></span>
+                                    {{--<span
+                                        class=" lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 flag-icon flag-icon-{{Config::get('languages')[App::getLocale()]['flag-icon']}}">
+                                    </span>--}}
                                     <span
                                         class="mr-6">{{ Config::get('languages')[App::getLocale()]['display'] }}</span><span
-                                        class="ml-4 border-r-2"></span>
+                                        class="ml-4 border-r-2">
+                                    </span>
                                 </a>
                             </div>
 
                             @foreach (Config::get('languages') as $lang => $language)
                                 @if ($lang != App::getLocale())
 
-                                    <div x-show="open" style="left: -212px; top: 65px;"
+                                    <div
+                                        :class="{hidden : !dropdown}"
+                                        class="hidden absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5"
+                                        x-show="open" style="left: -212px; top: 65px;"
                                          x-transition:enter="transition ease-out duration-100"
                                          x-transition:enter-start="transform opacity-0 scale-95"
                                          x-transition:enter-end="transform opacity-100 scale-100"
                                          x-transition:leave="transition ease-in duration-75"
                                          x-transition:leave-start="transform opacity-100 scale-100"
                                          x-transition:leave-end="transform opacity-0 scale-95"
-                                         class="absolute w-60 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-5">
+                                         >
                                         <ul class="space-y-3">
                                             <li class="font-medium">
                                                 <a href="{{ route('lang.switch', $lang) }}"

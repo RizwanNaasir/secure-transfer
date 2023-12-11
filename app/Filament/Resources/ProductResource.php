@@ -15,7 +15,10 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductResource extends Resource
@@ -73,7 +76,12 @@ class ProductResource extends Resource
                     ->action(fn(Collection $records) => $records->each(fn(Product $product) => $product->approve()))
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
-            ]);
+            ])
+            ->filters([
+                SelectFilter::make('user')->relationship('user', 'name')
+                ->searchable()
+            ])
+            ;
     }
 
     public static function getPages(): array
