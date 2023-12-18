@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Rating extends Model
@@ -18,6 +19,10 @@ class Rating extends Model
         return $this->morphTo();
     }
 
+    public function reviewer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'reviewer_id');
+    }
     public function scopeTheOnesWith(Builder $query, string $model): Rating|Builder
     {
         return $query->whereHasMorph(self::RELATION_NAME, $model);

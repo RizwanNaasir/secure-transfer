@@ -211,4 +211,9 @@ class User extends Authenticatable implements
     {
         return $this->hasOne(PayoutRequest::class);
     }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'reviewer_id');
+    }
 }

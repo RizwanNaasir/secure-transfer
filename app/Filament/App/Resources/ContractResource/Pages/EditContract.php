@@ -5,17 +5,22 @@ namespace App\Filament\App\Resources\ContractResource\Pages;
 use App\Filament\App\Resources\ContractResource;
 use App\Models\Contract;
 use App\Models\ContractStatus;
+use App\Models\Product;
+use App\Models\Rating;
 use App\Services\ContractService;
 use Filament\Actions;
-use Filament\Forms\Components\MarkdownEditor;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Tabs;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use IbrahimBougaoua\FilamentRatingStar\Actions\RatingStar;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\HtmlString;
 
@@ -45,20 +50,20 @@ class EditContract extends EditRecord
                     ->color('success')
                     ->requiresConfirmation()
                     ->modalDescription('Accept contract')
-                ->action(function () {
+                    ->action(function () {
                         ContractService::updateContract(contract: $this->record, status: 'accepted');
                     }),
 
-                    /*->action(function () {
-                        $product_owner  = $this->record->recipient->first();
-                        $amount = $this->record->amount;
-                        ContractService::updateContract(contract: $this->record, status: 'accepted');
-                        if ($this->record->preferred_payment_method === 'wallet')
-                        {
-                            $product_owner->deposit($amount);
-                        }
+                /*->action(function () {
+                    $product_owner  = $this->record->recipient->first();
+                    $amount = $this->record->amount;
+                    ContractService::updateContract(contract: $this->record, status: 'accepted');
+                    if ($this->record->preferred_payment_method === 'wallet')
+                    {
+                        $product_owner->deposit($amount);
+                    }
 
-                    }),*/
+                }),*/
 
                 Actions\Action::make('cancel_contract')
                     ->color('danger')
@@ -91,8 +96,7 @@ class EditContract extends EditRecord
 //                    })
             ];
         }
-        if ($contractIsReceived && $this->record->is_accepted )
-        {
+        if ($contractIsReceived && $this->record->is_accepted) {
             $actions = [
                 Actions\Action::make('Delivered')
                     ->color('danger')
@@ -103,11 +107,11 @@ class EditContract extends EditRecord
                             ->tabs([
                                 Tabs\Tab::make('QrCode')
                                     ->schema([
-                                        Placeholder::make('')->content(function (){
+                                        Placeholder::make('')->content(function () {
                                             $qrCode = $this->record->status->qr_code;
                                             return new HtmlString(
                                                 '<span class="flex text-center justify-center items-center">
-                                                    '.$qrCode.'
+                                                    ' . $qrCode . '
                                                     </span>'
                                             );
                                         })
@@ -134,32 +138,74 @@ class EditContract extends EditRecord
             ];
         }
 
-        if ($contractIsReceived && $this->record->is_accepted && $this->record->is_delivered)
-        {
+        if ($contractIsReceived && $this->record->is_accepted && $this->record->is_delivered) {
+          $productId = $this->record->products->first();
+            $receivedContract = Rating::query()
+              ->whereReviewerId(auth()->id())
+              ->theOnesWith(Product::class)
+              ->whereRatableId($productId->id)
+                ->exists();
             $actions = [
                 Actions\Action::make('Release payment')
                     ->color('success')
-                    ->action(function (){
-                        if ($this->record->status->buyer_status !== 'complete')
-                        {
+                    ->action(function () {
+                        if ($this->record->status->buyer_status !== 'complete') {
                             Notification::make()->title('Alert')
                                 ->warning()
                                 ->body('Product not received yet by buyer')
                                 ->send();
-                        }
-                        else
-                        {
+                        } else {
                             Notification::make()->title('Release payment')
                                 ->success()
                                 ->body('Request send to admin')
                                 ->send();
                         }
+                    }),
+
+                Actions\Action::make('Rating')
+                    ->hidden(function () use ($receivedContract) {
+                        return $receivedContract;
                     })
+                    ->color('warning')
+                    ->icon('heroicon-o-star')
+                    ->requiresConfirmation()
+                    ->modalHeading('Give the rating of product')
+                    ->modalDescription('')
+                    ->modalContent()
+                    ->modalIcon('')
+                    ->form([
+                        Section::make()->schema([
+                            RatingStar::make('rating')
+                                ->live()
+                                ->label(''),
+                            Checkbox::make('enable')
+                                ->live()
+                                ->label('Add Description')
+                                ->inline(),
+                            TextInput::make('description')
+                                ->live()
+                                ->visible(function (Get $get) {
+                                    return $get('enable');
+                                })
+                        ])
+                    ])->action(function (array $data) {
+                        $rating = (int)$data['rating'];
+                        $description = $data['description'];
+                        $user = \Auth::user();
+                        $product = $this->record->products->first();
+                        $user->review(
+                            $product,
+                            $user,
+                            $rating,
+                            $description
+                        );
+                    }),
             ];
         }
 
-        if ($contractIsSender && !$this->record->is_complete )
-        {
+
+        if ($contractIsSender && !$this->record->is_complete) {
+
             $actions = [
                 Actions\Action::make('Contract complete')
                     ->color('danger')
@@ -170,11 +216,11 @@ class EditContract extends EditRecord
                             ->tabs([
                                 Tabs\Tab::make('QrCode')
                                     ->schema([
-                                        Placeholder::make('')->content(function (){
+                                        Placeholder::make('')->content(function () {
                                             $qrCode = $this->record->status->qr_code;
                                             return new HtmlString(
                                                 '<span class="flex text-center justify-center items-center">
-                                                    '.$qrCode.'
+                                                    ' . $qrCode . '
                                                     </span>'
                                             );
                                         })
@@ -190,15 +236,63 @@ class EditContract extends EditRecord
                     ])
                     ->action(function () {
                         ContractService::updateContract(
-                                contract: $this->record,
-                                status: $this->record->status->status,
-                                buyer_status:'complete',
-                                seller_status: $this->record->status->seller_status
+                            contract: $this->record,
+                            status: $this->record->status->status,
+                            buyer_status: 'complete',
+                            seller_status: $this->record->status->seller_status
                         );
-                    })
+                    }),
             ];
         }
-
+        if ($contractIsSender && $this->record->is_complete)
+        {
+            $productId = $this->record->products->first();
+            $senderContract = Rating::query()
+                ->whereReviewerId(auth()->id())
+                ->theOnesWith(Product::class)
+                ->whereRatableId($productId->id)
+                ->exists();
+            $actions = [
+                Actions\Action::make('Rating')
+                    ->hidden(function () use ($senderContract) {
+                        return $senderContract;
+                    })
+                    ->color('warning')
+                    ->icon('heroicon-o-star')
+                    ->requiresConfirmation()
+                    ->modalHeading('Give the rating of product')
+                    ->modalDescription('')
+                    ->modalContent()
+                    ->modalIcon('')
+                    ->form([
+                        Section::make()->schema([
+                            RatingStar::make('rating')
+                                ->live()
+                                ->label(''),
+                            Checkbox::make('enable')
+                                ->live()
+                                ->label('Add Description')
+                                ->inline(),
+                            TextInput::make('description')
+                                ->live()
+                                ->visible(function (Get $get) {
+                                    return $get('enable');
+                                })
+                        ])
+                    ])->action(function (array $data) {
+                        $rating = (int)$data['rating'];
+                        $description = $data['description'];
+                        $user = \Auth::user();
+                        $product = $this->record->products->first();
+                        $user->review(
+                            $product,
+                            $user,
+                            $rating,
+                            $description
+                        );
+                    }),
+            ];
+        }
         else {
             Actions\DeleteAction::make();
         }

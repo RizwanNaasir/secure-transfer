@@ -176,3 +176,9 @@ Route::get('/remove-message', function (){
 
 Route::stripeWebhooks('stripe/webhook');
 
+Route::get('testing', function (){
+ /*  $user = Auth::user();
+   $amount = 2000;
+   $user->deposit($amount);
+   dd($user->balanceInt);*/
+});
