@@ -23,7 +23,10 @@ class StatsOverview extends BaseWidget
             ->notPending()
             ?->sum('amount');
         return [
-            Stat::make('Current Active Contracts', "$currentActiveContract?->amount $")
+            Stat::make('Total # of Contacts', $totalNumberOfContracts)
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
+            Stat::make('Current Active Contracts', "$currentActiveContract?->amount")
                 ->description(ucfirst($currentActiveContract?->status?->status))
                 ->color(match ($currentActiveContract?->status?->status) {
                     'pending' => 'warning',
@@ -31,11 +34,8 @@ class StatsOverview extends BaseWidget
                     'rejected' => 'danger',
                     default => 'primary',
                 }),
-            Stat::make('Total amount Received', "$totalAmountReceived $")
-                ->color('danger'),
-            Stat::make('Total # of Contacts', $totalNumberOfContracts)
-                ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->color('success'),
+            /*Stat::make('Total amount Received', "$totalAmountReceived $")
+                ->color('danger'),*/
             Stat::make('Total amount Sent', "$totalAmountSent $"),
         ];
     }

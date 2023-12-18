@@ -48,11 +48,11 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
             $query->where('id', auth()->id());
         })->where('preferred_payment_method', $this->preferred_payment_method)->exists();
 
-        if ($contractThatAlreadyExists) {
+        if (auth()->check() && $contractThatAlreadyExists) {
             $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
             return;
         }
-        if (\Auth::check())
+        if (auth()->check())
         {
             /*if ($this->preferred_payment_method === 'stripe') {
                 $product = $this->product;

@@ -117,7 +117,7 @@ Route::get('card-detail', [DashboardController::class, 'cardDetail']);
 Route::get('payment', [DashboardController::class, 'approvePayment']);
 Route::get('description', [DashboardController::class, 'description']);
 Route::get('market_place', [DashboardController::class, 'marketingView'])->name('all.products');
-Route::get('market_details/{id}', [DashboardController::class, 'marketProduct'])->name('product.details')->middleware('verify_document', 'auth:web');
+Route::get('market_details/{id}', [DashboardController::class, 'marketProduct'])->name('product.details');
 Route::get('success', [DashboardController::class, 'successPayment']);
 Route::get('rating', [DashboardController::class, 'starRating']);
 });
