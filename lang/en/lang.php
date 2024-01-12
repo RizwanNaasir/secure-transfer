@@ -3,6 +3,7 @@
 return [
     /*header*/
     'home' => 'Home',
+    'about' => 'About',
     'add_new_contract' => 'Add New Contract',
     'contracts' => 'Contracts',
     'market_place' => 'Market Place',
@@ -17,16 +18,15 @@ return [
 
     /*Footer*/
 
-    'secure_transfer' => 'Secure Transfer',
     'resources' => 'Resources',
-    'flowbite' => 'Flowbite',
+    'safeivoire' => 'Safeivoire',
     'tailwind_css' => 'Tailwind CSS',
     'follow_us' => 'Follow us',
-    'github' => 'Github',
-    'discord' => 'Discord',
+    'facebook'=>'Facebook',
+    'instagram'=>'Instagram',
     'legal' => 'Legal',
     'privacy_policy' => 'Privacy Policy',
-    'terms_and_conditions' => 'Terms &amp; Conditions',
+    'terms_and_conditions' => 'Terms & Conditions',
     'all_rights_reserved' => 'All Rights Reserved',
 
     /*home*/

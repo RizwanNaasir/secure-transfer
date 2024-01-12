@@ -120,6 +120,8 @@ Route::get('market_place', [DashboardController::class, 'marketingView'])->name(
 Route::get('market_details/{id}', [DashboardController::class, 'marketProduct'])->name('product.details');
 Route::get('success', [DashboardController::class, 'successPayment']);
 Route::get('rating', [DashboardController::class, 'starRating']);
+Route::get('privacy-policy', [DashboardController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('about', [DashboardController::class, 'about'])->name('about-us');
 });
 Route::group([
     'prefix' => 'contract',

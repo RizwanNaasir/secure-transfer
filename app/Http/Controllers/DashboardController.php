@@ -119,4 +119,14 @@ class DashboardController extends Controller
         return view(view: 'rating.index');
     }
 
+    public function privacyPolicy()
+    {
+        return view(view: 'privacy-policy');
+    }
+
+    public function about()
+    {
+        return view(view: 'about');
+    }
+
 }

@@ -3,6 +3,7 @@
 return [
     /*header*/
     'home'=>'Domicile',
+    'about'=>'Propos',
     'add_new_contract'=>'Ajouter un nouveau contrat',
     'contracts'=>"Contrats",
     'market_place'=>'Marché',
@@ -18,11 +19,12 @@ return [
     /*Footer*/
     'secure_transfer'=>'Transfert sécurisé',
     'resources'=>'Ressources',
-    'flowbite'=>'Flowbite',
+    'safeivoire'=>'Safeivoire',
     'tailwind_css'=>'CSS vent arrière',
     'follow_us'=>'Suivez nous',
-    'github'=>'GithubGenericName',
-    'discord'=>'Discorde',
+    'twitter'=>'Twitter',
+    'facebook'=>'Facebook',
+    'instagram'=>'Instagram',
     'legal'=>'Juridique',
     'privacy_policy'=>'Politique de confidentialité',
     'terms_and_conditions'=>'Conditions &amp; Les conditions',

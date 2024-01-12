@@ -57,6 +57,11 @@ $currentPanel = auth()->check() && auth()->user()->isAdmin() ? 'admin' : 'panel'
                     {{--Home--}}
                     <span class="mr-4">{{__('lang.home')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
                 </a>
+                <a href="{{route('about-us')}}"
+                   class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                    {{--About--}}
+                    <span class="mr-4">{{__('lang.about')}}</span> <span class="lg:ml-4 lg:border-r-2"></span>
+                </a>
                 @auth
                     <a href="{{url($currentPanel.'/contracts/create')}}"
                        class="hidden lg:block whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
