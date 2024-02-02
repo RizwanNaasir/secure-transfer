@@ -92,9 +92,13 @@
             <div class="text-center md:max-w-xl lg:max-w-3xl mx-auto">
                 <h3 class="text-3xl font-bold mb-6 text-gray-800">{{__('lang.testimonials')}}</h3>
                 <p class="mb-6 pb-2 md:mb-12 md:pb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam
-                    iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum
-                    porro a pariatur veniam.
+                    SAFE provides a novel mobile payment escrow solution that allows citizens across Africa to conduct
+                    online transactions with trust and assurance. Through its secure platform powered by
+                    industry-leading encryption, customers and merchants can trade with confidence,
+                    guaranteeing payments are received and products are delivered as promised.
+                    As an impartial intermediary, SAFE is revolutionizing commerce in Africa
+                    for the digital age. But dont take our words for it hear from our happy
+                    customers.
                 </p>
             </div>
 
@@ -106,8 +110,8 @@
                             class="rounded-full shadow-lg w-32"
                         />
                     </div>
-                    <h5 class="text-xl font-semibold mb-4">Maria Smantha</h5>
-                    <h6 class="font-semibold text-blue-600 mb-4">Web Developer</h6>
+                    <h5 class="text-xl font-semibold mb-4">Fatima Diallo</h5>
+                    <h6 class="font-semibold text-blue-600 mb-4">Online Cosmetics Shop Owner</h6>
                     <p class="mb-4">
                         <svg
                             aria-hidden="true"
@@ -124,10 +128,9 @@
                                 d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"
                             ></path>
                         </svg>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod eos id officiis hic
-                        tenetur quae quaerat ad velit ab hic tenetur.
+                        As a small business, I was losing valuable revenue from customers who would keep products without paying. Thanks to SAFE handling payments securely in escrow, I can sell online with the guarantee I'll receive what is owed!
                     </p>
-                    <ul class="flex justify-center mb-0">
+                    {{--<ul class="flex justify-center mb-0">
                         <li>
                             <svg
                                 aria-hidden="true"
@@ -213,7 +216,7 @@
                                 ></path>
                             </svg>
                         </li>
-                    </ul>
+                    </ul>--}}
                 </div>
                 <div class="mb-12 md:mb-0">
                     <div class="flex justify-center mb-6">
@@ -222,8 +225,8 @@
                             class="rounded-full shadow-lg w-32"
                         />
                     </div>
-                    <h5 class="text-xl font-semibold mb-4">Lisa Cudrow</h5>
-                    <h6 class="font-semibold text-blue-600 mb-4">Graphic Designer</h6>
+                    <h5 class="text-xl font-semibold mb-4">Samuel Konate</h5>
+                    <h6 class="font-semibold text-blue-600 mb-4">Government Employee</h6>
                     <p class="mb-4">
                         <svg
                             aria-hidden="true"
@@ -240,10 +243,9 @@
                                 d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"
                             ></path>
                         </svg>
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
-                        laboriosam, nisi ut aliquid commodi.
+                        I was scammed three times trying to purchase electronics from various sellers. With SAFE verifying sellers and keeping my payments protected until delivery, I finally have peace of mind as a consumer in the digital economy.
                     </p>
-                    <ul class="flex justify-center mb-0">
+                    {{--<ul class="flex justify-center mb-0">
                         <li>
                             <svg
                                 aria-hidden="true"
@@ -329,7 +331,7 @@
                                 ></path>
                             </svg>
                         </li>
-                    </ul>
+                    </ul>--}}
                 </div>
                 <div class="mb-0">
                     <div class="flex justify-center mb-6">
@@ -338,8 +340,8 @@
                             class="rounded-full shadow-lg w-32"
                         />
                     </div>
-                    <h5 class="text-xl font-semibold mb-4">John Smith</h5>
-                    <h6 class="font-semibold text-blue-600 mb-4">Marketing Specialist</h6>
+                    <h5 class="text-xl font-semibold mb-4">Konan Jonathan</h5>
+                    <h6 class="font-semibold text-blue-600 mb-4">Impact Investor</h6>
                     <p class="mb-4">
                         <svg
                             aria-hidden="true"
@@ -356,10 +358,9 @@
                                 d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"
                             ></path>
                         </svg>
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis
-                        praesentium voluptatum deleniti atque corrupti.
+                        There is too much fraud and mistrust hampering ecommerce growth in our country. I invested in SAFE because their payment protection platform not only prevents losses but also encourages more participation that can transform economic access.
                     </p>
-                    <ul class="flex justify-center mb-0">
+                    {{--<ul class="flex justify-center mb-0">
                         <li>
                             <svg
                                 aria-hidden="true"
@@ -445,7 +446,7 @@
                                 ></path>
                             </svg>
                         </li>
-                    </ul>
+                    </ul>--}}
                 </div>
             </div>
         </section>
