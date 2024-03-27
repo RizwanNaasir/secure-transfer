@@ -35,16 +35,16 @@ class EditContract extends EditRecord
     {
         $actions = [];
         $contractIsReceived = DB::table('contract_user')
-            ->where('contract_id', $this->record->id)
+            ->where('contract_id', $this?->record?->id)
             ->where('recipient_id', auth()->id())
             ->exists();
 
         $contractIsSender = DB::table('contract_user')
-            ->where('contract_id', $this->record->id)
+            ->where('contract_id', $this?->record?->id)
             ->where('user_id', auth()->id())
             ->exists();
 
-        if ($contractIsReceived && $this->record->is_pending) {
+        if ($contractIsReceived && $this?->record?->is_pending) {
             $actions = [
                 Actions\Action::make('accept_contract')
                     ->color('success')
@@ -74,7 +74,7 @@ class EditContract extends EditRecord
                     ])
                     ->action(function (array $data) {
                         ContractService::updateContract(
-                            contract: $this->record,
+                            contract: $this?->record,
                             status: 'declined',
                             description: $data['description']
                         );
@@ -96,7 +96,7 @@ class EditContract extends EditRecord
 //                    })
             ];
         }
-        if ($contractIsReceived && $this->record->is_accepted) {
+        if ($contractIsReceived && $this?->record?->is_accepted) {
             $actions = [
                 Actions\Action::make('Delivered')
                     ->color('danger')
@@ -108,7 +108,7 @@ class EditContract extends EditRecord
                                 Tabs\Tab::make('QrCode')
                                     ->schema([
                                         Placeholder::make('')->content(function () {
-                                            $qrCode = $this->record->status->qr_code;
+                                            $qrCode = $this?->record?->status?->qr_code;
                                             return new HtmlString(
                                                 '<span class="flex text-center justify-center items-center">
                                                     ' . $qrCode . '
@@ -127,9 +127,9 @@ class EditContract extends EditRecord
                     ])
                     ->action(function () {
                         ContractService::updateContract(
-                            contract: $this->record,
-                            status: $this->record->status->status,
-                            buyer_status: $this->record->status->buyer_status,
+                            contract: $this?->record,
+                            status: $this?->record?->status?->status,
+                            buyer_status: $this?->record?->status?->buyer_status,
                             seller_status: 'delivered'
 
 
@@ -138,12 +138,12 @@ class EditContract extends EditRecord
             ];
         }
 
-        if ($contractIsReceived && $this->record->is_accepted && $this->record->is_delivered) {
-          $productId = $this->record->products->first();
+        if ($contractIsReceived && $this?->record?->is_accepted && $this?->record?->is_delivered) {
+          $productId = $this?->record?->products?->first();
             $receivedContract = Rating::query()
               ->whereReviewerId(auth()->id())
               ->theOnesWith(Product::class)
-              ->whereRatableId($productId->id)
+              ->whereRatableId($productId?->id)
                 ->exists();
             $actions = [
                 Actions\Action::make('Release payment')
@@ -190,9 +190,9 @@ class EditContract extends EditRecord
                         ])
                     ])->action(function (array $data) {
                         $rating = (int)$data['rating'];
-                        $description = $data['description'];
+                        $description = @$data['description'];
                         $user = \Auth::user();
-                        $product = $this->record->products->first();
+                        $product = $this?->record?->products?->first();
                         $user->review(
                             $product,
                             $user,
@@ -204,7 +204,7 @@ class EditContract extends EditRecord
         }
 
 
-        if ($contractIsSender && !$this->record->is_complete) {
+        if ($contractIsSender && !$this?->record?->is_complete) {
 
             $actions = [
                 Actions\Action::make('Contract complete')
@@ -217,7 +217,7 @@ class EditContract extends EditRecord
                                 Tabs\Tab::make('QrCode')
                                     ->schema([
                                         Placeholder::make('')->content(function () {
-                                            $qrCode = $this->record->status->qr_code;
+                                            $qrCode = $this?->record?->status?->qr_code;
                                             return new HtmlString(
                                                 '<span class="flex text-center justify-center items-center">
                                                     ' . $qrCode . '
@@ -236,21 +236,21 @@ class EditContract extends EditRecord
                     ])
                     ->action(function () {
                         ContractService::updateContract(
-                            contract: $this->record,
-                            status: $this->record->status->status,
+                            contract: $this?->record,
+                            status: $this?->record?->status?->status,
                             buyer_status: 'complete',
-                            seller_status: $this->record->status->seller_status
+                            seller_status: $this?->record?->status?->seller_status
                         );
                     }),
             ];
         }
-        if ($contractIsSender && $this->record->is_complete)
+        if ($contractIsSender && $this?->record?->is_complete)
         {
-            $productId = $this->record->products->first();
+            $productId = $this?->record?->products?->first();
             $senderContract = Rating::query()
                 ->whereReviewerId(auth()->id())
                 ->theOnesWith(Product::class)
-                ->whereRatableId($productId->id)
+                ->whereRatableId($productId?->id)
                 ->exists();
             $actions = [
                 Actions\Action::make('Rating')
@@ -281,9 +281,9 @@ class EditContract extends EditRecord
                         ])
                     ])->action(function (array $data) {
                         $rating = (int)$data['rating'];
-                        $description = $data['description'];
+                        $description = @$data['description'];
                         $user = \Auth::user();
-                        $product = $this->record->products->first();
+                        $product = $this?->record?->products?->first();
                         $user->review(
                             $product,
                             $user,

@@ -12,6 +12,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Illuminate\Database\Eloquent\Builder;
 use LivewireUI\Modal\ModalComponent;
 
 class SendContractFromMarket extends ModalComponent implements HasForms, HasActions
@@ -44,35 +45,18 @@ class SendContractFromMarket extends ModalComponent implements HasForms, HasActi
 
     public function submit(): void
     {
-        $contractThatAlreadyExists = $this->product->contracts()->with('user', function ($query) {
-            $query->where('id', auth()->id());
-        })->where('preferred_payment_method', $this->preferred_payment_method)->exists();
-
+        $contractThatAlreadyExists = $this->product->contracts()
+            ->whereHas('user', function (Builder $query) {
+                $query->where('users.id', auth()->user()->id);
+            })
+            ->where('preferred_payment_method', $this->preferred_payment_method)
+            ->exists();
         if (auth()->check() && $contractThatAlreadyExists) {
             $this->addError('preferred_payment_method', 'You already sent a contract for this product with this payment method');
             return;
         }
         if (auth()->check())
         {
-            /*if ($this->preferred_payment_method === 'stripe') {
-                $product = $this->product;
-                $balance = auth()->user()->balance_int;
-                if ($balance < $product->price) {
-                    $this->addError('preferred_payment_method', 'You don\'t have enough balance to send this contract');
-                    return;
-                }
-                else {
-                    try {
-                        ContractService::create($this->getFormattedData(), auth()->user(), $this->product);
-                        $this->addMessagesFromOutside('Contract sent successfully');
-                    } catch (Exception $e) {
-                        $this->addError('preferred_payment_method', 'Something went wrong, please try again later');
-                    }
-
-
-                }
-                $this->redirect(url('/market_details', $product->id));
-            }*/
             switch ($this->preferred_payment_method) {
                 case 'wallet':
                     $product = $this->product;
